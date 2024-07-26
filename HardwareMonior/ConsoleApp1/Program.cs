@@ -13,7 +13,14 @@ namespace ConsoleApp1
 
 
             HardwareMonior.HardwareMonior.Init();
-            HardwareMonior.HardwareMonior.Update();
+            while (true)
+            {
+                Console.Clear();
+                // 작업 관리자의 CPU 사용량
+                Console.WriteLine(Math.Round(HardwareMonior.CpuMonitor.CPU_USE.Value, 2));
+
+            }
+            
         }
     }
 }
