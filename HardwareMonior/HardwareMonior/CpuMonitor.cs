@@ -1,14 +1,27 @@
-﻿using HardwareMonior.Items;
+﻿using HardwareMonitor.Items;
+using LibreHardwareMonitor.Hardware;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HardwareMonior
+namespace HardwareMonitor
 {
-    static public class CpuMonitor
+    public class CpuMonitor
     {
-        static public WindowsPerformanceCounterWrapper CPU_USE { get; } = new WindowsPerformanceCounterWrapper("Processor Information", "% Processor Utility", "0,_Total");
+        private readonly Computer _computer = null;
 
+        public CpuMonitor(Computer computer)
+        {
+            _computer = computer;
+        }
+
+
+        public WindowsPerformanceCounterWrapper CpuUse { get; } =
+            new WindowsPerformanceCounterWrapper("Processor Information",
+                "% Processor Utility", "0,_Total");
+
+
+        void 
 
 
     }

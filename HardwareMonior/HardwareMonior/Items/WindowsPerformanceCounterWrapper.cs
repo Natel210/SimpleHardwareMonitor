@@ -1,104 +1,203 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace HardwareMonior.Items
+namespace HardwareMonitor.Items
 {
-    public class WindowsPerformanceCounterWrapper : IDisposable
+    // 표면적 인터페이스 부분
+    public partial class WindowsPerformanceCounterWrapper : IInfoItem, IDisposable
     {
-        public string CategoryName { get; private set; }
-        public string CounterName { get; private set; }
-        public string InstanceName { get; private set; }
-        public double Value { get; private set; }
-        private Mutex _settingDataMutex = new Mutex();
-        private PerformanceCounter _performanceCounter;
-        private bool _disposed = false;
+        public void Start()
+        {
+            lock (_updateLock)
+            {
+                if (_updateTask != null)
+                    return;
 
-        /// <summary>
-        /// 빈 값입니다.<para/>
-        /// SetData(...) -> Open()이 필요합니다.<para/>
-        /// </summary>
+                lock (_counterLock)
+                {
+                    if (_performanceCounter == null)
+                    {
+                        if (string.IsNullOrEmpty(_categoryName) || string.IsNullOrEmpty(_counterName))
+                        {
+                            throw new InvalidOperationException("PerformanceCounter properties are not set.");
+                        }
+                        _performanceCounter = new PerformanceCounter(_categoryName, _counterName, _instanceName);
+                    }
+                }
+
+                _cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = _cancellationTokenSource.Token;
+
+                _updateTask = Task.Run(async () => await UpdateValueAsync(cancellationToken), cancellationToken);
+            }
+        }
+
+        public void Stop()
+        {
+            lock (_updateLock)
+            {
+                _cancellationTokenSource?.Cancel();
+                _updateTask?.Wait();
+                _updateTask = null;
+                _cancellationTokenSource = null;
+
+                lock (_counterLock)
+                {
+                    _performanceCounter?.Dispose();
+                    _performanceCounter = null;
+                }
+            }
+        }
+
+        public void Restart()
+        {
+            Stop();
+            Start();
+        }
+
         public WindowsPerformanceCounterWrapper() { }
 
         public WindowsPerformanceCounterWrapper(string categoryName, string counterName, string instanceName = "")
         {
-            SetData(categoryName, counterName, instanceName);
-            Open();
+            SetProperty(categoryName, counterName, instanceName);
+            Start();
         }
 
-        ~WindowsPerformanceCounterWrapper()
+        public void SetProperty(string categoryName, string counterName, string instanceName = "", bool autoRestart = false)
         {
-            Dispose(false);
-        }
-
-        /// <summary>
-        /// 퍼포먼스 카운터를 사용하기 위한 데이터를 설정합니다. <para/>
-        /// 변경에 대한 적용은 따로 Open 해야합니다.
-        /// </summary>
-        public bool SetData(string categoryName, string counterName, string instanceName = "")
-        {
-            // 뮤텍스 접근
-            bool accessMutex = _settingDataMutex.WaitOne(0);
-            if (accessMutex is false)
-                return false;
-            bool result = false;
-            try
+            lock (_counterLock)
             {
-                // 값 넣어줌
-                CategoryName = categoryName;
-                CounterName = counterName;
-                InstanceName = instanceName;
-                result = true;
+                _categoryName = categoryName;
+                _counterName = counterName;
+                _instanceName = instanceName;
+
+                _performanceCounter?.Dispose();
+                _performanceCounter = new PerformanceCounter(_categoryName, _counterName, _instanceName);
             }
-            finally { _settingDataMutex.ReleaseMutex(); }
-            return result;
+
+            if (autoRestart)
+                Restart();
         }
 
-        /// <summary>
-        /// 해당 설정에 대해서 탐색을 시작합니다.
-        /// </summary>
-        public bool Open()
+        public double GetValue()
         {
-            // 뮤텍스 접근
-            bool accessMutex = _settingDataMutex.WaitOne(0);
-            if (accessMutex is false)
-                return false;
-            bool result = false;
-            try
+            lock (_counterLock)
             {
-                // 생성전에 정리
-                if (_performanceCounter != null)
-                {
-                    _performanceCounter.Close();
-                    _performanceCounter.Dispose();
-                    _performanceCounter = null;
-                }
-                // 접근 후 생성
-                _performanceCounter = new PerformanceCounter(CategoryName, CounterName, InstanceName);
-                result = _performanceCounter != null;
+                return _value;
             }
-            finally { _settingDataMutex.ReleaseMutex(); }
-            return result;
         }
 
-        /// <summary>
-        /// 데이터에 대해서 업데이트 되는 구간 입니다.
-        /// </summary>
-        public double Update()
+        public string GetCategoryName()
         {
-            if (_performanceCounter is null)
-                return 0.0;
-            Value = _performanceCounter.NextValue();
-            return Value;
+            lock (_counterLock)
+            {
+                return _categoryName;
+            }
         }
 
-        /// <summary>
-        /// IDisposable 인터페이스 구현
-        /// </summary>
+        public string GetCounterName()
+        {
+            lock (_counterLock)
+            {
+                return _counterName;
+            }
+        }
+
+        public string GetInstanceName()
+        {
+            lock (_counterLock)
+            {
+                return _instanceName;
+            }
+        }
+
+        public int GetUpdateInterval()
+        {
+            lock (_updateLock)
+            {
+                return _updateInterval;
+            }
+        }
+
+        public void SetCategoryName(string categoryName, bool autoRestart = false)
+        {
+            lock (_counterLock)
+            {
+                _categoryName = categoryName;
+                _performanceCounter?.Dispose();
+                _performanceCounter = new PerformanceCounter(_categoryName, _counterName, _instanceName);
+            }
+
+            if (autoRestart)
+                Restart();
+        }
+
+        public void SetCounterName(string counterName, bool autoRestart = false)
+        {
+            lock (_counterLock)
+            {
+                _counterName = counterName;
+                _performanceCounter?.Dispose();
+                _performanceCounter = new PerformanceCounter(_categoryName, _counterName, _instanceName);
+            }
+
+            if (autoRestart)
+                Restart();
+        }
+
+        public void SetInstanceName(string instanceName, bool autoRestart = false)
+        {
+            lock (_counterLock)
+            {
+                _instanceName = instanceName;
+                _performanceCounter?.Dispose();
+                _performanceCounter = new PerformanceCounter(_categoryName, _counterName, _instanceName);
+            }
+
+            if (autoRestart)
+                Restart();
+        }
+
+        public void SetUpdateInterval(int interval)
+        {
+            if (interval <= 0)
+            {
+                throw new ArgumentException("Interval must be greater than zero.");
+            }
+            lock (_updateLock)
+            {
+                _updateInterval = interval;
+            }
+        }
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+    }
+
+    // 내부 변수&함수
+    public partial class WindowsPerformanceCounterWrapper : IInfoItem, IDisposable
+    {
+        private readonly object _counterLock = new object();
+        private readonly object _updateLock = new object();
+
+        private string _categoryName = null;
+        private string _counterName = null;
+        private string _instanceName = null;
+        private PerformanceCounter _performanceCounter = null;
+        private double _value = 0;
+        private Task _updateTask = null;
+        private CancellationTokenSource _cancellationTokenSource = null;
+        private bool _disposed = false;
+        private int _updateInterval = 1000; // 기본값은 1000ms (1초)
+
+        ~WindowsPerformanceCounterWrapper()
+        {
+            Dispose(false);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -108,13 +207,33 @@ namespace HardwareMonior.Items
 
             if (disposing)
             {
-                // 관리 리소스 해제
-                _settingDataMutex?.Dispose();
-                _performanceCounter?.Dispose();
+                Stop();
+                lock (_counterLock)
+                {
+                    _performanceCounter?.Dispose();
+                }
             }
 
-            // 비관리 리소스 해제 (필요한 경우)
             _disposed = true;
+        }
+
+        private async Task UpdateValueAsync(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                lock (_counterLock)
+                {
+                    _value = _performanceCounter.NextValue();
+                }
+                try
+                {
+                    await Task.Delay(_updateInterval, cancellationToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    break;
+                }
+            }
         }
     }
 }

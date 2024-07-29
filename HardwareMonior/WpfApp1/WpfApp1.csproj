@@ -95,9 +95,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HardwareMonior\HardwareMonior.csproj">
+    <ProjectReference Include="..\HardwareMonior\SimpleHardwareMonitor.csproj">
       <Project>{d4603f89-003c-47bc-820f-9611eab32d7f}</Project>
-      <Name>HardwareMonior</Name>
+      <Name>SimpleHardwareMonitor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

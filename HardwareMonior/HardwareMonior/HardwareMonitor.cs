@@ -3,14 +3,22 @@ using System.Threading;
 using System.Diagnostics;
 using LibreHardwareMonitor.Hardware;
 using System.Linq.Expressions;
+using System.Linq;
 
-namespace HardwareMonior
+namespace HardwareMonitor
 {
 
 
 
-    static public class HardwareMonior
+    static public class HardwareMonitor
     {
+        static CpuMonitor cpuMonitor;
+        static HardwareMonitor()
+        {
+            cpuMonitor = new CpuMonitor(computer);
+        }
+
+
         static Computer computer = new Computer
         {
             IsCpuEnabled = true,
@@ -30,14 +38,14 @@ namespace HardwareMonior
         
         private static void Update(object state)
         {
-            CpuMonitor.CPU_USE.Update();
-
+            //CpuMonitor.CPU_USE.Update();
 
             foreach (var hardware in computer.Hardware)
             {
                 switch (hardware.HardwareType)
                 {
                     case HardwareType.Cpu:
+                        UpdateValueAsync_CPU();
                         break;
 
                     //미사용 하드웨어
@@ -59,7 +67,7 @@ namespace HardwareMonior
             }
         }
 
-        static void CPU_UPDATE()
+        static void UpdateValueAsync_CPU()
         {
 
         }
