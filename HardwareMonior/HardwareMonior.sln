@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHardwareMonitor", "Ha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{C2BC40E3-BFE3-43B9-A39E-D1628B6013D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{A34E1C46-0A90-44BD-918B-0744546B004C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHardwareMonitorGUI", "SimpleHardeareMonitorGUI\SimpleHardwareMonitorGUI.csproj", "{1294D977-1E81-4F8F-9200-B6B2390E3E69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C2BC40E3-BFE3-43B9-A39E-D1628B6013D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2BC40E3-BFE3-43B9-A39E-D1628B6013D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2BC40E3-BFE3-43B9-A39E-D1628B6013D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A34E1C46-0A90-44BD-918B-0744546B004C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A34E1C46-0A90-44BD-918B-0744546B004C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A34E1C46-0A90-44BD-918B-0744546B004C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A34E1C46-0A90-44BD-918B-0744546B004C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

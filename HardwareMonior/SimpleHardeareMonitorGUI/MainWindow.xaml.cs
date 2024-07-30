@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,19 +9,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SimpleHardwareMonitor;
+using SimpleHardwareMonitor.data;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace WpfApp1
+namespace SimpleHardwareMonitorGUI
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MonitorInterface _monitorInterface;
+
         public MainWindow()
         {
             InitializeComponent();
             HardwareMonitor.Initialized();
+            _monitorInterface = new MonitorInterface(SynchronizationContext.Current);
+            DataContext = _monitorInterface;
+        }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            HardwareMonitor.Release();
         }
     }
 }
