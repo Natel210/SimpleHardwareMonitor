@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:SimpleHardwareMonitorGUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="pack://application:,,,/GrayThemeUI;component/Theme/Light.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/GrayThemeUI;component/Theme/Dark.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/GrayThemeUI;component/Main.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

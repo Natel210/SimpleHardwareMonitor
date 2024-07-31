@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GrayThemeUI\GrayThemeUI\GrayThemeUI.csproj" />
-    <ProjectReference Include="..\HardwareMonior\SimpleHardwareMonitor.csproj" />
+    <ProjectReference Include="..\SimpleHardwareMonitor\SimpleHardwareMonitor.csproj" />
   </ItemGroup>
 
 </Project>

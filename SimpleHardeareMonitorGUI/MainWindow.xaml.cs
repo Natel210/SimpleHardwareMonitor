@@ -27,7 +27,7 @@ namespace SimpleHardwareMonitorGUI
         public MainWindow()
         {
             InitializeComponent();
-            HardwareMonitor.Initialized();
+            //HardwareMonitor.Initialized();
             _cpuViewmodel = new HardwareMonitorViewmodel(SynchronizationContext.Current);
             DataContext = _cpuViewmodel;
             updateTimer = new Timer(_ => { _cpuViewmodel.UpdateData(); }, this, 0, 250);
@@ -37,7 +37,7 @@ namespace SimpleHardwareMonitorGUI
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            HardwareMonitor.Release();
+            //HardwareMonitor.Release();
         }
     }
 }
