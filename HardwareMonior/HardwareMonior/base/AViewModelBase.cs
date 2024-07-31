@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
-namespace SimpleHardwareMonitorGUI
+namespace SimpleHardwareMonitor.@base
 {
     public abstract class AViewModelBase : INotifyPropertyChanged
     {
+        protected readonly SynchronizationContext _syncContext;
+        protected AViewModelBase(SynchronizationContext syncContext)
+        {
+            _syncContext = syncContext ?? SynchronizationContext.Current;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool Set<T>(ref T field, T newValue = default(T), [CallerMemberName] string propertyName = null)

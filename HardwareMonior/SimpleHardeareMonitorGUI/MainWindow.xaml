@@ -5,21 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        FontSize="32"
+        Title="MainWindow" Height="1000" Width="500"
         Closed="Window_Closed">
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="text1" d:Text="1" Text="{Binding CpuUse, StringFormat={}{0:F2}}" Grid.Row="0"/>
-        <TextBlock x:Name="text2" d:Text="2" Text="{Binding CpuVoltage, StringFormat={}{0:F2}}" Grid.Row="1"/>
-        <TextBlock x:Name="text3" d:Text="3" Text="{Binding CpuPower, StringFormat={}{0:F2}}" Grid.Row="2"/>
-        <TextBlock x:Name="text4" d:Text="4" Text="{Binding CpuTemperature, StringFormat={}{0:F2}}" Grid.Row="3"/>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Margin="0,0,5,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="CpuUse : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Cpu.Use, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="1" Margin="0,0,5,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="CpuVoltage : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Cpu.Voltage, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="2" Margin="0,0,5,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="CpuPower : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Cpu.Power, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="3" Margin="0,0,5,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="CpuTemperature : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBlock d:Text="4" Text="{Binding Cpu.Temperature, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="4" Margin="0,0,5,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Test : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Memory.Use, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="5" Margin="0,0,5,5">
+            <ListBox ItemsSource="{Binding Cpu.UseByThreads}"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="6" Margin="0,0,5,5">
+            <TextBlock Text="{Binding Cpu.CoreCount}"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="7" Margin="0,0,5,5">
+            <TextBlock Text="{Binding Cpu.ProcessorCount}"/>
+        </Border>
     </Grid>
 </Window>

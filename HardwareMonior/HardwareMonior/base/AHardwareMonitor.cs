@@ -92,7 +92,7 @@ namespace SimpleHardwareMonitor.@base
                 {
                     _hardware.Update();
                     Update();
-                    await Task.Delay(50); // Yield to other threads without significant delay
+                    await Task.Delay(50);
                 }
             }
             catch (TaskCanceledException)
@@ -125,7 +125,7 @@ namespace SimpleHardwareMonitor.@base
                             {
                                 _updateTask?.Wait();
                             }
-                            catch (AggregateException ex)
+                            catch (AggregateException/* ex*/)
                             {
                                 //// Handle any exceptions thrown by the task
                                 //foreach (var innerEx in ex.InnerExceptions)

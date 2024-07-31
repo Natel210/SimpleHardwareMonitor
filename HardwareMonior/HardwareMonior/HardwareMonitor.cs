@@ -8,9 +8,9 @@ namespace SimpleHardwareMonitor
 {
     static public partial class HardwareMonitor
     {
-        public static AHardwareMonitor<CpuData> Cpu { get; private set; } = null;
         public static AHardwareMonitor<MotherboardData> Motherboard { get; private set; } = null;
         public static AHardwareMonitor<SuperIOData> SuperIO { get; private set; } = null;
+        public static AHardwareMonitor<CpuData> Cpu { get; private set; } = null;
         public static AHardwareMonitor<MemoryData> Memory { get; private set; } = null;
         public static AHardwareMonitor<GpuNvidiaData> Gpu_Nvidia { get; private set; } = null;
         public static AHardwareMonitor<GpuAmdData> Gpu_Amd { get; private set; } = null;
