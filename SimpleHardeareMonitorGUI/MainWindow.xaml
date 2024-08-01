@@ -8,12 +8,19 @@
         mc:Ignorable="d"
         FontSize="32"
         Style="{StaticResource GrayThemeUI.Window}"
-        Title="MainWindow" Height="1000" Width="1000"
+        Title="MainWindow"
+        Width="{StaticResource MainWindowWidth}" MinWidth="{StaticResource MainWindowWidth}" MaxWidth="{StaticResource MainWindowWidth}"
+        Height="Auto"
+        ResizeMode="NoResize"
         Closed="Window_Closed">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <StackPanel>
-            <items:CpuInfo/>
-        </StackPanel>
+    <StackPanel Width="Auto">
+        <items:MainWindowHeader Grid.Row="0" Height="{StaticResource MainWindowHeaderHeight}"/>
+        <items:CpuCategory Grid.Row="1" Margin="0,5,0,0"
+                           BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
+                           UsedData="{Binding Cpu.Use, StringFormat={}{0:F1}}"
+                           TemperatureData="{Binding Cpu.Temperature, StringFormat={}{0:F1}}"
+                           PowerData="{Binding Cpu.Power, StringFormat={}{0:F1}}"/>
+    </StackPanel>
 
 
         <!--<Grid Margin="5">
@@ -88,5 +95,4 @@
                 <TextBlock Text="{Binding Cpu.ProcessorCount}"/>
             </Border>
         </Grid>-->
-    </ScrollViewer>
 </Window>

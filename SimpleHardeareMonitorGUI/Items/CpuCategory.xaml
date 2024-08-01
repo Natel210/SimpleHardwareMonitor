@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="SimpleHardwareMonitorGUI.Items.CpuCategory"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Items"
+             mc:Ignorable="d"
+             Style="{StaticResource GrayThemeUI.UserControl}"
+             d:Width="{StaticResource MainWindowWidth}"
+             d:Height="Auto">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="0,0,1,0">
+            <TextBlock FontSize="40" Text="CPU" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+        <local:GategoryItem Header="Used"
+                            BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="0,0,1,0"
+                            Value="{Binding UsedData, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            Symbols="%" SymbolsUse="True" Grid.Column="1"/>
+        <local:GategoryItem Header="Temperature"
+                            BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="0,0,1,0"
+                            Value="{Binding TemperatureData, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            Symbols="°C" SymbolsUse="True" Grid.Column="2"/>
+        <local:GategoryItem Header="Power"
+                            Value="{Binding PowerData, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            Symbols="W" SymbolsUse="True" Grid.Column="3"/>
+    </Grid>
+</UserControl>
