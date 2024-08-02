@@ -24,12 +24,24 @@ namespace SimpleHardwareMonitor.data
         /// </summary>
         public float Voltage { get; internal set; }
         /// <summary>
+        /// voltage details per core. </para>
+        /// </summary>
+        public List<float> VoltageByCore { get; internal set; }
+        /// <summary>
         /// package
         /// </summary>
         public float Power { get; internal set; }
         /// <summary>
+        /// power details per core. </para>
+        /// </summary>
+        public List<float> PowerByCore { get; internal set; }
+        /// <summary>
         /// package
         /// </summary>
         public float Temperature { get; internal set; }
+        /// <summary>
+        /// temperature details per core. </para>
+        /// </summary>
+        public List<float> TemperatureByCore { get; internal set; }
     }
 }

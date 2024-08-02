@@ -15,6 +15,30 @@ namespace SimpleHardwareMonitor
     /// </summary>
     public partial class HardwareMonitorViewmodel : AHardwareMonitorViewmodel
     {
+        public bool Runing
+        {
+            get => HardwareMonitor.Runing;
+            private set
+            {
+                if (EqualityComparer<bool>.Default.Equals(HardwareMonitor.Runing, value))
+                    return;
+                OnPropertyChanged(null);
+                return;
+            }
+        }
+        public int UpdateInterval
+        {
+            get => HardwareMonitor.UpdateInterval;
+            set
+            {
+                if (EqualityComparer<int>.Default.Equals(HardwareMonitor.UpdateInterval, value))
+                    return;
+                HardwareMonitor.UpdateInterval = value;
+                OnPropertyChanged(null);
+                _updateTimer.Change(0, HardwareMonitor.UpdateInterval);
+                return;
+            }
+        }
         public MotherboardViewmodel Motherboard
         {
             get => _motherboardVM;
@@ -91,9 +115,11 @@ namespace SimpleHardwareMonitor
         private EmbeddedControllerViewmodel _embeddedControllerVM;
         private PsuViewmodel _psuVM;
         private BatteryViewmodel _batteryVM;
-
+        private Timer _updateTimer;
         public HardwareMonitorViewmodel(SynchronizationContext syncContext) : base(syncContext)
         {
+            Runing = HardwareMonitor.Runing;
+
             Motherboard = new MotherboardViewmodel(syncContext);
             SuperIO = new SuperIOViewmodel(syncContext);
             Cpu = new CpuViewmodel(syncContext);
@@ -106,24 +132,31 @@ namespace SimpleHardwareMonitor
             EmbeddedController = new EmbeddedControllerViewmodel(syncContext);
             Psu = new PsuViewmodel(syncContext);
             Battery = new BatteryViewmodel(syncContext);
+            _updateTimer = new Timer(_=> { UpdateData(); }, null, 0, UpdateInterval);
         }
 
         protected override bool UpdateData_Inner()
         {
-            bool oppositeResult = false;
-            oppositeResult |= !Motherboard.UpdateData();
-            oppositeResult |= !SuperIO.UpdateData();
-            oppositeResult |= !Cpu.UpdateData();
-            oppositeResult |= !Memory.UpdateData();
-            oppositeResult |= !GpuAmd.UpdateData();
-            oppositeResult |= !GpuIntel.UpdateData();
-            oppositeResult |= !GpuNvidia.UpdateData();
-            oppositeResult |= !Storage.UpdateData();
-            oppositeResult |= !Cooler.UpdateData();
-            oppositeResult |= !EmbeddedController.UpdateData();
-            oppositeResult |= !Psu.UpdateData();
-            oppositeResult |= !Battery.UpdateData();
-            return !oppositeResult;
+            try
+            {
+                Runing = HardwareMonitor.Runing;
+                UpdateInterval = HardwareMonitor.UpdateInterval;
+                bool oppositeResult = false;
+                oppositeResult |= !Motherboard.UpdateData();
+                oppositeResult |= !SuperIO.UpdateData();
+                oppositeResult |= !Cpu.UpdateData();
+                oppositeResult |= !Memory.UpdateData();
+                oppositeResult |= !GpuAmd.UpdateData();
+                oppositeResult |= !GpuIntel.UpdateData();
+                oppositeResult |= !GpuNvidia.UpdateData();
+                oppositeResult |= !Storage.UpdateData();
+                oppositeResult |= !Cooler.UpdateData();
+                oppositeResult |= !EmbeddedController.UpdateData();
+                oppositeResult |= !Psu.UpdateData();
+                oppositeResult |= !Battery.UpdateData();
+                return !oppositeResult;
+            }
+            catch (Exception) { return false; }
         }
     }
 }

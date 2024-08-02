@@ -5,94 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI"
         xmlns:items="clr-namespace:SimpleHardwareMonitorGUI.Items"
+        xmlns:dashboard="clr-namespace:SimpleHardwareMonitorGUI.Common.Dashboard"
         mc:Ignorable="d"
         FontSize="32"
         Style="{StaticResource GrayThemeUI.Window}"
-        Title="MainWindow"
         Width="{StaticResource MainWindowWidth}" MinWidth="{StaticResource MainWindowWidth}" MaxWidth="{StaticResource MainWindowWidth}"
-        Height="Auto"
         ResizeMode="NoResize"
-        Closed="Window_Closed">
-    <StackPanel Width="Auto">
-        <items:MainWindowHeader Grid.Row="0" Height="{StaticResource MainWindowHeaderHeight}"/>
-        <items:CpuCategory Grid.Row="1" Margin="0,5,0,0"
-                           BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
-                           UsedData="{Binding Cpu.Use, StringFormat={}{0:F1}}"
-                           TemperatureData="{Binding Cpu.Temperature, StringFormat={}{0:F1}}"
-                           PowerData="{Binding Cpu.Power, StringFormat={}{0:F1}}"/>
+        Closed="Window_Closed" WindowStyle="None">
+    <StackPanel>
+        <items:MainWindowHeader Grid.Row="0" Height="{StaticResource MainWindowHeaderHeight}"
+                                />
+        <dashboard:Dashboard Grid.Row="1" Margin="5"
+                     BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
+                     Header1="Used" Value1="{Binding Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
+                     Header2="Temperature" Value2="{Binding Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
+                     Header3="Power" Value3="{Binding Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
+            <dashboard:Dashboard.ContentName>
+                <Border Width="250">
+                    <TextBlock Text="CPU" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </dashboard:Dashboard.ContentName>
+        </dashboard:Dashboard>
     </StackPanel>
-
-
-        <!--<Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Border BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="3" Grid.Row="0" Margin="0,0,5,5" Style="{StaticResource GrayThemeUI.Border}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="CpuUse : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Cpu.Use, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="3" Grid.Row="1" Margin="0,0,5,5" Style="{StaticResource GrayThemeUI.Border}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="CpuVoltage : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Cpu.Voltage, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="3" Grid.Row="2" Margin="0,0,5,5" Style="{StaticResource GrayThemeUI.Border}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="CpuPower : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Cpu.Power, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="3" Grid.Row="3" Margin="0,0,5,5">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="CpuTemperature : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-                    <TextBlock d:Text="4" Text="{Binding Cpu.Temperature, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="3" Grid.Row="4" Margin="0,0,5,5">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Test : " Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Memory.Use, StringFormat={}{0:F3}}" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="3" Grid.Row="5" Margin="0,0,5,5">
-                <ListBox ItemsSource="{Binding Cpu.UseByThreads}"/>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="3" Grid.Row="6" Margin="0,0,5,5">
-                <TextBlock Text="{Binding Cpu.CoreCount}"/>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="3" Grid.Row="7" Margin="0,0,5,5">
-                <TextBlock Text="{Binding Cpu.ProcessorCount}"/>
-            </Border>
-        </Grid>-->
 </Window>

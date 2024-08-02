@@ -10,9 +10,18 @@
                 <!--<ResourceDictionary Source="pack://application:,,,/GrayThemeUI;component/Theme/Light.xaml"/>-->
                 <ResourceDictionary Source="pack://application:,,,/GrayThemeUI;component/Theme/Dark.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/GrayThemeUI;component/Main.xaml"/>
+
+                <ResourceDictionary Source="pack://application:,,,/SimpleHardwareMonitorGUI;component/Items/SettingDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <sys:Double x:Key="MainWindowWidth">800.0</sys:Double>
+            <!--Header(1) Dashboard(1) DashboardSpace(1)-->
+            <sys:Double x:Key="MainWindowHeight">135.0</sys:Double> 
             <sys:Double x:Key="MainWindowHeaderHeight">50.0</sys:Double>
+            <sys:Double x:Key="DashboardSpaceHeight">5.0</sys:Double>
+            <sys:Double x:Key="DashboardHeight">80.0</sys:Double>
+
+
+            
         </ResourceDictionary>
 
     </Application.Resources>

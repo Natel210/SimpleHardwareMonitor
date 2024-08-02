@@ -92,7 +92,7 @@ namespace SimpleHardwareMonitor.@base
                 {
                     _hardware.Update();
                     Update();
-                    await Task.Delay(50);
+                    await Task.Delay(HardwareMonitor.UpdateInterval);
                 }
             }
             catch (TaskCanceledException)

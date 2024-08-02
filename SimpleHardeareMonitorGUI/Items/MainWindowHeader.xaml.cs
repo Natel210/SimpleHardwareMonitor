@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Threading;
+
 
 namespace SimpleHardwareMonitorGUI.Items
 {
@@ -22,17 +15,21 @@ namespace SimpleHardwareMonitorGUI.Items
     public partial class MainWindowHeader : UserControl
     {
         Timer updateStatusTimer;
+        private bool isDragging = false;
+        private Point startPoint;
 
         public MainWindowHeader()
         {
             InitializeComponent();
 
             updateStatusTimer = new Timer(UpdateStatus, this, 0, 250);
-
+            this.MouseLeftButtonDown += MainWindowHeader_MouseLeftButtonDown;
+            this.MouseMove += MainWindowHeader_MouseMove;
+            this.MouseLeftButtonUp += MainWindowHeader_MouseLeftButtonUp;
         }
 
-        private readonly SolidColorBrush _monitoring_OK_Brush = new SolidColorBrush(new Color() { R = 0, G = 128, B = 0, A = 60 });
-        private readonly SolidColorBrush _monitoring_Wait_Brush = new SolidColorBrush(new Color() { R = 180, G = 83, B = 0, A = 60 });
+        private readonly SolidColorBrush _logOnBrush = new SolidColorBrush(new Color() { R = 0, G = 128, B = 0, A = 60 });
+        private readonly SolidColorBrush _logOffBrush = new SolidColorBrush(new Color() { R = 180, G = 83, B = 0, A = 60 });
 
 
         bool test = true;
@@ -45,41 +42,105 @@ namespace SimpleHardwareMonitorGUI.Items
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     // UI 업데이트 코드
-                    if (test)
-                    {
-                        string temp = $"LOG ON";
-                        if (temp != logStatusTextBlock.Text)
-                            logStatusTextBlock.Text = temp;
-                        if (logStatusBorder.Background != _monitoring_OK_Brush)
-                            logStatusBorder.Background = _monitoring_OK_Brush;
-                    }
-                    else
-                    {
-                        string temp = $"LOG OFF";
-                        if (temp != logStatusTextBlock.Text)
-                            logStatusTextBlock.Text = temp;
-                        if (logStatusBorder.Background != _monitoring_Wait_Brush)
-                            logStatusBorder.Background = _monitoring_Wait_Brush;
-                    }
+                    //if (test)
+                    //{
+                    //    string temp = $"DataSave";
+                    //    if (temp != logStatusTextBlock.Text)
+                    //        logStatusTextBlock.Text = temp;
+                    //    if (logStatusBorder.Background != _logOnBrush)
+                    //        logStatusBorder.Background = _logOnBrush;
+                    //}
+                    //else
+                    //{
+                    //    string temp = $"DataDisSave";
+                    //    if (temp != logStatusTextBlock.Text)
+                    //        logStatusTextBlock.Text = temp;
+                    //    if (logStatusBorder.Background != _logOffBrush)
+                    //        logStatusBorder.Background = _logOffBrush;
+                    //}
 
                     test = !test;
                 }));
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException /*ex*/)
             {
                 // 작업이 취소된 경우의 처리
                 //Console.WriteLine("The task was canceled: " + ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception /*ex*/)
             {
                 // 기타 예외 처리
                 //Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
 
+        public static readonly DependencyProperty _saving =
+            DependencyProperty.Register("Saving", typeof(bool), typeof(MainWindowHeader), new PropertyMetadata(false));
+        public bool Saving
+        {
+            get { return (bool)GetValue(_saving); }
+            set { SetValue(_saving, value); }
+        }
+
+
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            Application.Current.Shutdown();
+        }
 
+        private void MainWindowHeader_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = true;
+            startPoint = e.GetPosition(this);
+            this.CaptureMouse();
+        }
+
+        private void MainWindowHeader_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (lockButton.IsChecked is true)
+                return;
+
+            if (isDragging)
+            {
+                Point currentPoint = e.GetPosition(this);
+                var parentWindow = Window.GetWindow(this);
+
+                if (parentWindow != null)
+                {
+                    double offsetX = currentPoint.X - startPoint.X;
+                    double offsetY = currentPoint.Y - startPoint.Y;
+
+                    parentWindow.Left += offsetX;
+                    parentWindow.Top += offsetY;
+                }
+            }
+        }
+
+        private void MainWindowHeader_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+            this.ReleaseMouseCapture();
+        }
+
+        private void Setting_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Lock_Checked(object sender, RoutedEventArgs e)
+        {
+            SettingData.Instance.WindowTitleLocked = true;
+        }
+
+        private void Lock_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SettingData.Instance.WindowTitleLocked = false;
         }
     }
 }

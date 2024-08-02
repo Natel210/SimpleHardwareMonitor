@@ -5,6 +5,7 @@ using SimpleHardwareMonitor.@base;
 using System.Collections.Generic;
 using System;
 using System.Management;
+using System.Threading;
 
 namespace SimpleHardwareMonitor.monitor
 {
@@ -25,6 +26,9 @@ namespace SimpleHardwareMonitor.monitor
                 _usePerformanceByThreads.Add(new PerformanceCounter("Processor Information", "% Processor Utility", $"0,{i}"));
                 _data.UseByThreads.Add(0.0f);
             }
+            _data.VoltageByCore = new List<float>();
+            _data.PowerByCore = new List<float>();
+            _data.TemperatureByCore = new List<float>();
         }
         protected sealed override void Update()
         {

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="SimpleHardwareMonitorGUI.Common.Dashboard.Dashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Common.Dashboard"
+             mc:Ignorable="d" 
+             Style="{StaticResource GrayThemeUI.UserControl}"
+             d:DesignHeight="80" d:DesignWidth="850">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}" BorderThickness="0,0,1,0" Grid.Column="0" Background="Transparent">
+            <ContentControl Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="40"
+                            d:Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue=' Content '}"/>
+        </Border>
+        <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}"
+                             BorderThickness="0,0,1,0" Grid.Column="1"
+                             Header="{Binding Header1, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Value="{Binding Value1, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             SymbolsUse="{Binding SymbolsUse1, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                             Symbols="{Binding Symbols1, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}"
+                             BorderThickness="0,0,1,0" Grid.Column="2"
+                             Header="{Binding Header2, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Value="{Binding Value2, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             SymbolsUse="{Binding SymbolsUse2, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                             Symbols="{Binding Symbols2, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}" Grid.Column="3"
+                             Header="{Binding Header3, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Value="{Binding Value3, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             SymbolsUse="{Binding SymbolsUse3, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                             Symbols="{Binding Symbols3, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </Grid>
+</UserControl>

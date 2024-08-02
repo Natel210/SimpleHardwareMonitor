@@ -10,8 +10,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resource\BootstrapIcons-Lock.png" />
+    <None Remove="resource\BootstrapIcons-Unlock.png" />
+    <None Remove="resource\PhosphorIcons-GearSixThin.png" />
+    <None Remove="resource\PhosphorIcons-HardDrivesThin.png" />
+    <None Remove="resource\PhosphorIcons-MinusThin.png" />
+    <None Remove="resource\PhosphorIcons-XThin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GrayThemeUI\GrayThemeUI\GrayThemeUI.csproj" />
     <ProjectReference Include="..\SimpleHardwareMonitor\SimpleHardwareMonitor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="log\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resource\BootstrapIcons-Lock.png" />
+    <Resource Include="resource\BootstrapIcons-Unlock.png" />
+    <Resource Include="resource\PhosphorIcons-GearSixThin.png" />
+    <Resource Include="resource\PhosphorIcons-HardDrivesThin.png" />
+    <Resource Include="resource\PhosphorIcons-MinusThin.png" />
+    <Resource Include="resource\PhosphorIcons-XThin.png" />
   </ItemGroup>
 
 </Project>

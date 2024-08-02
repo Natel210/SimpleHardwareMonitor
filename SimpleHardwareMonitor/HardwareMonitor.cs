@@ -21,7 +21,10 @@ namespace SimpleHardwareMonitor
         public static AHardwareMonitor<EmbeddedControllerData> EmbeddedController { get; private set; } = null;
         public static AHardwareMonitor<PsuData> Psu { get; private set; } = null;
         //public static AHardwareMonitor<BatteryData> Battery { get; private set; } = null;
-
+        /// <summary>
+        /// ms
+        /// </summary>
+        public static int UpdateInterval { get; set; } = 1000;
         public static bool Runing { get; private set; }
 
         /// <summary>

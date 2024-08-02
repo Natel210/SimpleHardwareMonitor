@@ -13,20 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SimpleHardwareMonitorGUI.Items
+namespace SimpleHardwareMonitorGUI.Common.Dashboard
 {
     /// <summary>
     /// GategoryItem.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class GategoryItem : UserControl
+    public partial class DashboardItem : UserControl
     {
-        public GategoryItem()
+        public DashboardItem()
         {
             InitializeComponent();
         }
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(string), typeof(GategoryItem), new PropertyMetadata("Header"));
+            DependencyProperty.Register("Header", typeof(string), typeof(DashboardItem), new PropertyMetadata("Header"));
 
         public string Header
         {
@@ -35,7 +35,7 @@ namespace SimpleHardwareMonitorGUI.Items
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(string), typeof(GategoryItem), new PropertyMetadata("0.0.00."));
+            DependencyProperty.Register("Value", typeof(string), typeof(DashboardItem), new PropertyMetadata("0.0.00."));
 
         public string Value
         {
@@ -44,7 +44,7 @@ namespace SimpleHardwareMonitorGUI.Items
         }
 
         public static readonly DependencyProperty SymbolsUseProperty =
-            DependencyProperty.Register("SymbolsUse", typeof(bool), typeof(GategoryItem), new PropertyMetadata(false));
+            DependencyProperty.Register("SymbolsUse", typeof(bool), typeof(DashboardItem), new PropertyMetadata(false));
 
         public bool SymbolsUse
         {
@@ -53,7 +53,7 @@ namespace SimpleHardwareMonitorGUI.Items
         }
 
         public static readonly DependencyProperty SymbolsProperty =
-            DependencyProperty.Register("Symbols", typeof(string), typeof(GategoryItem), new PropertyMetadata(""));
+            DependencyProperty.Register("Symbols", typeof(string), typeof(DashboardItem), new PropertyMetadata(""));
 
         public string Symbols
         {
