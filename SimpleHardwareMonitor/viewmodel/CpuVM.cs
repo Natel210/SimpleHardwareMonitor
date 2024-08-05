@@ -2,76 +2,68 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace SimpleHardwareMonitor.viewmodel
 {
-    public partial class CpuViewmodel : AHardwareMonitorViewmodel
+    public partial class CpuVM : INotifyPropertyChanged
     {
+        public static CpuVM instance = new CpuVM();
         public int CoreCount
         {
             get => _coreCount;
-            private set => Set(ref _coreCount, value);
+            internal set => Set(ref _coreCount, value);
         }
-
         public int ProcessorCount
         {
             get => _processorCount;
-            private set => Set(ref _processorCount, value);
+            internal set => Set(ref _processorCount, value);
         }
-
-
         public float Use
         {
             get => _use;
-            private set => Set(ref _use, value);
+            internal set => Set(ref _use, value);
         }
-
         public ObservableCollection<float> UseByThreads
         {
             get => _useByThreads;
-            private set => Set(ref _useByThreads, value);
+            internal set => Set(ref _useByThreads, value);
         }
-
         public float Voltage
         {
             get => _voltage;
-            private set => Set(ref _voltage, value);
+            internal set => Set(ref _voltage, value);
         }
-
         public ObservableCollection<float> VoltageByCore
         {
             get => _voltageByCore;
-            private set => Set(ref _voltageByCore, value);
+            internal set => Set(ref _voltageByCore, value);
         }
-
         public float Power
         {
             get => _power;
-            private set => Set(ref _power, value);
+            internal set => Set(ref _power, value);
         }
-
         public ObservableCollection<float> PowerByCore
         {
             get => _powerByCore;
-            private set => Set(ref _powerByCore, value);
+            internal set => Set(ref _powerByCore, value);
         }
-
         public float Temperature
         {
             get => _temperature;
-            private set => Set(ref _temperature, value);
+            internal set => Set(ref _temperature, value);
         }
-
         public ObservableCollection<float> TemperatureyByCore
         {
             get => _temperatureByCore;
-            private set => Set(ref _temperatureByCore, value);
+            internal set => Set(ref _temperatureByCore, value);
         }
     }
-
-    public partial class CpuViewmodel : AHardwareMonitorViewmodel
+    public partial class CpuVM : INotifyPropertyChanged
     {
         private int _coreCount;
         private int _processorCount;
@@ -83,28 +75,22 @@ namespace SimpleHardwareMonitor.viewmodel
         private ObservableCollection<float> _powerByCore = new ObservableCollection<float>();
         private float _temperature;
         private ObservableCollection<float> _temperatureByCore = new ObservableCollection<float>();
-        public CpuViewmodel(SynchronizationContext syncContext) : base(syncContext)
+        private readonly SynchronizationContext _syncContext;
+        public event PropertyChangedEventHandler PropertyChanged;
+        private CpuVM() { _syncContext = SynchronizationContext.Current; }
+        private bool Set<T>(ref T field, T newValue = default(T), [CallerMemberName] string propertyName = null)
         {
-
-        }
-
-        protected override bool UpdateData_Inner()
-        {
-            CoreCount = HardwareMonitor.Cpu.Data.CoreCount;
-            ProcessorCount = HardwareMonitor.Cpu.Data.ProcessorCount;
-            Use = HardwareMonitor.Cpu.Data.Use;
-            Voltage = HardwareMonitor.Cpu.Data.Voltage;
-            Power = HardwareMonitor.Cpu.Data.Power;
-            Temperature = HardwareMonitor.Cpu.Data.Temperature;
-
-            Action<List<float>, ObservableCollection<float>> updateDetailInfo = (List<float> src, ObservableCollection<float> dest) => {
-                dest.Clear();
-                foreach (var item in src)
-                    dest.Add(item);
-            };
-            updateDetailInfo(new List<float>(HardwareMonitor.Cpu.Data.UseByThreads), UseByThreads);
-
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+            {
+                return false;
+            }
+            field = newValue;
+            OnPropertyChanged(propertyName);
             return true;
+        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

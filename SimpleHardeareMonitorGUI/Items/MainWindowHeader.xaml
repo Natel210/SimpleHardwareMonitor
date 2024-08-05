@@ -9,7 +9,6 @@
              d:Width="{StaticResource MainWindowWidth}"
              d:Height="{StaticResource MainWindowHeaderHeight}"
              Style="{StaticResource GrayThemeUI.UserControl}">
-    
     <UserControl.Resources>
         <ImageBrush x:Key="logImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/PhosphorIcons-HardDrivesThin.png" Stretch="Uniform"/>
         <ImageBrush x:Key="lockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/BootstrapIcons-Lock.png" Stretch="Uniform"/>
@@ -28,11 +27,13 @@
             <Label Content="Monitor" FontSize="32"  Margin="5,0" Style="{StaticResource GrayThemeUI.Label}" Background="Transparent"/>
         </Border>
         <StackPanel Grid.Column="1" Orientation="Horizontal">
-            <Border IsEnabled="{DynamicResource SettingData.WindowTitleLocked}">
+            <Border x:Name="loggingButton">
                 <ToggleButton Background="Transparent" BorderThickness="0" 
                               Width="{StaticResource MainWindowHeaderHeight}"
                               Height="{StaticResource MainWindowHeaderHeight}"
-                              IsChecked="{DynamicResource SettingData.LogSave}">
+                              IsChecked="{Binding Logging, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              Checked="Logging_Checked"
+                              Unchecked="Logging_Unchecked">
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Setter Property="Template">
@@ -90,7 +91,6 @@
                 <ToggleButton x:Name="lockButton" Background="Transparent" BorderThickness="0" 
                               Width="{StaticResource MainWindowHeaderHeight}"
                               Height="{StaticResource MainWindowHeaderHeight}"
-                              IsChecked="{DynamicResource SettingData.WindowTitleLocked}"
                               Checked="Lock_Checked"
                               Unchecked="Lock_Unchecked">
                     <ToggleButton.Style>
@@ -157,7 +157,7 @@
                     </ToggleButton.Style>
                 </ToggleButton>
             </Border>
-            <Border IsEnabled="{DynamicResource SettingData.WindowTitleLocked}">
+            <Border x:Name="settingButton">
                 <Button Background="Transparent" Click="Setting_Click" BorderThickness="0" 
                     Width="{StaticResource MainWindowHeaderHeight}"
                     Height="{StaticResource MainWindowHeaderHeight}">
@@ -211,7 +211,7 @@
                     </Button.Style>
                 </Button>
             </Border>
-            <Border IsEnabled="{DynamicResource SettingData.WindowTitleLocked}">
+            <Border x:Name="minimizationButton">
                 <Button Background="Transparent" Click="Minimize_Click" BorderThickness="0" 
                         Width="{StaticResource MainWindowHeaderHeight}"
                         Height="{StaticResource MainWindowHeaderHeight}">
@@ -265,7 +265,7 @@
                     </Button.Style>
                 </Button>
             </Border>
-            <Border IsEnabled="{DynamicResource SettingData.WindowTitleLocked}">
+            <Border x:Name="exitButton">
                 <Button Background="Transparent" Click="Exit_Click" BorderThickness="0" 
                         Width="{StaticResource MainWindowHeaderHeight}"
                         Height="{StaticResource MainWindowHeaderHeight}">

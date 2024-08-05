@@ -12,17 +12,13 @@ namespace SimpleHardwareMonitorGUI.Common.Dashboard
         {
             InitializeComponent();
         }
-
         public static readonly DependencyProperty ContentNameProperty =
             DependencyProperty.Register("ContentName", typeof(object), typeof(Dashboard), new PropertyMetadata(null));
-
         public object ContentName
         {
             get { return GetValue(ContentNameProperty); }
             set { SetValue(ContentNameProperty, value); }
         }
-
-
         public static readonly DependencyProperty Header1Property =
             DependencyProperty.Register("Header1", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
         public string Header1
@@ -51,9 +47,8 @@ namespace SimpleHardwareMonitorGUI.Common.Dashboard
             get { return (string)GetValue(Symbols1Property); }
             set { SetValue(Symbols1Property, value); }
         }
-
         public static readonly DependencyProperty Header2Property =
-    DependencyProperty.Register("Header2", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
+            DependencyProperty.Register("Header2", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
         public string Header2
         {
             get { return (string)GetValue(Header2Property); }
@@ -80,7 +75,6 @@ namespace SimpleHardwareMonitorGUI.Common.Dashboard
             get { return (string)GetValue(Symbols2Property); }
             set { SetValue(Symbols2Property, value); }
         }
-
         public static readonly DependencyProperty Header3Property =
             DependencyProperty.Register("Header3", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
         public string Header3

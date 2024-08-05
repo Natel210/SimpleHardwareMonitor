@@ -12,19 +12,23 @@
         Width="{StaticResource MainWindowWidth}" MinWidth="{StaticResource MainWindowWidth}" MaxWidth="{StaticResource MainWindowWidth}"
         ResizeMode="NoResize"
         Closed="Window_Closed" WindowStyle="None">
+    <Window.DataContext>
+        <local:MainWindowViewmodel/>
+    </Window.DataContext>
     <StackPanel>
         <items:MainWindowHeader Grid.Row="0" Height="{StaticResource MainWindowHeaderHeight}"
-                                />
+                                Logging="{Binding LoggingEnabled, Mode=TwoWay}"/>
         <dashboard:Dashboard Grid.Row="1" Margin="5"
                      BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
-                     Header1="Used" Value1="{Binding Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
-                     Header2="Temperature" Value2="{Binding Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
-                     Header3="Power" Value3="{Binding Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
+                     Header1="Used" Value1="{Binding HW.Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
+                     Header2="Temperature" Value2="{Binding HW.Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
+                     Header3="Power" Value3="{Binding HW.Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
             <dashboard:Dashboard.ContentName>
                 <Border Width="250">
                     <TextBlock Text="CPU" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
             </dashboard:Dashboard.ContentName>
         </dashboard:Dashboard>
+        <Button Content="123" Click="Button_Click"/>
     </StackPanel>
 </Window>

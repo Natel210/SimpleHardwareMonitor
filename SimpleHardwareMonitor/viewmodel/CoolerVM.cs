@@ -1,32 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using SimpleHardwareMonitor.@base;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace SimpleHardwareMonitor.@base
+namespace SimpleHardwareMonitor.viewmodel
 {
-    public abstract class AViewModelBase : INotifyPropertyChanged
+    public partial class CoolerVM : INotifyPropertyChanged
     {
-        protected readonly SynchronizationContext _syncContext;
-        protected AViewModelBase(SynchronizationContext syncContext)
-        {
-            _syncContext = syncContext ?? SynchronizationContext.Current;
-        }
+        public static CoolerVM instance = new CoolerVM();
+    }
 
+    public partial class CoolerVM : INotifyPropertyChanged
+    {
+        private readonly SynchronizationContext _syncContext;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected bool Set<T>(ref T field, T newValue = default(T), [CallerMemberName] string propertyName = null)
+        private CoolerVM() { _syncContext = SynchronizationContext.Current; }
+        private bool Set<T>(ref T field, T newValue = default(T), [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, newValue))
             {
                 return false;
             }
-
             field = newValue;
             OnPropertyChanged(propertyName);
             return true;
         }
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

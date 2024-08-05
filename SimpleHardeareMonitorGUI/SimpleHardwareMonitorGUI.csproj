@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="log\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="resource\BootstrapIcons-Lock.png" />
     <Resource Include="resource\BootstrapIcons-Unlock.png" />
     <Resource Include="resource\PhosphorIcons-GearSixThin.png" />

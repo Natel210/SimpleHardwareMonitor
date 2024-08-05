@@ -24,12 +24,17 @@ namespace SimpleHardwareMonitorGUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new HardwareMonitorViewmodel(SynchronizationContext.Current);
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             //HardwareMonitor.Release();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var a = DataContext as MainWindowViewmodel;
+            a.LoggingEnabled = !a.LoggingEnabled;
         }
     }
 }

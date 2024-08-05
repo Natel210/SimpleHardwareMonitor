@@ -3,35 +3,46 @@ using LibreHardwareMonitor.Hardware;
 using SimpleHardwareMonitor.monitor;
 using SimpleHardwareMonitor.@base;
 using SimpleHardwareMonitor.data;
+using System;
+using System.Threading.Tasks;
 
 namespace SimpleHardwareMonitor
 {
-    static public partial class HardwareMonitor
+    public static partial class HardwareMonitor
     {
-        public static AHardwareMonitor<MotherboardData> Motherboard { get; private set; } = null;
-        public static AHardwareMonitor<SuperIOData> SuperIO { get; private set; } = null;
-        public static AHardwareMonitor<CpuData> Cpu { get; private set; } = null;
-        public static AHardwareMonitor<MemoryData> Memory { get; private set; } = null;
-        public static AHardwareMonitor<GpuNvidiaData> Gpu_Nvidia { get; private set; } = null;
-        public static AHardwareMonitor<GpuAmdData> Gpu_Amd { get; private set; } = null;
-        public static AHardwareMonitor<GpuIntelData> Gpu_Intel { get; private set; } = null;
-        public static AHardwareMonitor<StorageData> Storage { get; private set; } = null;
-        public static AHardwareMonitor<NetworkData> Network { get; private set; } = null;
-        public static AHardwareMonitor<CoolerData> Cooler { get; private set; } = null;
-        public static AHardwareMonitor<EmbeddedControllerData> EmbeddedController { get; private set; } = null;
-        public static AHardwareMonitor<PsuData> Psu { get; private set; } = null;
-        //public static AHardwareMonitor<BatteryData> Battery { get; private set; } = null;
-        /// <summary>
-        /// ms
-        /// </summary>
-        public static int UpdateInterval { get; set; } = 1000;
-        public static bool Runing { get; private set; }
-
+        private static bool _runing = false;
+        public static bool Runing
+        {
+            get => _runing;
+            private set
+            {
+                _runing = value;
+                HardwareMonitorVM.instance.Runing = value;
+            }
+        }
+        internal static int _updateInterval = 1000;
+        internal static void SetUpdateInterval(int updateInterval) { _updateInterval = updateInterval; }
+        public static int UpdateInterval { get => _updateInterval; set => HardwareMonitorVM.instance.UpdateInterval = value; }
+        public static MotherboardData Motherboard { get => _motherboard.Data; }
+        public static SuperIOData SuperIO { get => _superIO.Data; }
+        public static CpuData Cpu { get => _cpu.Data; }
+        public static MemoryData Memory { get => _memory.Data; }
+        public static GpuNvidiaData GpuNvidia { get => _gpu_Nvidia.Data; }
+        public static GpuAmdData GpuAmd { get => _gpu_Amd.Data; }
+        public static GpuIntelData GpuIntel { get => _gpu_Intel.Data; }
+        public static StorageData Storage { get => _storage.Data; }
+        public static NetworkData Network { get => _network.Data; }
+        public static CoolerData Cooler { get => _cooler.Data; }
+        public static EmbeddedControllerData EmbeddedController { get => _embeddedController.Data; }
+        public static PsuData Psu { get => _psu.Data; }
+        public static BatteryData Battery { get => _battery.Data; }
         /// <summary>
         /// Initialized.
         /// </summary>
         public static void Initialized()
         {
+            if (Runing is true)
+                return;
             computer.IsCpuEnabled = true;
             computer.IsMotherboardEnabled = true;
             computer.IsMemoryEnabled = true;
@@ -42,200 +53,175 @@ namespace SimpleHardwareMonitor
             computer.IsPsuEnabled = true;
             //computer.IsBatteryEnabled = true; // unable
             computer.Open();
+
             foreach (var hardware in computer.Hardware)
-            {
-                switch (hardware.HardwareType)
-                {
-                    case HardwareType.Motherboard:
-                        if (Motherboard != null)
-                        {
-                            Motherboard.Dispose();
-                            Motherboard = null;
-                        }
-                        Motherboard = new MotherboardMonitor(hardware);
-                        break;
-                    case HardwareType.SuperIO:
-                        if (SuperIO != null)
-                        {
-                            SuperIO.Dispose();
-                            SuperIO = null;
-                        }
-                        SuperIO = new SuperIOMonitor(hardware);
-                        break;
-                    case HardwareType.Cpu:
-                        if (Cpu != null)
-                        {
-                            Cpu.Dispose();
-                            Cpu = null;
-                        }
-                        Cpu = new CpuMonitor(hardware);
-                        break;
-                    case HardwareType.Memory:
-                        if (Memory != null)
-                        {
-                            Memory.Dispose();
-                            Memory = null;
-                        }
-                        Memory = new MemoryMonitor(hardware);
-                        break;
-                    case HardwareType.GpuNvidia:
-                        if (Gpu_Nvidia != null)
-                        {
-                            Gpu_Nvidia.Dispose();
-                            Gpu_Nvidia = null;
-                        }
-                        Gpu_Nvidia = new GpuNvidiaMonitor(hardware);
-                        break;
-                    case HardwareType.GpuAmd:
-                        if (Gpu_Amd != null)
-                        {
-                            Gpu_Amd.Dispose();
-                            Gpu_Amd = null;
-                        }
-                        Gpu_Amd = new GpuAmdMonitor(hardware);
-                        break;
-                    case HardwareType.GpuIntel:
-                        if (Gpu_Intel != null)
-                        {
-                            Gpu_Intel.Dispose();
-                            Gpu_Intel = null;
-                        }
-                        Gpu_Intel = new GpuIntelMonitor(hardware);
-                        break;
-                    case HardwareType.Storage:
-                        if (Storage != null)
-                        {
-                            Storage.Dispose();
-                            Storage = null;
-                        }
-                        Storage = new StorageMonitor(hardware);
-                        break;
-                    case HardwareType.Network:
-                        if (Network != null)
-                        {
-                            Network.Dispose();
-                            Network = null;
-                        }
-                        Network = new NetworkMonitor(hardware);
-                        break;
-                    case HardwareType.Cooler:
-                        if (Cooler != null)
-                        {
-                            Cooler.Dispose();
-                            Cooler = null;
-                        }
-                        Cooler = new CoolerMonitor(hardware);
-                        break;
-                    case HardwareType.EmbeddedController:
-                        if (EmbeddedController != null)
-                        {
-                            EmbeddedController.Dispose();
-                            EmbeddedController = null;
-                        }
-                        EmbeddedController = new EmbeddedControllerMonitor(hardware);
-                        break;
-                    case HardwareType.Psu:
-                        if (Psu != null)
-                        {
-                            Psu.Dispose();
-                            Psu = null;
-                        }
-                        Psu = new PsuMonitor(hardware);
-                        break;
-                    //case HardwareType.Battery: // unable
-                    //    if (Battery != null)
-                    //    {
-                    //        Battery.Dispose();
-                    //        Battery = null;
-                    //    }
-                    //    Battery = new BatteryMonitor(hardware);
-                    //    break;
-                    default:
-                        break;
-                }
-            }
+                CheckCreateHardware(hardware);
             Runing = true;
         }
+
         /// <summary>
         /// Release.
         /// </summary>
-        static public void Release()
+        public static void Release()
         {
+            if (Runing is false)
+                return;
             Runing = false;
-            if (Motherboard != null)
-            {
-                Motherboard.Dispose();
-                Motherboard = null;
-            }
-            if (SuperIO != null)
-            {
-                SuperIO.Dispose();
-                SuperIO = null;
-            }
-            if (Cpu != null)
-            {
-                Cpu.Dispose();
-                Cpu = null;
-            }
-            if (Memory != null)
-            {
-                Memory.Dispose();
-                Memory = null;
-            }
-            if (Gpu_Nvidia != null)
-            {
-                Gpu_Nvidia.Dispose();
-                Gpu_Nvidia = null;
-            }
-            if (Gpu_Amd != null)
-            {
-                Gpu_Amd.Dispose();
-                Gpu_Amd = null;
-            }
-            if (Gpu_Intel != null)
-            {
-                Gpu_Intel.Dispose();
-                Gpu_Intel = null;
-            }
-            if (Storage != null)
-            {
-                Storage.Dispose();
-                Storage = null;
-            }
-            if (Network != null)
-            {
-                Network.Dispose();
-                Network = null;
-            }
-            if (Cooler != null)
-            {
-                Cooler.Dispose();
-                Cooler = null;
-            }
-            if (EmbeddedController != null)
-            {
-                EmbeddedController.Dispose();
-                EmbeddedController = null;
-            }
-            if (Psu != null)
-            {
-                Psu.Dispose();
-                Psu = null;
-            }
-            //if (Battery != null)
-            //{
-            //    Battery.Dispose();
-            //    Battery = null;
-            //}
+            CheckReleaseHardware(_motherboard);
+            CheckReleaseHardware(_superIO);
+            CheckReleaseHardware(_cpu);
+            CheckReleaseHardware(_memory);
+            CheckReleaseHardware(_gpu_Nvidia);
+            CheckReleaseHardware(_gpu_Amd);
+            CheckReleaseHardware(_gpu_Intel);
+            CheckReleaseHardware(_storage);
+            CheckReleaseHardware(_network);
+            CheckReleaseHardware(_cooler);
+            CheckReleaseHardware(_embeddedController);
+            CheckReleaseHardware(_psu);
+            CheckReleaseHardware(_battery);
             computer.Close();
         }
     }
 
-    static public partial class HardwareMonitor
+    public static partial class HardwareMonitor
     {
         /// <summary>
         /// LibreHardwareMonitor maint.
         /// </summary>
         private static Computer computer = new Computer();
+        private static AHardwareMonitor<MotherboardData> _motherboard = null;
+        private static AHardwareMonitor<SuperIOData> _superIO = null;
+        private static AHardwareMonitor<CpuData> _cpu = null;
+        private static AHardwareMonitor<MemoryData> _memory = null;
+        private static AHardwareMonitor<GpuNvidiaData> _gpu_Nvidia = null;
+        private static AHardwareMonitor<GpuAmdData> _gpu_Amd = null;
+        private static AHardwareMonitor<GpuIntelData> _gpu_Intel = null;
+        private static AHardwareMonitor<StorageData> _storage = null;
+        private static AHardwareMonitor<NetworkData> _network = null;
+        private static AHardwareMonitor<CoolerData> _cooler = null;
+        private static AHardwareMonitor<EmbeddedControllerData> _embeddedController = null;
+        private static AHardwareMonitor<PsuData> _psu = null;
+        private static AHardwareMonitor<BatteryData> _battery = null;
+        /// <summary>
+        /// task instance.
+        /// </summary>
+        static private Task _updateTask = null;
+        /// <summary>
+        /// to cancel an asynchronous operation.
+        /// </summary>
+        static private CancellationTokenSource _cancellationTokenSource = null;
+        static HardwareMonitor()
+        {
+            Initialized();
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = _cancellationTokenSource.Token;
+            _updateTask = Task.Run(async () => await UpdateHardwareAsync(cancellationToken), cancellationToken);
+        }
+        private static async Task UpdateHardwareAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+
+                    UpdateHardware(_motherboard);
+                    UpdateHardware(_superIO);
+                    UpdateHardware(_cpu);
+                    UpdateHardware(_memory);
+                    UpdateHardware(_gpu_Nvidia);
+                    UpdateHardware(_gpu_Amd);
+                    UpdateHardware(_gpu_Intel);
+                    UpdateHardware(_storage);
+                    UpdateHardware(_network);
+                    UpdateHardware(_cooler);
+                    UpdateHardware(_embeddedController);
+                    UpdateHardware(_psu);
+                    UpdateHardware(_battery);
+                    await Task.Delay(UpdateInterval);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // task was canceled, no need to handle this as an error.
+            }
+            catch (Exception ex)
+            {
+                // rethrow the exception to be handled by the caller.
+                throw new Exception($"Exception occurred during update: {ex.Message}", ex);
+            }
+        }
+        private static void CheckCreateHardware<data, T>(ref AHardwareMonitor<data> oldItem, T newItem)
+            where data : struct
+            where T : AHardwareMonitor<data>
+        {
+            if (oldItem != null)
+            {
+                oldItem.Dispose();
+                oldItem = null;
+            }
+            oldItem = newItem;
+        }
+        private static void CheckCreateHardware(IHardware hardware)
+        {
+            switch (hardware.HardwareType)
+            {
+                case HardwareType.Motherboard:
+                    CheckCreateHardware(ref _motherboard, new MotherboardMonitor(hardware));
+                    break;
+                case HardwareType.SuperIO:
+                    CheckCreateHardware(ref _superIO, new SuperIOMonitor(hardware));
+                    break;
+                case HardwareType.Cpu:
+                    CheckCreateHardware(ref _cpu, new CpuMonitor(hardware));
+                    break;
+                case HardwareType.Memory:
+                    CheckCreateHardware(ref _memory, new MemoryMonitor(hardware));
+                    break;
+                case HardwareType.GpuNvidia:
+                    CheckCreateHardware(ref _gpu_Nvidia, new GpuNvidiaMonitor(hardware));
+                    break;
+                case HardwareType.GpuAmd:
+                    CheckCreateHardware(ref _gpu_Amd, new GpuAmdMonitor(hardware));
+                    break;
+                case HardwareType.GpuIntel:
+                    CheckCreateHardware(ref _gpu_Intel, new GpuIntelMonitor(hardware));
+                    break;
+                case HardwareType.Storage:
+                    CheckCreateHardware(ref _storage, new StorageMonitor(hardware));
+                    break;
+                case HardwareType.Network:
+                    CheckCreateHardware(ref _network, new NetworkMonitor(hardware));
+                    break;
+                case HardwareType.Cooler:
+                    CheckCreateHardware(ref _cooler, new CoolerMonitor(hardware));
+                    break;
+                case HardwareType.EmbeddedController:
+                    CheckCreateHardware(ref _embeddedController, new EmbeddedControllerMonitor(hardware));
+                    break;
+                case HardwareType.Psu:
+                    CheckCreateHardware(ref _psu, new PsuMonitor(hardware));
+                    break;
+                case HardwareType.Battery: // unable
+                    CheckCreateHardware(ref _battery, new BatteryMonitor(hardware));
+                    break;
+                default:
+                    break;
+            }
+        }
+        private static void UpdateHardware<data>(AHardwareMonitor<data> item) where data : struct
+        {
+            if (item is null)
+                return;
+            item.UpdateHardWare();
+        }
+        private static void CheckReleaseHardware<data>(AHardwareMonitor<data> item) where data : struct
+        {
+            if (item != null)
+            {
+                item.Dispose();
+                item = null;
+            }
+        }
     }
 }

@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System;
 using System.Management;
 using System.Threading;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography;
+using SimpleHardwareMonitor.viewmodel;
 
 namespace SimpleHardwareMonitor.monitor
 {
@@ -33,8 +36,10 @@ namespace SimpleHardwareMonitor.monitor
         protected sealed override void Update()
         {
             _data.Use = _usePerformance.NextValue();
+            CpuVM.instance.Use = _data.Use;
             for (int i = 0; i < Environment.ProcessorCount; ++i)
                 _data.UseByThreads[i] = _usePerformanceByThreads[i].NextValue();
+            CpuVM.instance.UseByThreads = listToObservableCollection(_data.UseByThreads);
             if (_hardware.HardwareType != HardwareType.Cpu)
                 return;
             _hardware.Update();
@@ -119,6 +124,13 @@ namespace SimpleHardwareMonitor.monitor
             }
             return coreCount;
         }
+        private ObservableCollection<float> listToObservableCollection(List<float> src)
+        {
+            ObservableCollection<float> temp = new ObservableCollection<float>();
+            foreach (var item in src)
+                temp.Add(item);
+            return temp;
+        }
     }
 
 
@@ -132,6 +144,7 @@ namespace SimpleHardwareMonitor.monitor
             {
                 case "cpu core":
                     _data.Voltage = sensor.Value.GetValueOrDefault(0.0f);
+                    CpuVM.instance.Voltage = _data.Voltage;
                     break;
                 default:
                     break;
@@ -155,6 +168,7 @@ namespace SimpleHardwareMonitor.monitor
             {
                 case "cpu package":
                     _data.Power = sensor.Value.GetValueOrDefault(0.0f);
+                    CpuVM.instance.Power = _data.Power;
                     break;
                 default:
                     break;
@@ -178,6 +192,7 @@ namespace SimpleHardwareMonitor.monitor
             {
                 case "cpu package":
                     _data.Temperature = sensor.Value.GetValueOrDefault(0.0f);
+                    CpuVM.instance.Temperature = _data.Temperature;
                     break;
                 default:
                     break;
