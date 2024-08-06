@@ -34,7 +34,8 @@ namespace SimpleHardwareMonitorGUI
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var a = DataContext as MainWindowViewmodel;
-            a.LoggingEnabled = !a.LoggingEnabled;
+            if (a is not null)
+                a.LoggingEnabled = !a.LoggingEnabled;
         }
     }
 }
