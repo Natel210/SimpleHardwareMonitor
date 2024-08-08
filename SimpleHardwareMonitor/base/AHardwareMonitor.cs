@@ -1,5 +1,6 @@
 ﻿using System;
 using LibreHardwareMonitor.Hardware;
+using SimpleHardwareMonitor.viewmodel;
 
 namespace SimpleHardwareMonitor.@base
 {
@@ -30,7 +31,71 @@ namespace SimpleHardwareMonitor.@base
         internal void UpdateHardWare()
         {
             _hardware.Update();
-            Update();
+            PrevUpdate();
+            foreach (var sensor in _hardware.Sensors)
+            {
+                switch (sensor.SensorType)
+                {
+                    case SensorType.Voltage:
+                        Update_Voltage(sensor);
+                        break;
+                    case SensorType.Current:
+                        Update_Current(sensor);
+                        break;
+                    case SensorType.Power:
+                        Update_Power(sensor);
+                        break;
+                    case SensorType.Clock:
+                        Update_Clock(sensor);
+                        break;
+                    case SensorType.Temperature:
+                        Update_Temperature(sensor);
+                        break;
+                    case SensorType.Load:
+                        Update_Load(sensor);
+                        break;
+                    case SensorType.Frequency:
+                        Update_Frequency(sensor);
+                        break;
+                    case SensorType.Fan:
+                        Update_Fan(sensor);
+                        break;
+                    case SensorType.Flow:
+                        Update_Flow(sensor);
+                        break;
+                    case SensorType.Control:
+                        Update_Control(sensor);
+                        break;
+                    case SensorType.Level:
+                        Update_Level(sensor);
+                        break;
+                    case SensorType.Factor:
+                        Update_Factor(sensor);
+                        break;
+                    case SensorType.Data:
+                        Update_Data(sensor);
+                        break;
+                    case SensorType.SmallData:
+                        Update_SmallData(sensor);
+                        break;
+                    case SensorType.Throughput:
+                        Update_Throughput(sensor);
+                        break;
+                    case SensorType.TimeSpan:
+                        Update_TimeSpan(sensor);
+                        break;
+                    case SensorType.Energy:
+                        Update_Energy(sensor);
+                        break;
+                    case SensorType.Noise:
+                        Update_Noise(sensor);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
         }
     }
 
@@ -50,13 +115,32 @@ namespace SimpleHardwareMonitor.@base
         /// </summary>
         protected virtual void Init() { }
         /// <summary>
-        /// update logic to insert values into the actual [T] structure.
-        /// </summary>
-        protected abstract void Update();
-        /// <summary>
         /// method that can be overridden in derived classes to clean up resources.
         /// </summary>
         protected virtual void Dispose(bool disposing) { }
+        /// <summary>
+        /// update logic to insert values ​​into the actual [T] structure.</br>
+        /// and define what needs to be updated in advance
+        /// </summary>
+        protected virtual void PrevUpdate() { }
+        protected virtual void Update_Voltage(ISensor sensor) { }
+        protected virtual void Update_Current(ISensor sensor) { }
+        protected virtual void Update_Power(ISensor sensor) { }
+        protected virtual void Update_Clock(ISensor sensor) { }
+        protected virtual void Update_Temperature(ISensor sensor) { }
+        protected virtual void Update_Load(ISensor sensor) { }
+        protected virtual void Update_Frequency(ISensor sensor) { }
+        protected virtual void Update_Fan(ISensor sensor) { }
+        protected virtual void Update_Flow(ISensor sensor) { }
+        protected virtual void Update_Control(ISensor sensor) { }
+        protected virtual void Update_Level(ISensor sensor) { }
+        protected virtual void Update_Factor(ISensor sensor) { }
+        protected virtual void Update_Data(ISensor sensor) { }
+        protected virtual void Update_SmallData(ISensor sensor) { }
+        protected virtual void Update_Throughput(ISensor sensor) { }
+        protected virtual void Update_TimeSpan(ISensor sensor) { }
+        protected virtual void Update_Energy(ISensor sensor) { }
+        protected virtual void Update_Noise(ISensor sensor) { }
     }
 
     // backend components.

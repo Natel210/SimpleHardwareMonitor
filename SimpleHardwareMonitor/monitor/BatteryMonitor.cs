@@ -7,7 +7,7 @@ namespace SimpleHardwareMonitor.monitor
     {
         public BatteryMonitor(IHardware hardware) : base(hardware) { }
 
-        protected sealed override void Update()
+        protected sealed override void PrevUpdate()
         {
 
         }

@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="SimpleHardwareMonitorGUI.Common.Header.WindowHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Common.Header"
+             mc:Ignorable="d" 
+             d:Width="{StaticResource WindowWidth}"
+             d:Height="{StaticResource WindowHeaderHeight}"
+             Style="{StaticResource GrayThemeUI.UserControl}">
+    <UserControl.Resources>
+        <ImageBrush x:Key="closeImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/Codicons-ChromeClose.png" Stretch="Uniform"/>
+        <ImageBrush x:Key="minimizeImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/Codicons-ChromeMinimize.png" Stretch="Uniform"/>
+        <ImageBrush x:Key="maximizeImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/Codicons-ChromeMaximize.png" Stretch="Uniform"/>
+        <ImageBrush x:Key="restoreImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/Codicons-ChromeRestore.png" Stretch="Uniform"/>
+        <!-- Minimize Button Style -->
+        <Style x:Key="MinimizeButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="minimizeBorder" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                <Grid Margin="0,25,0,0">
+                                    <Border x:Name="minimizeMask" Background="{TemplateBinding Foreground}" Width="30" Height="30" OpacityMask="{DynamicResource minimizeImage}"/>
+                                    <Border x:Name="minimizeOverlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Default}" Width="30" Height="30" OpacityMask="{DynamicResource minimizeImage}"/>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="minimizeOverlay" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="minimizeOverlay" Property="BorderBrush" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.MouseOver}"/>
+                                <Setter TargetName="minimizeOverlay" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.Background.MouseOver}"/>
+                                <Setter TargetName="minimizeOverlayMask" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.MouseOver}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="minimizeOverlay" Property="BorderBrush" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}"/>
+                                <Setter TargetName="minimizeOverlay" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.Background.Focus}"/>
+                                <Setter TargetName="minimizeOverlayMask" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Maximize/Restore Button Style -->
+        <Style x:Key="ToggleMaxRestoreButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="toggleMaxRestoreBorder" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                <Grid>
+                                    <Border x:Name="toggleMaxRestoreMask" Background="{TemplateBinding Foreground}" Width="30" Height="30" OpacityMask="{DynamicResource maximizeImage}"/>
+                                    <Border x:Name="toggleMaxRestoreOverlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Default}" Width="30" Height="30" OpacityMask="{DynamicResource maximizeImage}"/>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="toggleMaxRestoreOverlay" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="toggleMaxRestoreOverlay" Property="BorderBrush" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.MouseOver}"/>
+                                <Setter TargetName="toggleMaxRestoreOverlay" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.Background.MouseOver}"/>
+                                <Setter TargetName="toggleMaxRestoreOverlayMask" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.MouseOver}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="toggleMaxRestoreOverlay" Property="BorderBrush" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}"/>
+                                <Setter TargetName="toggleMaxRestoreOverlay" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.Background.Focus}"/>
+                                <Setter TargetName="toggleMaxRestoreOverlayMask" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Close Button Style -->
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="closeBorder" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                <Grid>
+                                    <Border x:Name="closeMask" Background="{TemplateBinding Foreground}" Width="30" Height="30" OpacityMask="{DynamicResource closeImage}"/>
+                                    <Border x:Name="closeOverlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Default}" Width="30" Height="30" OpacityMask="{DynamicResource closeImage}"/>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="closeOverlay" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="closeOverlay" Property="BorderBrush" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.MouseOver}"/>
+                                <Setter TargetName="closeOverlay" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.Background.MouseOver}"/>
+                                <Setter TargetName="closeOverlayMask" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.MouseOver}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="closeOverlay" Property="BorderBrush" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}"/>
+                                <Setter TargetName="closeOverlay" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.Background.Focus}"/>
+                                <Setter TargetName="closeOverlayMask" Property="Background" Value="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0">
+            <TextBlock x:Name="TitleTextBlock" d:Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue='Tilte'}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="40" Foreground="White"/>
+        </Border>
+        <Border Grid.Column="1">
+            <ContentControl x:Name="AddOnContent" Content="{Binding AddOnItem, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </Border>
+        <Border Grid.Column="2"
+                IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding ShowMinimize, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Button x:Name="MinimizeButton" Click="Minimize_Click" Style="{StaticResource MinimizeButtonStyle}"/>
+        </Border>
+        <Border Grid.Column="3"
+                IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding ShowToggleMaximizeRestore, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Button x:Name="ToggleMaxRestoreButton" Click="ToggleMaximizeRestore_Click" Style="{StaticResource ToggleMaxRestoreButtonStyle}"/>
+        </Border>
+        <Border Grid.Column="4"
+                IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding ShowClose, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Button x:Name="CloseButton" Click="Exit_Click" Style="{StaticResource CloseButtonStyle}"/>
+        </Border>
+    </Grid>
+</UserControl>

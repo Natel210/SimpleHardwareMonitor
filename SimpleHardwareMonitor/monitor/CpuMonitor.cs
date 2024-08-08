@@ -21,7 +21,7 @@ namespace SimpleHardwareMonitor.monitor
         {
             _data.CoreCount = GetPhysicalCoreCount();
             _data.ProcessorCount = Environment.ProcessorCount;
-            _usePerformance = new PerformanceCounter("Processor Information", "% Processor Utility", "0,_Total");
+            _usePerformance = new PerformanceCounter("Processor Information", "% Processor Utility", "0,_Total", true);
             _data.UseByThreads = new List<float>();
             _usePerformanceByThreads = new List<PerformanceCounter>();
             for (int i = 0; i < Environment.ProcessorCount; ++i)
@@ -33,7 +33,7 @@ namespace SimpleHardwareMonitor.monitor
             _data.PowerByCore = new List<float>();
             _data.TemperatureByCore = new List<float>();
         }
-        protected sealed override void Update()
+        protected sealed override void PrevUpdate()
         {
             _data.Use = _usePerformance.NextValue();
             CpuVM.instance.Use = _data.Use;
@@ -42,69 +42,6 @@ namespace SimpleHardwareMonitor.monitor
             CpuVM.instance.UseByThreads = listToObservableCollection(_data.UseByThreads);
             if (_hardware.HardwareType != HardwareType.Cpu)
                 return;
-            _hardware.Update();
-            foreach (var sensor in _hardware.Sensors)
-            {
-                switch (sensor.SensorType)
-                {
-                    case SensorType.Voltage:
-                        Update_Voltage(sensor);
-                        break;
-                    case SensorType.Current:
-                        Update_Current(sensor);
-                        break;
-                    case SensorType.Power:
-                        Update_Power(sensor);
-                        break;
-                    case SensorType.Clock:
-                        Update_Clock(sensor);
-                        break;
-                    case SensorType.Temperature:
-                        Update_Temperature(sensor);
-                        break;
-                    case SensorType.Load:
-                        Update_Load(sensor);
-                        break;
-                    case SensorType.Frequency:
-                        Update_Frequency(sensor);
-                        break;
-                    case SensorType.Fan:
-                        Update_Fan(sensor);
-                        break;
-                    case SensorType.Flow:
-                        Update_Flow(sensor);
-                        break;
-                    case SensorType.Control:
-                        Update_Control(sensor);
-                        break;
-                    case SensorType.Level:
-                        Update_Level(sensor);
-                        break;
-                    case SensorType.Factor:
-                        Update_Factor(sensor);
-                        break;
-                    case SensorType.Data:
-                        Update_Data(sensor);
-                        break;
-                    case SensorType.SmallData:
-                        Update_SmallData(sensor);
-                        break;
-                    case SensorType.Throughput:
-                        Update_Throughput(sensor);
-                        break;
-                    case SensorType.TimeSpan:
-                        Update_TimeSpan(sensor);
-                        break;
-                    case SensorType.Energy:
-                        Update_Energy(sensor);
-                        break;
-                    case SensorType.Noise:
-                        Update_Noise(sensor);
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
         private int GetPhysicalCoreCount()
@@ -136,7 +73,7 @@ namespace SimpleHardwareMonitor.monitor
 
     internal partial class CpuMonitor : AHardwareMonitor<CpuData>
     {
-        public void Update_Voltage(ISensor sensor)
+        protected override sealed void Update_Voltage(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Voltage)
                 return;
@@ -150,7 +87,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Current(ISensor sensor)
+        protected override sealed void Update_Current(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Current)
                 return;
@@ -160,7 +97,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Power(ISensor sensor)
+        protected override sealed void Update_Power(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Power)
                 return;
@@ -174,7 +111,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Clock(ISensor sensor)
+        protected override sealed void Update_Clock(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Clock)
                 return;
@@ -184,7 +121,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Temperature(ISensor sensor)
+        protected override sealed void Update_Temperature(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Temperature)
                 return;
@@ -198,7 +135,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Load(ISensor sensor)
+        protected override sealed void Update_Load(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Load)
                 return;
@@ -208,7 +145,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Frequency(ISensor sensor)
+        protected override sealed void Update_Frequency(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Frequency)
                 return;
@@ -218,7 +155,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Fan(ISensor sensor)
+        protected override sealed void Update_Fan(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Fan)
                 return;
@@ -228,7 +165,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Flow(ISensor sensor)
+        protected override sealed void Update_Flow(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Flow)
                 return;
@@ -238,7 +175,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Control(ISensor sensor)
+        protected override sealed void Update_Control(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Control)
                 return;
@@ -248,7 +185,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Level(ISensor sensor)
+        protected override sealed void Update_Level(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Level)
                 return;
@@ -258,7 +195,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Factor(ISensor sensor)
+        protected override sealed void Update_Factor(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Factor)
                 return;
@@ -268,7 +205,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Data(ISensor sensor)
+        protected override sealed void Update_Data(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Data)
                 return;
@@ -278,7 +215,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_SmallData(ISensor sensor)
+        protected override sealed void Update_SmallData(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.SmallData)
                 return;
@@ -288,7 +225,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Throughput(ISensor sensor)
+        protected override sealed void Update_Throughput(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Throughput)
                 return;
@@ -298,7 +235,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_TimeSpan(ISensor sensor)
+        protected override sealed void Update_TimeSpan(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.TimeSpan)
                 return;
@@ -308,7 +245,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Energy(ISensor sensor)
+        protected override sealed void Update_Energy(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Energy)
                 return;
@@ -318,7 +255,7 @@ namespace SimpleHardwareMonitor.monitor
                     break;
             }
         }
-        public void Update_Noise(ISensor sensor)
+        protected override sealed void Update_Noise(ISensor sensor)
         {
             if (sensor is null || sensor.SensorType != SensorType.Noise)
                 return;

@@ -8,7 +8,7 @@ namespace SimpleHardwareMonitor.monitor
     {
         public CoolerMonitor(IHardware hardware) : base(hardware) { }
 
-        protected sealed override void Update()
+        protected sealed override void PrevUpdate()
         {
 
         }

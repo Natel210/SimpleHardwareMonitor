@@ -16,7 +16,40 @@ namespace SimpleHardwareMonitor.viewmodel
         public float Use
         {
             get => _use;
-            private set => Set(ref _use, value);
+            internal set => Set(ref _use, value);
+        }
+        private float _value;
+        /// <summary>
+        /// actually displayed in TaskMng.
+        /// </summary>
+        public float Value
+        {
+            get => _value;
+            internal set => Set(ref _value, value);
+        }
+        private float _available;
+        public float Available
+        {
+            get => _available;
+            internal set => Set(ref _available, value);
+        }
+        private float _virtualUse;
+        public float VirtualUse
+        {
+            get => _virtualUse;
+            internal set => Set(ref _virtualUse, value);
+        }
+        private float _virtualValue;
+        public float VirtualValue
+        {
+            get => _virtualValue;
+            internal set => Set(ref _virtualValue, value);
+        }
+        private float _virtualAvailable;
+        public float VirtualAvailable
+        {
+            get => _virtualAvailable;
+            internal set => Set(ref _virtualAvailable, value);
         }
     }
 

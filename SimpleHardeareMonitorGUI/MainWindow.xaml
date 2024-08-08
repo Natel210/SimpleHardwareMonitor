@@ -9,26 +9,51 @@
         mc:Ignorable="d"
         FontSize="32"
         Style="{StaticResource GrayThemeUI.Window}"
-        Width="{StaticResource MainWindowWidth}" MinWidth="{StaticResource MainWindowWidth}" MaxWidth="{StaticResource MainWindowWidth}"
-        ResizeMode="NoResize"
+        Width="{StaticResource WindowWidth}" MinWidth="{StaticResource WindowWidth}" MaxWidth="{StaticResource WindowWidth}"
+        SizeToContent="Height"
+        ResizeMode="CanResize"
         Closed="Window_Closed" WindowStyle="None">
     <Window.DataContext>
         <local:MainWindowViewmodel/>
     </Window.DataContext>
     <StackPanel>
-        <items:MainWindowHeader Grid.Row="0" Height="{StaticResource MainWindowHeaderHeight}"
-                                Logging="{Binding LoggingEnabled, Mode=TwoWay}"/>
-        <dashboard:Dashboard Grid.Row="1" Margin="5"
-                     BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
-                     Header1="Used" Value1="{Binding HW.Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
-                     Header2="Temperature" Value2="{Binding HW.Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
-                     Header3="Power" Value3="{Binding HW.Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
-            <dashboard:Dashboard.ContentName>
-                <Border Width="250">
-                    <TextBlock Text="CPU" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Border>
-            </dashboard:Dashboard.ContentName>
-        </dashboard:Dashboard>
-        <Button Content="123" Click="Button_Click"/>
+        <items:MainWindowHeader BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}"
+                                BorderThickness="1"
+                                MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
+                                MainWindowLogging="{Binding LoggingEnabled, Mode=TwoWay}"/>
+        <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <dashboard:Dashboard Grid.Row="0" Margin="5,5,5,0"
+                                 BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
+                                 Header1="Used" Value1="{Binding HW.Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
+                                 Header2="Temperature" Value2="{Binding HW.Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
+                                 Header3="Power" Value3="{Binding HW.Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
+                    <dashboard:Dashboard.ContentName>
+                        <Border Width="250">
+                            <Button Content="CPU" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
+                        </Border>
+                    </dashboard:Dashboard.ContentName>
+                </dashboard:Dashboard>
+                <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0"
+                                 BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
+                                 Header1="Used Percent" Value1="{Binding HW.Memory.Value, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
+                                 Header2="Used" Value2="{Binding HW.Memory.Use, StringFormat={}{0:F2}}" Symbols2="GB" SymbolsUse2="True"
+                                 Header3="" Value3="" Symbols3="" SymbolsUse3="False">
+                    <dashboard:Dashboard.ContentName>
+                        <Border Width="250">
+                            <Button Content="Memory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
+                        </Border>
+                    </dashboard:Dashboard.ContentName>
+                </dashboard:Dashboard>
+                <Button Grid.Row="2" Content="123" Click="Button_Click"/>
+            </Grid>
+        </Border>
     </StackPanel>
 </Window>

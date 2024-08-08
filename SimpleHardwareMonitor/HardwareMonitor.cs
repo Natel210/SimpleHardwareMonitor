@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿//#define USE_BATTERY
+
+using System.Threading;
 using LibreHardwareMonitor.Hardware;
 using SimpleHardwareMonitor.monitor;
 using SimpleHardwareMonitor.@base;
@@ -20,7 +22,7 @@ namespace SimpleHardwareMonitor
                 HardwareMonitorVM.instance.Runing = value;
             }
         }
-        internal static int _updateInterval = 1000;
+        internal static int _updateInterval = 50;
         internal static void SetUpdateInterval(int updateInterval) { _updateInterval = updateInterval; }
         public static int UpdateInterval { get => _updateInterval; set => HardwareMonitorVM.instance.UpdateInterval = value; }
         public static MotherboardData Motherboard { get => _motherboard.Data; }
@@ -51,7 +53,9 @@ namespace SimpleHardwareMonitor
             computer.IsNetworkEnabled = true;
             computer.IsControllerEnabled = true;
             computer.IsPsuEnabled = true;
-            //computer.IsBatteryEnabled = true; // unable
+#if USE_BATTERY
+            computer.IsBatteryEnabled = true; // unable
+#endif
             computer.Open();
 
             foreach (var hardware in computer.Hardware)
@@ -67,6 +71,7 @@ namespace SimpleHardwareMonitor
             if (Runing is false)
                 return;
             Runing = false;
+
             CheckReleaseHardware(_motherboard);
             CheckReleaseHardware(_superIO);
             CheckReleaseHardware(_cpu);
@@ -80,6 +85,18 @@ namespace SimpleHardwareMonitor
             CheckReleaseHardware(_embeddedController);
             CheckReleaseHardware(_psu);
             CheckReleaseHardware(_battery);
+
+            _cancellationTokenSource.Cancel(); // Cancel the running task
+            if (_updateTask.Wait(TimeSpan.FromSeconds(5)) is false) // Wait for the task to complete with timeout
+            {
+                // If the task did not complete in the given time, forcefully dispose the cancellation token source
+                _cancellationTokenSource.Dispose();
+#if DEBUG
+                throw new Exception("Update task did not complete in time and was forcefully terminated.");
+#endif
+            }
+            else
+                _cancellationTokenSource.Dispose();
             computer.Close();
         }
     }

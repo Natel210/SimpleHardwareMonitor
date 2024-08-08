@@ -7,7 +7,7 @@ namespace SimpleHardwareMonitor.monitor
     {
         public EmbeddedControllerMonitor(IHardware hardware) : base(hardware) { }
 
-        protected sealed override void Update()
+        protected sealed override void PrevUpdate()
         {
 
         }
