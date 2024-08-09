@@ -9,11 +9,11 @@
         Title="SettingWindow"
         WindowStyle="None"
         Width="{StaticResource WindowWidth}" MinWidth="{StaticResource WindowWidth}" MaxWidth="{StaticResource WindowWidth}"
-        SizeToContent="Height"
-        ResizeMode="CanResize"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
         Style="{StaticResource GrayThemeUI.Window}">
     <StackPanel Orientation="Vertical">
-        <header:WindowHeader Title="타이틀!!!!" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Height="{StaticResource WindowHeaderHeight}"/>
+        <header:WindowHeader Title="Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Height="{StaticResource WindowHeaderHeight}" Margin="0,0,0,5"/>
         <TextBlock Text="1123"/>
         <Button Content="123"/>
     </StackPanel>

@@ -13,7 +13,7 @@
 
             </ResourceDictionary.MergedDictionaries>
             <sys:Double x:Key="WindowWidth">800.0</sys:Double>
-            <sys:Double x:Key="WindowHeaderHeight">50.0</sys:Double>
+            <sys:Double x:Key="WindowHeaderHeight">40.0</sys:Double>
             
             
             <!--Header(1) Dashboard(1) DashboardSpace(1)-->

@@ -7,7 +7,7 @@
              xmlns:header="clr-namespace:SimpleHardwareMonitorGUI.Common.Header"
              mc:Ignorable="d"
              d:Width="{StaticResource WindowWidth}"
-             d:Height="Auto"
+             d:Height="{StaticResource WindowHeaderHeight}"
              Style="{StaticResource GrayThemeUI.UserControl}">
     <UserControl.Resources>
         <ImageBrush x:Key="logImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/PhosphorIcons-HardDrivesThin.png" Stretch="Uniform"/>
@@ -25,8 +25,8 @@
                         <Grid>
                             <Border Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                                 <Grid>
-                                    <Border x:Name="Mask" Background="#9CB45300" Width="35" Height="35" OpacityMask="{DynamicResource logImage}"/>
-                                    <Border x:Name="overlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Default}" Width="35" Height="35" OpacityMask="{DynamicResource logImage}"/>
+                                    <Border x:Name="Mask" Background="#9CB45300" Width="30" Height="30" OpacityMask="{DynamicResource logImage}"/>
+                                    <Border x:Name="overlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Default}" Width="30" Height="30" OpacityMask="{DynamicResource logImage}"/>
                                 </Grid>
                             </Border>
                             <Border x:Name="overlay" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
@@ -62,8 +62,8 @@
                         <Grid>
                             <Border x:Name="border" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                                 <Grid>
-                                    <Border x:Name="Mask" Background="{TemplateBinding Foreground}" Width="35" Height="35" OpacityMask="{DynamicResource lockImage}"/>
-                                    <Border x:Name="overlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}" Width="35" Height="35" OpacityMask="{DynamicResource lockImage}"/>
+                                    <Border x:Name="Mask" Background="{TemplateBinding Foreground}" Width="30" Height="30" OpacityMask="{DynamicResource lockImage}"/>
+                                    <Border x:Name="overlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Focus}" Width="30" Height="30" OpacityMask="{DynamicResource lockImage}"/>
                                 </Grid>
                             </Border>
                             <Border x:Name="overlay" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>

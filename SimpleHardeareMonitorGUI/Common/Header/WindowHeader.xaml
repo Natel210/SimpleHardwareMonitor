@@ -24,7 +24,7 @@
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Border x:Name="minimizeBorder" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                                <Grid Margin="0,25,0,0">
+                                <Grid Margin="0,17,0,0">
                                     <Border x:Name="minimizeMask" Background="{TemplateBinding Foreground}" Width="30" Height="30" OpacityMask="{DynamicResource minimizeImage}"/>
                                     <Border x:Name="minimizeOverlayMask" Background="{DynamicResource GrayThemeUI.Overlay.BorderBrush.Default}" Width="30" Height="30" OpacityMask="{DynamicResource minimizeImage}"/>
                                 </Grid>
@@ -125,7 +125,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0">
-            <TextBlock x:Name="TitleTextBlock" d:Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue='Tilte'}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="40" Foreground="White"/>
+            <TextBlock x:Name="TitleTextBlock" d:Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue='Tilte'}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="24" VerticalAlignment="Center" Foreground="White"/>
         </Border>
         <Border Grid.Column="1">
             <ContentControl x:Name="AddOnContent" Content="{Binding AddOnItem, RelativeSource={RelativeSource AncestorType=UserControl}}"/>

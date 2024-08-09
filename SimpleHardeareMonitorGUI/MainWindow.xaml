@@ -10,8 +10,9 @@
         FontSize="32"
         Style="{StaticResource GrayThemeUI.Window}"
         Width="{StaticResource WindowWidth}" MinWidth="{StaticResource WindowWidth}" MaxWidth="{StaticResource WindowWidth}"
-        SizeToContent="Height"
-        ResizeMode="CanResize"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        Title="{Binding TitleName, Mode=TwoWay}"
         Closed="Window_Closed" WindowStyle="None">
     <Window.DataContext>
         <local:MainWindowViewmodel/>
@@ -52,7 +53,6 @@
                         </Border>
                     </dashboard:Dashboard.ContentName>
                 </dashboard:Dashboard>
-                <Button Grid.Row="2" Content="123" Click="Button_Click"/>
             </Grid>
         </Border>
     </StackPanel>
