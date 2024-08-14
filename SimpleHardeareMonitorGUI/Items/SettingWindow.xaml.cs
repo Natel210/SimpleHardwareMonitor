@@ -1,4 +1,4 @@
-﻿using SimpleHardwareMonitorGUI.Common.Enums;
+﻿using SimpleHardwareMonitorGUI.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;

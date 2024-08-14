@@ -31,7 +31,6 @@ namespace SimpleHardwareMonitorGUI
 
         ~MainWindowViewmodel()
         {
-            int a = 0;
         }
 
         private void RestartLoggingTimer()
@@ -42,7 +41,6 @@ namespace SimpleHardwareMonitorGUI
             DateTime nextTime = DateTime.Now;
             switch (LoggingInterval)
             {
-                case ELoggingInterval.ms100:
                 case ELoggingInterval.ms250:
                 case ELoggingInterval.ms500:
                 case ELoggingInterval.s1:

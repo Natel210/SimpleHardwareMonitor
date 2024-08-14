@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleHardwareMonitorGUI.Common.Enums
+namespace SimpleHardwareMonitorGUI.Logger
 {
     public enum ELoggingInterval
     {
-        ms100 = 100,
         ms250 = 250,
         ms500 = 500,
         s1 = 1000,

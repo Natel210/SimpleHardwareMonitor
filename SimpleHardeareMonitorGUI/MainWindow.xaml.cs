@@ -28,14 +28,9 @@ namespace SimpleHardwareMonitorGUI
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            //HardwareMonitor.Release();
+
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var a = DataContext as MainWindowViewmodel;
-            if (a is not null)
-                a.LoggingEnabled = !a.LoggingEnabled;
-        }
+
     }
 }
