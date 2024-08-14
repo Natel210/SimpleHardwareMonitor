@@ -19,7 +19,7 @@
     </Window.DataContext>
     <StackPanel>
         <items:MainWindowHeader BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}"
-                                BorderThickness="1"
+                                Height="{StaticResource WindowHeaderHeight}"
                                 MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
                                 MainWindowLogging="{Binding LoggingEnabled, Mode=TwoWay}"/>
         <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1,0">
@@ -41,7 +41,7 @@
                         </Border>
                     </dashboard:Dashboard.ContentName>
                 </dashboard:Dashboard>
-                <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0"
+                <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0" Visibility="Collapsed"
                                  BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
                                  Header1="Used Percent" Value1="{Binding HW.Memory.Value, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
                                  Header2="Used" Value2="{Binding HW.Memory.Use, StringFormat={}{0:F2}}" Symbols2="GB" SymbolsUse2="True"

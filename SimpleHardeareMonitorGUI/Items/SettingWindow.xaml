@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Items"
         xmlns:header="clr-namespace:SimpleHardwareMonitorGUI.Common.Header"
+        xmlns:enums="clr-namespace:SimpleHardwareMonitorGUI.Common.Enums"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="SettingWindow"
         WindowStyle="None"
@@ -12,9 +14,20 @@
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         Style="{StaticResource GrayThemeUI.Window}">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="ELoggingIntervalProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:ELoggingInterval"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <header:WindowHeader Title="Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Height="{StaticResource WindowHeaderHeight}" Margin="0,0,0,5"/>
+        <header:WindowHeader Title=" Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Height="{StaticResource WindowHeaderHeight}" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
         <TextBlock Text="1123"/>
         <Button Content="123"/>
+        <ComboBox SelectedItem="{Binding SettingWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}}"
+                  ItemsSource="{Binding Source={StaticResource ELoggingIntervalProvider}}"/>
+
+
     </StackPanel>
 </Window>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using SimpleHardwareMonitor;
 using SimpleHardwareMonitorGUI.Common;
+using SimpleHardwareMonitorGUI.Common.Enums;
+using SimpleLogger.UserProperties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,23 +13,59 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Collections;
+using Windows.Media.Miracast;
 
 namespace SimpleHardwareMonitorGUI
 {
     public partial class MainWindowViewmodel : AViewModelBase_None
     {
+
         public MainWindowViewmodel()
         {
             _hardwareMonitorViewmodel = HardwareMonitorVM.instance ?? throw new ArgumentNullException(nameof(HardwareMonitorVM.instance));
-            _cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = _cancellationTokenSource.Token;
-            ;
+            
+            SimpleLogger.Main.Builder.Create("logData", new LoggerProperties());
+            _loggingTimer = new Timer(SaveAsync, null, 0, (int)LoggingInterval);
+            RestartLoggingTimer();
+        }
 
+        ~MainWindowViewmodel()
+        {
+            int a = 0;
+        }
 
-            DateTime now = DateTime.Now;
-            DateTime nextMinute = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0).AddMinutes(1);
-            TimeSpan initialDelay = nextMinute - now;
-            _loggingTimer = new Timer(async _ => await Task.Run(() => SaveAsync()), null, initialDelay.Milliseconds, LoggingInterval);
+        private void RestartLoggingTimer()
+        {
+            TimeSpan currentInterval = TimeSpan.FromMilliseconds((double)LoggingInterval);
+            DateTime calDate = DateTime.Now;
+            TimeSpan waitTime;
+            DateTime nextTime = DateTime.Now;
+            switch (LoggingInterval)
+            {
+                case ELoggingInterval.ms100:
+                case ELoggingInterval.ms250:
+                case ELoggingInterval.ms500:
+                case ELoggingInterval.s1:
+                    nextTime = new DateTime(calDate.Year, calDate.Month, calDate.Day, calDate.Hour, calDate.Minute, calDate.Second, 0).AddSeconds(1);
+                    break;
+                case ELoggingInterval.s5:
+                case ELoggingInterval.s10:
+                case ELoggingInterval.s20:
+                case ELoggingInterval.s30:
+                case ELoggingInterval.m1:
+                    nextTime = new DateTime(calDate.Year, calDate.Month, calDate.Day, calDate.Hour, calDate.Minute, 0,0).AddMinutes(1);
+                    break;
+                case ELoggingInterval.m10:
+                case ELoggingInterval.m20:
+                case ELoggingInterval.m30:
+                case ELoggingInterval.h1:
+                    nextTime = new DateTime(calDate.Year, calDate.Month, calDate.Day, calDate.Hour, 0, 0, 0).AddHours(1);
+                    break;
+                default:
+                    break;
+            }
+            waitTime = nextTime - DateTime.Now;
+            _loggingTimer.Change(waitTime, currentInterval);
         }
 
         public HardwareMonitorVM HW
@@ -35,12 +73,13 @@ namespace SimpleHardwareMonitorGUI
             get => _hardwareMonitorViewmodel;
             set => Set(ref _hardwareMonitorViewmodel, value, nameof(HW));
         }
-        public int LoggingInterval
+        public ELoggingInterval LoggingInterval
         {
             get => _loggingInterval;
             set
             {
                 Set(ref _loggingInterval, value, nameof(LoggingInterval));
+                RestartLoggingTimer();
             }
         }
         public string TitleName
@@ -59,50 +98,27 @@ namespace SimpleHardwareMonitorGUI
 
 
 
-        private async Task SaveAsync()
+        private void SaveAsync(object? state)
         {
             if (!LoggingEnabled || !HardwareMonitor.Runing)
                 return;
-            try
-            {
-                var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = cancellationTokenSource.Token;
-                await Task.Run(async () =>
-                {
-                    try
-                    {
-                        var cutDateTime = DateTime.Now;
-                        DirectoryInfo rootDir = new DirectoryInfo(".//");
-                        DirectoryInfo saveDir = new DirectoryInfo(Path.Combine(rootDir.FullName, $"{cutDateTime:yyMMdd}\\"));
+            var logger = SimpleLogger.Main.Builder.Get("logData");
+            if (logger is null)
+                return;
 
-                        if (!saveDir.Exists)
-                            saveDir.Create();
+            var cutDateTime = DateTime.Now;
+            DirectoryInfo rootDir = new DirectoryInfo(".//");
+            DirectoryInfo saveDir = new DirectoryInfo(Path.Combine(rootDir.FullName, $"{cutDateTime:yyMMdd}\\"));
 
-                        FileInfo saveFile = new FileInfo(Path.Combine(saveDir.FullName, $"{cutDateTime.Hour:D2}H_Data.rawdata"));
+            LoggerProperties tempProperties = logger.Properties;
+            tempProperties.RootDirectory = new DirectoryInfo(Path.Combine(rootDir.FullName, $"{cutDateTime:yyMMdd}\\"));
+            tempProperties.FileName = $"{cutDateTime.Hour:D2}H_Data";
+            tempProperties.Extension = "rawdata";
+            logger.Properties = tempProperties;
 
-                        using (var fileStream = new FileStream(saveFile.FullName, saveFile.Exists ? FileMode.Append : FileMode.Create))
-                        using (var streamWriter = new StreamWriter(fileStream))
-                        {
-                            if (!saveFile.Exists)
-                            {
-                                // Write the header if the file does not exist
-                                var header = "Time,CPU USE,CPU TEMP,CPU POWER";
-                                await streamWriter.WriteLineAsync(header);
-                            }
+            logger.Add($"{cutDateTime:mm:ss:fff},{HW.Cpu.Use:000.0},{HW.Cpu.Temperature:000.0},{HW.Cpu.Power:000.0}");
+            logger.Write();
 
-                            string writeString = $"{cutDateTime:mm:ss:fff},{HW.Cpu.Use:000.0},{HW.Cpu.Temperature:000.0},{HW.Cpu.Power:000.0}";
-                            await streamWriter.WriteLineAsync(writeString);
-                        }
-                    }
-                    catch (Exception) { throw; }
-
-
-                }, cancellationToken);
-            }
-            catch (Exception /*ex*/)
-            {
-                //Console.WriteLine($"Error occurred: {ex.Message}");
-            }
         }
     }
 
@@ -111,10 +127,9 @@ namespace SimpleHardwareMonitorGUI
     {
         private HardwareMonitorVM _hardwareMonitorViewmodel;
         private string _titleName = "타이틀 !!!";
-        private int _loggingInterval = 1000;
+        private ELoggingInterval _loggingInterval = ELoggingInterval.s1;
         private bool _loggingEnabled = false;
 
         private Timer _loggingTimer;
-        private CancellationTokenSource _cancellationTokenSource;
     }
 }
