@@ -1,5 +1,5 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using SimpleHardwareMonitor.@base;
+using SimpleHardwareMonitor.common;
 using SimpleHardwareMonitor.data;
 
 namespace SimpleHardwareMonitor.monitor

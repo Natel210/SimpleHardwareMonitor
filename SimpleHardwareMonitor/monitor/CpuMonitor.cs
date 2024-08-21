@@ -1,13 +1,11 @@
 ﻿using System.Diagnostics;
 using LibreHardwareMonitor.Hardware;
 using SimpleHardwareMonitor.data;
-using SimpleHardwareMonitor.@base;
+using SimpleHardwareMonitor.common;
 using System.Collections.Generic;
 using System;
 using System.Management;
-using System.Threading;
 using System.Collections.ObjectModel;
-using System.Security.Cryptography;
 using SimpleHardwareMonitor.viewmodel;
 
 namespace SimpleHardwareMonitor.monitor

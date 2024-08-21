@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace SimpleHardwareMonitorGUI.Common
+namespace SimpleHardwareMonitorGUI.common
 {
     public abstract class AViewModelBase_None : INotifyPropertyChanged
     {

@@ -11,10 +11,10 @@ using System.Windows.Shapes;
 using SimpleHardwareMonitor;
 using SimpleHardwareMonitor.data;
 using SimpleHardwareMonitor.viewmodel;
-using SimpleHardwareMonitorGUI.Items;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace SimpleHardwareMonitorGUI
+
+namespace SimpleHardwareMonitorGUI.Main
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

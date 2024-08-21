@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleHardwareMonitorGUI.Logger
+namespace SimpleHardwareMonitorGUI.rawdata
 {
-    public enum ELoggingInterval
+    public enum ERawDataInterval
     {
         ms250 = 250,
         ms500 = 500,

@@ -68,7 +68,7 @@ namespace SimpleLogger.Internal
         /// <summary>
         /// Indicates if writing is enabled.
         /// </summary>
-        public bool IsWriting { get; private set; }
+        public bool IsWriting { get; private set; } = false;
 
         /// <summary>
         /// Adds a log entry to the buffer.
@@ -121,19 +121,32 @@ namespace SimpleLogger.Internal
             catch (Exception)
             {
                 result = ELogWriteErrorCode.GetLogItemsException;
+                IsWriting = false;
 #if CHECK_THROW
                 throw;
 #endif
             }
 
             if (result is ELogWriteErrorCode.GetLogItemsException)
+            {
+                IsWriting = false;
                 return result;
+            }
             if (result is ELogWriteErrorCode.OK)
+            {
+                IsWriting = false;
                 return result;
+            }
             if (tempItems is null)
+            {
+                IsWriting = false;
                 return ELogWriteErrorCode.InvalidNull;
+            }
             if (tempItems.Count is 0)
+            {
+                IsWriting = false;
                 return ELogWriteErrorCode.InvalidEmpty;
+            }
 
             var tempProperties = Properties;
 
@@ -158,11 +171,12 @@ namespace SimpleLogger.Internal
                     catch (Exception)
                     {
                         result = ELogWriteErrorCode.TaskRunWritingException;
+                        IsWriting = false;
+
 #if CHECK_THROW
                 throw;
 #endif
-                    }
-                }, cancellationToken);
+                    }}, cancellationToken);
             }
             catch (Exception)
             {
@@ -171,10 +185,7 @@ namespace SimpleLogger.Internal
                 throw;
 #endif
             }
-            finally
-            {
-            }
-            IsWriting = false;
+            finally { IsWriting = false; }
             return result;
         }
 

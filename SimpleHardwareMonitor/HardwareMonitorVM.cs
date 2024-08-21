@@ -1,13 +1,7 @@
-﻿using HidSharp.Utility;
-using LibreHardwareMonitor.Hardware.Motherboard;
-using SimpleHardwareMonitor.@base;
-using SimpleHardwareMonitor.viewmodel;
-using System;
+﻿using SimpleHardwareMonitor.viewmodel;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 
 namespace SimpleHardwareMonitor

@@ -1,12 +1,11 @@
 ﻿//#define USE_BATTERY
-
 using System.Threading;
 using LibreHardwareMonitor.Hardware;
 using SimpleHardwareMonitor.monitor;
-using SimpleHardwareMonitor.@base;
 using SimpleHardwareMonitor.data;
 using System;
 using System.Threading.Tasks;
+using SimpleHardwareMonitor.common;
 
 namespace SimpleHardwareMonitor
 {

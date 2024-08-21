@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-
-namespace SimpleHardwareMonitorGUI.Items
+using SimpleHardwareMonitorGUI.Setting;
+namespace SimpleHardwareMonitorGUI.Main
 {
     public partial class MainWindowHeader : UserControl
     {

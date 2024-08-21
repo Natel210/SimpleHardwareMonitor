@@ -9,6 +9,8 @@ namespace SimpleLogger.Main
     {
         public static ILogger? Create(string logName, LoggerProperties loggerProperties = new LoggerProperties())
         {
+            if (logName is null)
+                return null;
             if (ExistLogger(logName) is true)
                 return Get(logName);
             _logDic.Add(logName, new LoggerItem());

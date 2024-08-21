@@ -1,8 +1,7 @@
 ﻿using System;
 using LibreHardwareMonitor.Hardware;
-using SimpleHardwareMonitor.viewmodel;
 
-namespace SimpleHardwareMonitor.@base
+namespace SimpleHardwareMonitor.common
 {
     // interface of surface.
     internal abstract partial class AHardwareMonitor<T> : IDisposable where T : struct

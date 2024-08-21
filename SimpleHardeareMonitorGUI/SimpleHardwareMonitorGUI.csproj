@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="common\header\**" />
+    <EmbeddedResource Remove="common\header\**" />
+    <None Remove="common\header\**" />
+    <Page Remove="common\header\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="resource\BootstrapIcons-Lock.png" />
     <None Remove="resource\BootstrapIcons-Unlock.png" />
     <None Remove="resource\Codicons-ChromeClose.png" />
@@ -29,10 +36,6 @@
   <ItemGroup>
     <Resource Include="resource\BootstrapIcons-Lock.png" />
     <Resource Include="resource\BootstrapIcons-Unlock.png" />
-    <Resource Include="resource\Codicons-ChromeClose.png" />
-    <Resource Include="resource\Codicons-ChromeMaximize.png" />
-    <Resource Include="resource\Codicons-ChromeMinimize.png" />
-    <Resource Include="resource\Codicons-ChromeRestore.png" />
     <Resource Include="resource\PhosphorIcons-GearSixThin.png" />
     <Resource Include="resource\PhosphorIcons-HardDrivesThin.png" />
   </ItemGroup>
