@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Main"
              xmlns:theme="clr-namespace:GrayThemeUI;assembly=GrayThemeUI"
+             xmlns:customControl="clr-namespace:GrayThemeUI.CustomControl;assembly=GrayThemeUI"
              xmlns:helper="clr-namespace:GrayThemeUI.Helper;assembly=GrayThemeUI"
              mc:Ignorable="d"
              d:Width="{StaticResource WindowWidth}"
@@ -16,17 +17,41 @@
             <ImageBrush x:Key="lockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/BootstrapIcons-Lock.png" Stretch="Uniform"/>
             <ImageBrush x:Key="unlockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/BootstrapIcons-Unlock.png" Stretch="Uniform"/>
             <ImageBrush x:Key="settingImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/PhosphorIcons-GearSixThin.png" Stretch="Uniform"/>
+            <Style x:Key="AddOnContentControl" TargetType="ContentControl" BasedOn="{StaticResource GrayThemeUI.Border}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContentControl">
+                            <StackPanel x:Name="AddonStackPanel" Orientation="Horizontal">
+                                <ToggleButton IsChecked="{Binding MainWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource logImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource logImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton" BasedOn="{StaticResource GrayThemeUI.ImageMaskToggleButton}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter Property="Foreground" Value="#FF00FF00"/>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter Property="Foreground" Value="#9CB45300"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                                <ToggleButton Style="{StaticResource GrayThemeUI.ImageMaskToggleButton}" IsChecked="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource lockImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource unlockImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
+                                <Button Click="Setting_Click" helper:ButtonHelper.DefaultMask="{DynamicResource settingImage}" IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}}" Style="{StaticResource GrayThemeUI.ImageMaskButton}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <DataTemplate x:Key="AddOnContentTemplate">
                 <StackPanel x:Name="AddonStackPanel" Orientation="Horizontal">
-                    <ToggleButton IsChecked="{Binding MainWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type theme:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource logImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource logImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}">
+                    <ToggleButton IsChecked="{Binding MainWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource logImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource logImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton" BasedOn="{StaticResource GrayThemeUI.ImageMaskToggleButton}">
                                 <Style.Triggers>
-                                    <!-- IsChecked가 True일 때 배경을 초록색으로 변경 -->
                                     <Trigger Property="IsChecked" Value="True">
                                         <Setter Property="Foreground" Value="#FF00FF00"/>
                                     </Trigger>
-                                    <!-- IsChecked가 False일 때 배경을 빨간색으로 변경 -->
                                     <Trigger Property="IsChecked" Value="False">
                                         <Setter Property="Foreground" Value="#9CB45300"/>
                                     </Trigger>
@@ -34,31 +59,35 @@
                             </Style>
                         </ToggleButton.Style>
                     </ToggleButton>
-                <ToggleButton Style="{StaticResource GrayThemeUI.ImageMaskToggleButton}" IsChecked="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type theme:WindowHeader}}, Mode=TwoWay}"
-                        helper:ToggleButtonHelper.DefaultMask="{DynamicResource lockImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource unlockImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
-                    <Button Click="Setting_Click"
-                        helper:ButtonHelper.DefaultMask="{DynamicResource settingImage}" IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type theme:WindowHeader}}}" Style="{StaticResource GrayThemeUI.ImageMaskButton}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
+                    <ToggleButton Style="{StaticResource GrayThemeUI.ImageMaskToggleButton}" IsChecked="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource lockImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource unlockImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
+                    <Button Click="Setting_Click" helper:ButtonHelper.DefaultMask="{DynamicResource settingImage}" IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}}" Style="{StaticResource GrayThemeUI.ImageMaskButton}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
                 </StackPanel>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <theme:WindowHeader x:Name="WindowHeaderControl"
-                             Title="{Binding MainWindowTitle, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             d:Title="{Binding MainWindowTitle, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue='Tilte'}" FontSize="42">
-            <theme:WindowHeader.AddOnItem>
-                <ContentControl ContentTemplate="{StaticResource AddOnContentTemplate}" />
-
-
-            </theme:WindowHeader.AddOnItem>
-        </theme:WindowHeader>
-
-        <!--<GroupBox>
-            <GroupBox.Header>
-                <StackPanel x:Name="a213">
-                    <TextBlock x:Name="b213" Text="123"/>
+        <customControl:WindowHeader x:Name="WindowHeaderControl" Title="{Binding MainWindowTitle, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="42" >
+            <customControl:WindowHeader.AddOnItem>
+                <!--<ContentControl ContentTemplate="{StaticResource AddOnContentTemplate}" />-->
+                <StackPanel x:Name="AddonStackPanel" Orientation="Horizontal">
+                    <ToggleButton IsChecked="{Binding MainWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource logImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource logImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton" BasedOn="{StaticResource GrayThemeUI.ImageMaskToggleButton}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Foreground" Value="#FF00FF00"/>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Foreground" Value="#9CB45300"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource GrayThemeUI.ImageMaskToggleButton}" IsChecked="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}, Mode=TwoWay}" helper:ToggleButtonHelper.DefaultMask="{DynamicResource lockImage}" helper:ToggleButtonHelper.CheckedMask="{DynamicResource unlockImage}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
+                    <Button Click="Setting_Click" helper:ButtonHelper.DefaultMask="{DynamicResource settingImage}" IsEnabled="{Binding WindowUnlocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}}" Style="{StaticResource GrayThemeUI.ImageMaskButton}" Width="{Binding ActualHeight, ElementName='AddonStackPanel'}" Height="{Binding ActualHeight, ElementName='AddonStackPanel'}"/>
                 </StackPanel>
-            </GroupBox.Header>
-        </GroupBox>-->
+            </customControl:WindowHeader.AddOnItem>
+        </customControl:WindowHeader>
     </Grid>
 </UserControl>

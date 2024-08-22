@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Main"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:dashboard="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
         xmlns:theme="clr-namespace:GrayThemeUI;assembly=GrayThemeUI"
         mc:Ignorable="d"
@@ -17,9 +18,12 @@
     <Window.DataContext>
         <local:MainWindowViewmodel/>
     </Window.DataContext>
+    <Window.Resources>
+        <sys:Double x:Key="dashboardHeaderWidth">150.0</sys:Double>
+    </Window.Resources>
     <StackPanel>
-        <local:MainWindowHeader BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}"
-                                Height="90"
+        <local:MainWindowHeader BorderBrush="{DynamicResource GrayThemeUI.Overlay.Background.Focus}"
+                                Height="50"
                                 MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
                                 MainWindowLogging="{Binding RawData.LoggingEnabled, Mode=TwoWay}"/>
         <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1,0">
@@ -35,8 +39,8 @@
                                  Header2="Temperature" Value2="{Binding HW.Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
                                  Header3="Power" Value3="{Binding HW.Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
                     <dashboard:Dashboard.ContentName>
-                        <Border Width="250">
-                            <Button Content="CPU" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                        <Border Width="150">
+                            <Button Content="CPU" VerticalAlignment="Center" HorizontalAlignment="Center"
                                     Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
                         </Border>
                     </dashboard:Dashboard.ContentName>
@@ -47,7 +51,7 @@
                                  Header2="Used" Value2="{Binding HW.Memory.Use, StringFormat={}{0:F2}}" Symbols2="GB" SymbolsUse2="True"
                                  Header3="" Value3="" Symbols3="" SymbolsUse3="False">
                     <dashboard:Dashboard.ContentName>
-                        <Border Width="250">
+                        <Border Width="150">
                             <Button Content="Memory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                     Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
                         </Border>

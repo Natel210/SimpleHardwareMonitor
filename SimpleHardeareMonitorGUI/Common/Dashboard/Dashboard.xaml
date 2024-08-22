@@ -15,8 +15,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}" BorderThickness="0,0,1,0" Grid.Column="0" Background="Transparent">
-            <ContentControl Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="40"
-                            d:Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue=' Content '}"/>
+            <ContentPresenter Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}}" d:Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue=' Content '}" Width="Auto" d:Width="250"/>
         </Border>
         <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}"
                              BorderThickness="0,0,1,0" Grid.Column="1"

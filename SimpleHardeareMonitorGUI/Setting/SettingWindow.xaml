@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Setting"
         xmlns:theme="clr-namespace:GrayThemeUI;assembly=GrayThemeUI"
+        xmlns:customControl="clr-namespace:GrayThemeUI.CustomControl;assembly=GrayThemeUI"
         xmlns:rawdata="clr-namespace:SimpleHardwareMonitorGUI.rawdata"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
@@ -22,7 +23,7 @@
         </ObjectDataProvider>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <theme:WindowHeader Title=" Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
+        <customControl:WindowHeader Title=" Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
         <TextBlock Text="1123"/>
         <Button Content="123" Style="{StaticResource GrayThemeUI.SquareButton}"/>
         
