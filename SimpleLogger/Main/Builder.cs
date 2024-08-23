@@ -30,9 +30,9 @@ namespace SimpleLogger.Main
         {
             if (ExistLogger(logName) is false)
                 return null;
-            logDicMutex.WaitOne();
+            _logDicMutex.WaitOne();
             ILogger tempLogger = _logDic[logName];
-            logDicMutex.ReleaseMutex();
+            _logDicMutex.ReleaseMutex();
             return tempLogger;
 
         }
@@ -48,14 +48,14 @@ namespace SimpleLogger.Main
         private static bool ExistLogger(string logName)
         {
             bool result = false;
-            logDicMutex.WaitOne();
+            _logDicMutex.WaitOne();
             result = _logDic.ContainsKey(logName);
-            logDicMutex.ReleaseMutex();
+            _logDicMutex.ReleaseMutex();
             return result;
         }
 
-        private static Dictionary<string, ILogger> _logDic = new Dictionary<string, ILogger>();
-        private static Mutex logDicMutex = new Mutex();
+        private static Dictionary<string, ILogger> _logDic = new();
+        private static Mutex _logDicMutex = new();
         private static readonly string _defaultLog = "default";
         static Builder()
         {

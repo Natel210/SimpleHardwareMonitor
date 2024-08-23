@@ -25,7 +25,7 @@
     <StackPanel Orientation="Vertical">
         <customControl:WindowHeader Title=" Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
         <TextBlock Text="1123"/>
-        <Button Content="123" Style="{StaticResource GrayThemeUI.SquareButton}"/>
+        <Button Content="123" Style="{StaticResource GrayThemeUI.Button.Square}"/>
         
         
         <ComboBox SelectedItem="{Binding SettingWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}}"
@@ -35,8 +35,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Content="22" Grid.Row="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
-            <Button Content="33" Grid.Row="1" Style="{StaticResource GrayThemeUI.SquareButton}"/>
+            <Button Content="22" Grid.Row="0" Style="{StaticResource GrayThemeUI.Button.Square}"/>
+            <Button Content="33" Grid.Row="1" Style="{StaticResource GrayThemeUI.Button.Square}"/>
         </Grid>
 
     </StackPanel>

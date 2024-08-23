@@ -41,7 +41,7 @@
                     <dashboard:Dashboard.ContentName>
                         <Border Width="150">
                             <Button Content="CPU" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
+                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.Button.Square}"/>
                         </Border>
                     </dashboard:Dashboard.ContentName>
                 </dashboard:Dashboard>
@@ -53,7 +53,7 @@
                     <dashboard:Dashboard.ContentName>
                         <Border Width="150">
                             <Button Content="Memory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.SquareButton}"/>
+                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.Button.Square}"/>
                         </Border>
                     </dashboard:Dashboard.ContentName>
                 </dashboard:Dashboard>
