@@ -5,11 +5,15 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHardwareMonitorGUI", "SimpleHardeareMonitorGUI\SimpleHardwareMonitorGUI.csproj", "{1294D977-1E81-4F8F-9200-B6B2390E3E69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrayThemeUI", "GrayThemeUI\GrayThemeUI\GrayThemeUI.csproj", "{B2A6CEB0-F8A2-441B-BB46-55EB46608805}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHardwareMonitor", "SimpleHardwareMonitor\SimpleHardwareMonitor.csproj", "{F67EB2CF-5DEB-4199-88BB-F839B3A1E2D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLogger", "SimpleLogger\SimpleLogger.csproj", "{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleLogger", "SimpleLogger\SimpleLogger.csproj", "{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleOverlayTheme", "SimpleOverlayTheme\SimpleOverlayTheme\SimpleOverlayTheme.csproj", "{A23571EA-954A-4E44-A53A-BA7AEED8E86A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleIniController", "SimpleOverlayTheme\SimpleIniController\SimpleIniController.csproj", "{3436C1D1-A38D-4EF6-8FB3-D3755282355D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third", "Third", "{ADFB2304-8B5E-41CA-9087-E49D2970A0B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +25,6 @@ Global
 		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1294D977-1E81-4F8F-9200-B6B2390E3E69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2A6CEB0-F8A2-441B-BB46-55EB46608805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2A6CEB0-F8A2-441B-BB46-55EB46608805}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2A6CEB0-F8A2-441B-BB46-55EB46608805}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2A6CEB0-F8A2-441B-BB46-55EB46608805}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F67EB2CF-5DEB-4199-88BB-F839B3A1E2D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F67EB2CF-5DEB-4199-88BB-F839B3A1E2D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F67EB2CF-5DEB-4199-88BB-F839B3A1E2D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,9 +33,22 @@ Global
 		{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A23571EA-954A-4E44-A53A-BA7AEED8E86A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A23571EA-954A-4E44-A53A-BA7AEED8E86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A23571EA-954A-4E44-A53A-BA7AEED8E86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A23571EA-954A-4E44-A53A-BA7AEED8E86A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3436C1D1-A38D-4EF6-8FB3-D3755282355D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3436C1D1-A38D-4EF6-8FB3-D3755282355D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3436C1D1-A38D-4EF6-8FB3-D3755282355D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3436C1D1-A38D-4EF6-8FB3-D3755282355D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{972A468C-4D26-4C34-9E5E-1A5FE08D0A49} = {ADFB2304-8B5E-41CA-9087-E49D2970A0B8}
+		{A23571EA-954A-4E44-A53A-BA7AEED8E86A} = {ADFB2304-8B5E-41CA-9087-E49D2970A0B8}
+		{3436C1D1-A38D-4EF6-8FB3-D3755282355D} = {ADFB2304-8B5E-41CA-9087-E49D2970A0B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB0DECFF-F753-4074-887A-33ECF15C1B69}

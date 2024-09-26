@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace SimpleHardwareMonitorGUI.common.dashboard
 {
@@ -8,17 +9,60 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
     /// </summary>
     public partial class DashboardItem : UserControl
     {
+        private static readonly FrameworkPropertyMetadataOptions _frameworkPropertyMetadataOptions = FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure;
+
         public DashboardItem()
         {
             InitializeComponent();
         }
-        public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(string), typeof(DashboardItem), new PropertyMetadata("Header"));
-        public string Header
+        //public static readonly DependencyProperty HeaderContentProperty
+        //    = DependencyProperty.Register(
+        //        nameof(HeaderContent),
+        //        typeof(object),
+        //        typeof(DashboardItem),
+        //        new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        //public object? HeaderContent
+        //{
+        //    get { return GetValue(HeaderContentProperty); }
+        //    set { SetValue(HeaderContentProperty, value); }
+        //}
+
+        public static readonly DependencyProperty HeaderTextProperty
+            = DependencyProperty.Register(
+                nameof(HeaderText),
+                typeof(string),
+                typeof(DashboardItem),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? HeaderText
         {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get { return (string)GetValue(HeaderTextProperty); }
+            set { SetValue(HeaderTextProperty, value); }
         }
+
+        public static readonly DependencyProperty HeaderBackgroundProperty
+            = DependencyProperty.Register(
+                nameof(HeaderBackground),
+                typeof(SolidColorBrush),
+                typeof(DashboardItem),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public SolidColorBrush? HeaderBackground
+        {
+            get { return (SolidColorBrush)GetValue(HeaderBackgroundProperty); }
+            set { SetValue(HeaderBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderHeightProperty
+            = DependencyProperty.Register(
+                nameof(HeaderHeight),
+                typeof(double),
+                typeof(DashboardItem),
+                new FrameworkPropertyMetadata(45.0, _frameworkPropertyMetadataOptions));
+        public double HeaderHeight
+        {
+            get { return (double)GetValue(HeaderHeightProperty); }
+            set { SetValue(HeaderHeightProperty, value); }
+        }
+
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(string), typeof(DashboardItem), new PropertyMetadata("0.0.00."));
         public string Value

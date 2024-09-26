@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Main"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:dashboard="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
-        xmlns:theme="clr-namespace:GrayThemeUI;assembly=GrayThemeUI"
         mc:Ignorable="d"
         FontSize="32"
-        Style="{StaticResource GrayThemeUI.Window}"
+        Style="{StaticResource SimpleOverlayTheme.Window.Default}"
         Width="{StaticResource WindowWidth}" MinWidth="{StaticResource WindowWidth}" MaxWidth="{StaticResource WindowWidth}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
@@ -22,11 +21,11 @@
         <sys:Double x:Key="dashboardHeaderWidth">150.0</sys:Double>
     </Window.Resources>
     <StackPanel>
-        <local:MainWindowHeader BorderBrush="{DynamicResource GrayThemeUI.Overlay.Background.Focus}"
+        <local:MainWindowHeader 
                                 Height="50"
                                 MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
                                 MainWindowLogging="{Binding RawData.LoggingEnabled, Mode=TwoWay}"/>
-        <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1,0">
+        <Border BorderThickness="1,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -34,26 +33,26 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <dashboard:Dashboard Grid.Row="0" Margin="5,5,5,0"
-                                 BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
+                                 BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Line}" BorderThickness="1"
                                  Header1="Used" Value1="{Binding HW.Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
                                  Header2="Temperature" Value2="{Binding HW.Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
                                  Header3="Power" Value3="{Binding HW.Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
                     <dashboard:Dashboard.ContentName>
                         <Border Width="150">
                             <Button Content="CPU" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.Button.Square}"/>
+                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
                         </Border>
                     </dashboard:Dashboard.ContentName>
                 </dashboard:Dashboard>
                 <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0" Visibility="Collapsed"
-                                 BorderBrush="{StaticResource GrayThemeUI.Common.LineColor}" BorderThickness="1"
+                                 BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Line}" BorderThickness="1"
                                  Header1="Used Percent" Value1="{Binding HW.Memory.Value, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
                                  Header2="Used" Value2="{Binding HW.Memory.Use, StringFormat={}{0:F2}}" Symbols2="GB" SymbolsUse2="True"
                                  Header3="" Value3="" Symbols3="" SymbolsUse3="False">
                     <dashboard:Dashboard.ContentName>
                         <Border Width="150">
                             <Button Content="Memory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource GrayThemeUI.Button.Square}"/>
+                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
                         </Border>
                     </dashboard:Dashboard.ContentName>
                 </dashboard:Dashboard>

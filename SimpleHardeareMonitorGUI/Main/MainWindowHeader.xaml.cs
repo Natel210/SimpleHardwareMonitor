@@ -20,7 +20,7 @@ namespace SimpleHardwareMonitorGUI.Main
         }
 
         public static readonly DependencyProperty MainWindowLoggingProperty =
-            DependencyProperty.Register("MainWindowLogging", typeof(bool), typeof(MainWindowHeader), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(MainWindowLogging), typeof(bool), typeof(MainWindowHeader), new PropertyMetadata(false));
 
         public bool MainWindowLogging
         {
@@ -36,11 +36,11 @@ namespace SimpleHardwareMonitorGUI.Main
         {
             if (testcode is true)
             {
-                GrayThemeUI.Main.ThemeDark();
+                //GrayThemeUI.Main.ThemeDark();
             }
             else
             {
-                GrayThemeUI.Main.ThemeLight();
+                //GrayThemeUI.Main.ThemeLight();
             }
             testcode = !testcode;
 

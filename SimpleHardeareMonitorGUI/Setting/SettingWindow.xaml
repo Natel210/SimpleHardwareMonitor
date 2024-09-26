@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Setting"
-        xmlns:theme="clr-namespace:GrayThemeUI;assembly=GrayThemeUI"
-        xmlns:customControl="clr-namespace:GrayThemeUI.CustomControl;assembly=GrayThemeUI"
+        xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
         xmlns:rawdata="clr-namespace:SimpleHardwareMonitorGUI.rawdata"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
@@ -14,7 +13,7 @@
         Width="{StaticResource WindowWidth}" MinWidth="{StaticResource WindowWidth}" MaxWidth="{StaticResource WindowWidth}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
-        Style="{StaticResource GrayThemeUI.Window}">
+        Style="{StaticResource SimpleOverlayTheme.Window.Default}">
     <Window.Resources>
         <ObjectDataProvider x:Key="ERawDataIntervalProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -23,9 +22,9 @@
         </ObjectDataProvider>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <customControl:WindowHeader Title=" Setting" BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.Focus}" BorderThickness="1" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
+        <customControl:WindowHeader TitleContent=" Setting" BorderBrush="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.Active}" BorderThickness="1" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
         <TextBlock Text="1123"/>
-        <Button Content="123" Style="{StaticResource GrayThemeUI.Button.Square}"/>
+        <Button Content="123" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
         
         
         <ComboBox SelectedItem="{Binding SettingWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}}"
@@ -35,8 +34,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Content="22" Grid.Row="0" Style="{StaticResource GrayThemeUI.Button.Square}"/>
-            <Button Content="33" Grid.Row="1" Style="{StaticResource GrayThemeUI.Button.Square}"/>
+            <Button Content="22" Grid.Row="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
+            <Button Content="33" Grid.Row="1" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
         </Grid>
 
     </StackPanel>

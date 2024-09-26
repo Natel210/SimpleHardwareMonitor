@@ -5,34 +5,64 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
              mc:Ignorable="d" 
-             Style="{StaticResource GrayThemeUI.UserControl}"
-             d:DesignHeight="80" d:DesignWidth="850">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Border BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}" BorderThickness="0,0,1,0" Grid.Column="0" Background="Transparent">
+             x:Name="dashboardControl"
+             Style="{StaticResource SimpleOverlayTheme.UserControl.Empty}"
+             d:DesignWidth="850">
+    <StackPanel Orientation="Horizontal">
+        <Border BorderBrush="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}" BorderThickness="0,0,1,0" Grid.Column="0" Background="Transparent">
             <ContentPresenter Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}}" d:Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue=' Content '}" Width="Auto" d:Width="250"/>
         </Border>
-        <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}"
-                             BorderThickness="0,0,1,0" Grid.Column="1"
-                             Header="{Binding Header1, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             Value="{Binding Value1, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             SymbolsUse="{Binding SymbolsUse1, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                             Symbols="{Binding Symbols1, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}"
-                             BorderThickness="0,0,1,0" Grid.Column="2"
-                             Header="{Binding Header2, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             Value="{Binding Value2, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             SymbolsUse="{Binding SymbolsUse2, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                             Symbols="{Binding Symbols2, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        <local:DashboardItem BorderBrush="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}" Grid.Column="3"
-                             Header="{Binding Header3, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             Value="{Binding Value3, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             SymbolsUse="{Binding SymbolsUse3, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                             Symbols="{Binding Symbols3, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </Grid>
+        <local:DashboardItem>
+            <local:DashboardItem.BorderThickness>0,0,1,0
+            </local:DashboardItem.BorderThickness>
+            <local:DashboardItem.HorizontalAlignment>Stretch
+            </local:DashboardItem.HorizontalAlignment>
+            <local:DashboardItem.HeaderText>
+                <Binding Path="Header1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.HeaderText>
+            <local:DashboardItem.Value>
+                <Binding Path="Value1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.Value>
+            <local:DashboardItem.SymbolsUse>
+                <Binding Path="SymbolsUse1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.SymbolsUse>
+            <local:DashboardItem.Symbols>
+                <Binding Path="Symbols1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.Symbols>
+        </local:DashboardItem>
+        <local:DashboardItem>
+            <local:DashboardItem.BorderThickness>0,0,1,0
+            </local:DashboardItem.BorderThickness>
+            <local:DashboardItem.HorizontalAlignment>Stretch
+            </local:DashboardItem.HorizontalAlignment>
+            <local:DashboardItem.HeaderText>
+                <Binding Path="Header2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.HeaderText>
+            <local:DashboardItem.Value>
+                <Binding Path="Value2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.Value>
+            <local:DashboardItem.SymbolsUse>
+                <Binding Path="SymbolsUse2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.SymbolsUse>
+            <local:DashboardItem.Symbols>
+                <Binding Path="Symbols2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.Symbols>
+        </local:DashboardItem>
+        <local:DashboardItem>
+            <local:DashboardItem.HorizontalAlignment>Stretch
+            </local:DashboardItem.HorizontalAlignment>
+            <local:DashboardItem.HeaderText>
+                <Binding Path="Header3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.HeaderText>
+            <local:DashboardItem.Value>
+                <Binding Path="Value3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.Value>
+            <local:DashboardItem.SymbolsUse>
+                <Binding Path="SymbolsUse3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.SymbolsUse>
+            <local:DashboardItem.Symbols>
+                <Binding Path="Symbols3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+            </local:DashboardItem.Symbols>
+        </local:DashboardItem>
+    </StackPanel>
 </UserControl>

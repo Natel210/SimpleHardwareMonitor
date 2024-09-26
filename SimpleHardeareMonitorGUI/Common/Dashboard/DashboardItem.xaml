@@ -5,16 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
              mc:Ignorable="d"
-             Style="{StaticResource GrayThemeUI.UserControl}"
-             d:DesignHeight="80" d:DesignWidth="200">
+             d:MinWidth="200"
+             Style="{StaticResource SimpleOverlayTheme.UserControl.Default}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="{StaticResource GrayThemeUI.Overlay.Background.MouseOver}">
-            <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       FontSize="18" Margin="0,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Border Grid.Row="0" Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}">
+            <Border.Height>
+                <Binding Path="HeaderHeight" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="50.0"/>
+            </Border.Height>
+            <!--<ContentPresenter>
+                <ContentPresenter.Content>
+                    <Binding>
+                        <Binding.RelativeSource>
+                            <RelativeSource Mode="TemplatedParent"/>
+                        </Binding.RelativeSource>
+                        <Binding.Path>HeaderContent
+                        </Binding.Path>
+                        <Binding.FallbackValue>
+                            <TextBlock>
+                                <TextBlock.Text>Default Header Text
+                                </TextBlock.Text>
+                                <TextBlock.FontSize>18
+                                </TextBlock.FontSize>
+                                <TextBlock.Margin>0,5
+                                </TextBlock.Margin>
+                                <TextBlock.VerticalAlignment>Center
+                                </TextBlock.VerticalAlignment>
+                                <TextBlock.HorizontalAlignment>Center
+                                </TextBlock.HorizontalAlignment>
+                                <TextBlock.Style>
+                                    <StaticResource ResourceKey="SimpleOverlayTheme.TextBlock.Default"/>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Binding.FallbackValue>
+                    </Binding>
+                </ContentPresenter.Content>
+            </ContentPresenter>-->
+            <TextBlock Text="{Binding HeaderText, RelativeSource={RelativeSource AncestorType=UserControl},FallbackValue='N/A'}"
+                      FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
         </Border>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
