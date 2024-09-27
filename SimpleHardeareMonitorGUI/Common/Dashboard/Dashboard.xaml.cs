@@ -12,96 +12,163 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
         {
             InitializeComponent();
         }
-        public static readonly DependencyProperty ContentNameProperty =
-            DependencyProperty.Register("ContentName", typeof(object), typeof(Dashboard), new PropertyMetadata(null));
-        public object ContentName
+
+        private static readonly FrameworkPropertyMetadataOptions _frameworkPropertyMetadataOptions = FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure;
+
+        public static readonly DependencyProperty CategoryContentProperty
+            = DependencyProperty.Register(
+                nameof(CategoryContent),
+                typeof(object),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public object CategoryContent
         {
-            get { return GetValue(ContentNameProperty); }
-            set { SetValue(ContentNameProperty, value); }
+            get { return GetValue(CategoryContentProperty); }
+            set { SetValue(CategoryContentProperty, value); }
         }
-        public static readonly DependencyProperty Header1Property =
-            DependencyProperty.Register("Header1", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
-        public string Header1
+
+        public static readonly DependencyProperty Item1_HeaderProperty
+            = DependencyProperty.Register(
+                nameof(Item1_Header),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item1_Header
         {
-            get { return (string)GetValue(Header1Property); }
-            set { SetValue(Header1Property, value); }
+            get { return (string)GetValue(Item1_HeaderProperty); }
+            set { SetValue(Item1_HeaderProperty, value); }
         }
-        public static readonly DependencyProperty Value1Property =
-            DependencyProperty.Register("Value1", typeof(string), typeof(Dashboard), new PropertyMetadata("000.0"));
-        public string Value1
+
+        public static readonly DependencyProperty Item1_ValueProperty
+            = DependencyProperty.Register(
+                nameof(Item1_Value),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata("", _frameworkPropertyMetadataOptions));
+        public string? Item1_Value
         {
-            get { return (string)GetValue(Value1Property); }
-            set { SetValue(Value1Property, value); }
+            get { return (string)GetValue(Item1_ValueProperty); }
+            set { SetValue(Item1_ValueProperty, value); }
         }
-        public static readonly DependencyProperty SymbolsUse1Property =
-            DependencyProperty.Register("SymbolsUse1", typeof(bool), typeof(Dashboard), new PropertyMetadata(false));
-        public bool SymbolsUse1
+
+        public static readonly DependencyProperty Item1_SymbolsUseProperty
+            = DependencyProperty.Register(
+                nameof(Item1_SymbolsUse),
+                typeof(bool),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(false, _frameworkPropertyMetadataOptions));
+        public bool Item1_SymbolsUse
         {
-            get { return (bool)GetValue(SymbolsUse1Property); }
-            set { SetValue(SymbolsUse1Property, value); }
+            get { return (bool)GetValue(Item1_SymbolsUseProperty); }
+            set { SetValue(Item1_SymbolsUseProperty, value); }
         }
-        public static readonly DependencyProperty Symbols1Property =
-            DependencyProperty.Register("Symbols1", typeof(string), typeof(Dashboard), new PropertyMetadata("?"));
-        public string Symbols1
+
+        public static readonly DependencyProperty Item1_SymbolsProperty
+            = DependencyProperty.Register(
+                nameof(Item1_Symbols),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item1_Symbols
         {
-            get { return (string)GetValue(Symbols1Property); }
-            set { SetValue(Symbols1Property, value); }
+            get { return (string)GetValue(Item1_SymbolsProperty); }
+            set { SetValue(Item1_SymbolsProperty, value); }
         }
-        public static readonly DependencyProperty Header2Property =
-            DependencyProperty.Register("Header2", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
-        public string Header2
+
+        public static readonly DependencyProperty Item2_HeaderProperty
+            = DependencyProperty.Register(
+                nameof(Item2_Header),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item2_Header
         {
-            get { return (string)GetValue(Header2Property); }
-            set { SetValue(Header2Property, value); }
+            get { return (string)GetValue(Item2_HeaderProperty); }
+            set { SetValue(Item2_HeaderProperty, value); }
         }
-        public static readonly DependencyProperty Value2Property =
-            DependencyProperty.Register("Value2", typeof(string), typeof(Dashboard), new PropertyMetadata("000.0"));
-        public string Value2
+
+        public static readonly DependencyProperty Item2_ValueProperty
+            = DependencyProperty.Register(
+                nameof(Item2_Value),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item2_Value
         {
-            get { return (string)GetValue(Value2Property); }
-            set { SetValue(Value2Property, value); }
+            get { return (string)GetValue(Item2_ValueProperty); }
+            set { SetValue(Item2_ValueProperty, value); }
         }
-        public static readonly DependencyProperty SymbolsUse2Property =
-            DependencyProperty.Register("SymbolsUse2", typeof(bool), typeof(Dashboard), new PropertyMetadata(false));
-        public bool SymbolsUse2
+
+        public static readonly DependencyProperty Item2_SymbolsUseProperty
+            = DependencyProperty.Register(
+                nameof(Item2_SymbolsUse),
+                typeof(bool),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(false, _frameworkPropertyMetadataOptions));
+        public bool Item2_SymbolsUse
         {
-            get { return (bool)GetValue(SymbolsUse2Property); }
-            set { SetValue(SymbolsUse2Property, value); }
+            get { return (bool)GetValue(Item2_SymbolsUseProperty); }
+            set { SetValue(Item2_SymbolsUseProperty, value); }
         }
-        public static readonly DependencyProperty Symbols2Property =
-            DependencyProperty.Register("Symbols2", typeof(string), typeof(Dashboard), new PropertyMetadata("?"));
-        public string Symbols2
+
+        public static readonly DependencyProperty Item2_SymbolsProperty
+            = DependencyProperty.Register(
+                nameof(Item2_Symbols),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item2_Symbols
         {
-            get { return (string)GetValue(Symbols2Property); }
-            set { SetValue(Symbols2Property, value); }
+            get { return (string)GetValue(Item2_SymbolsProperty); }
+            set { SetValue(Item2_SymbolsProperty, value); }
         }
-        public static readonly DependencyProperty Header3Property =
-            DependencyProperty.Register("Header3", typeof(string), typeof(Dashboard), new PropertyMetadata("N/A"));
-        public string Header3
+
+        public static readonly DependencyProperty Item3_HeaderProperty =
+            DependencyProperty.Register(
+                nameof(Item3_Header),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item3_Header
         {
-            get { return (string)GetValue(Header3Property); }
-            set { SetValue(Header3Property, value); }
+            get { return (string)GetValue(Item3_HeaderProperty); }
+            set { SetValue(Item3_HeaderProperty, value); }
         }
-        public static readonly DependencyProperty Value3Property =
-            DependencyProperty.Register("Value3", typeof(string), typeof(Dashboard), new PropertyMetadata("000.0"));
-        public string Value3
+
+        public static readonly DependencyProperty Item3_ValueProperty
+            = DependencyProperty.Register(
+                nameof(Item3_Value),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item3_Value
         {
-            get { return (string)GetValue(Value3Property); }
-            set { SetValue(Value3Property, value); }
+            get { return (string)GetValue(Item3_ValueProperty); }
+            set { SetValue(Item3_ValueProperty, value); }
         }
-        public static readonly DependencyProperty SymbolsUse3Property =
-            DependencyProperty.Register("SymbolsUse3", typeof(bool), typeof(Dashboard), new PropertyMetadata(false));
-        public bool SymbolsUse3
+
+        public static readonly DependencyProperty Item3_SymbolsUseProperty
+            = DependencyProperty.Register(
+                nameof(Item3_SymbolsUse),
+                typeof(bool),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(false, _frameworkPropertyMetadataOptions));
+        public bool Item3_SymbolsUse
         {
-            get { return (bool)GetValue(SymbolsUse3Property); }
-            set { SetValue(SymbolsUse3Property, value); }
+            get { return (bool)GetValue(Item3_SymbolsUseProperty); }
+            set { SetValue(Item3_SymbolsUseProperty, value); }
         }
-        public static readonly DependencyProperty Symbols3Property =
-            DependencyProperty.Register("Symbols3", typeof(string), typeof(Dashboard), new PropertyMetadata("?"));
-        public string Symbols3
+
+        public static readonly DependencyProperty Item3_SymbolsProperty
+            = DependencyProperty.Register(
+                nameof(Item3_Symbols),
+                typeof(string),
+                typeof(Dashboard),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string? Item3_Symbols
         {
-            get { return (string)GetValue(Symbols3Property); }
-            set { SetValue(Symbols3Property, value); }
+            get { return (string)GetValue(Item3_SymbolsProperty); }
+            set { SetValue(Item3_SymbolsProperty, value); }
         }
     }
 }

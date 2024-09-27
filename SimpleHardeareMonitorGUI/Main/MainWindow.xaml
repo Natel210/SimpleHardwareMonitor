@@ -22,7 +22,6 @@
     </Window.Resources>
     <StackPanel>
         <local:MainWindowHeader 
-                                Height="50"
                                 MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
                                 MainWindowLogging="{Binding RawData.LoggingEnabled, Mode=TwoWay}"/>
         <Border BorderThickness="1,0">
@@ -32,29 +31,77 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <dashboard:Dashboard Grid.Row="0" Margin="5,5,5,0"
-                                 BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Line}" BorderThickness="1"
-                                 Header1="Used" Value1="{Binding HW.Cpu.Use, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
-                                 Header2="Temperature" Value2="{Binding HW.Cpu.Temperature, StringFormat={}{0:F1}}" Symbols2="°C" SymbolsUse2="True"
-                                 Header3="Power" Value3="{Binding HW.Cpu.Power, StringFormat={}{0:F1}}" Symbols3="W" SymbolsUse3="True">
-                    <dashboard:Dashboard.ContentName>
+                <dashboard:Dashboard Grid.Row="0" Margin="5,5,5,0">
+                    <dashboard:Dashboard.BorderBrush>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Outline"/>
+                    </dashboard:Dashboard.BorderBrush>
+                    <dashboard:Dashboard.BorderThickness>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.DefaultThickness.Default"/>
+                    </dashboard:Dashboard.BorderThickness>
+                    <dashboard:Dashboard.CategoryContent>
                         <Border Width="150">
-                            <Button Content="CPU" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
+                            <Button Content="CPU" Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
-                    </dashboard:Dashboard.ContentName>
+                    </dashboard:Dashboard.CategoryContent>
+                    <dashboard:Dashboard.Item1_Header>Used
+                    </dashboard:Dashboard.Item1_Header>
+                    <dashboard:Dashboard.Item1_Value>
+                        <Binding Path="HW.Cpu.Use" StringFormat="{}{0:F1}"/>
+                    </dashboard:Dashboard.Item1_Value>
+                    <dashboard:Dashboard.Item1_SymbolsUse>True
+                    </dashboard:Dashboard.Item1_SymbolsUse>
+                    <dashboard:Dashboard.Item1_Symbols>%
+                    </dashboard:Dashboard.Item1_Symbols>
+                    <dashboard:Dashboard.Item2_Header>Temperature
+                    </dashboard:Dashboard.Item2_Header>
+                    <dashboard:Dashboard.Item2_Value>
+                        <Binding Path="HW.Cpu.Temperature" StringFormat="{}{0:F1}"/>
+                    </dashboard:Dashboard.Item2_Value>
+                    <dashboard:Dashboard.Item2_SymbolsUse>True
+                    </dashboard:Dashboard.Item2_SymbolsUse>
+                    <dashboard:Dashboard.Item2_Symbols>°C
+                    </dashboard:Dashboard.Item2_Symbols>
+                    <dashboard:Dashboard.Item3_Header>Power
+                    </dashboard:Dashboard.Item3_Header>
+                    <dashboard:Dashboard.Item3_Value>
+                        <Binding Path="HW.Cpu.Power" StringFormat="{}{0:F1}"/>
+                    </dashboard:Dashboard.Item3_Value>
+                    <dashboard:Dashboard.Item3_SymbolsUse>True
+                    </dashboard:Dashboard.Item3_SymbolsUse>
+                    <dashboard:Dashboard.Item3_Symbols>W
+                    </dashboard:Dashboard.Item3_Symbols>
                 </dashboard:Dashboard>
-                <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0" Visibility="Collapsed"
-                                 BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Line}" BorderThickness="1"
-                                 Header1="Used Percent" Value1="{Binding HW.Memory.Value, StringFormat={}{0:F1}}" Symbols1="%" SymbolsUse1="True"
-                                 Header2="Used" Value2="{Binding HW.Memory.Use, StringFormat={}{0:F2}}" Symbols2="GB" SymbolsUse2="True"
-                                 Header3="" Value3="" Symbols3="" SymbolsUse3="False">
-                    <dashboard:Dashboard.ContentName>
+                <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0" >
+                    <dashboard:Dashboard.BorderBrush>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Outline"/>
+                    </dashboard:Dashboard.BorderBrush>
+                    <dashboard:Dashboard.BorderThickness>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.DefaultThickness.Default"/>
+                    </dashboard:Dashboard.BorderThickness>
+                    <dashboard:Dashboard.CategoryContent>
                         <Border Width="150">
                             <Button Content="Memory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                     Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
                         </Border>
-                    </dashboard:Dashboard.ContentName>
+                    </dashboard:Dashboard.CategoryContent>
+                    <dashboard:Dashboard.Item1_Header>Used Percent
+                    </dashboard:Dashboard.Item1_Header>
+                    <dashboard:Dashboard.Item1_Value>
+                        <Binding Path="HW.Memory.Value" StringFormat="{}{0:F1}"/>
+                    </dashboard:Dashboard.Item1_Value>
+                    <dashboard:Dashboard.Item1_SymbolsUse>True
+                    </dashboard:Dashboard.Item1_SymbolsUse>
+                    <dashboard:Dashboard.Item1_Symbols>%
+                    </dashboard:Dashboard.Item1_Symbols>
+                    <dashboard:Dashboard.Item2_Header>Used
+                    </dashboard:Dashboard.Item2_Header>
+                    <dashboard:Dashboard.Item2_Value>
+                        <Binding Path="HW.Cpu.Use" StringFormat="{}{0:F2}"/>
+                    </dashboard:Dashboard.Item2_Value>
+                    <dashboard:Dashboard.Item2_SymbolsUse>True
+                    </dashboard:Dashboard.Item2_SymbolsUse>
+                    <dashboard:Dashboard.Item2_Symbols>GB
+                    </dashboard:Dashboard.Item2_Symbols>
                 </dashboard:Dashboard>
             </Grid>
         </Border>

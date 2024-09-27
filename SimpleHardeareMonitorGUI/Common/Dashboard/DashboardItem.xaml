@@ -5,70 +5,94 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
              mc:Ignorable="d"
-             d:MinWidth="200"
              Style="{StaticResource SimpleOverlayTheme.UserControl.Default}">
+    <UserControl.BorderBrush>
+        <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Line"/>
+    </UserControl.BorderBrush>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}">
+        <Border Grid.Row="0">
+            <Border.Background>
+                <Binding Path="HeaderBackground" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}"/>
+            </Border.Background>
+            <Border.BorderThickness>0,0,0,1
+            </Border.BorderThickness>
+            <Border.BorderBrush>
+                <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Line"/>
+            </Border.BorderBrush>
             <Border.Height>
-                <Binding Path="HeaderHeight" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="50.0"/>
+                <Binding Path="HeaderHeight" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="30.0"/>
             </Border.Height>
-            <!--<ContentPresenter>
-                <ContentPresenter.Content>
-                    <Binding>
-                        <Binding.RelativeSource>
-                            <RelativeSource Mode="TemplatedParent"/>
-                        </Binding.RelativeSource>
-                        <Binding.Path>HeaderContent
-                        </Binding.Path>
-                        <Binding.FallbackValue>
-                            <TextBlock>
-                                <TextBlock.Text>Default Header Text
-                                </TextBlock.Text>
-                                <TextBlock.FontSize>18
-                                </TextBlock.FontSize>
-                                <TextBlock.Margin>0,5
-                                </TextBlock.Margin>
-                                <TextBlock.VerticalAlignment>Center
-                                </TextBlock.VerticalAlignment>
-                                <TextBlock.HorizontalAlignment>Center
-                                </TextBlock.HorizontalAlignment>
-                                <TextBlock.Style>
-                                    <StaticResource ResourceKey="SimpleOverlayTheme.TextBlock.Default"/>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Binding.FallbackValue>
-                    </Binding>
-                </ContentPresenter.Content>
-            </ContentPresenter>-->
-            <TextBlock Text="{Binding HeaderText, RelativeSource={RelativeSource AncestorType=UserControl},FallbackValue='N/A'}"
-                      FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
+            <TextBlock>
+                <TextBlock.Text>
+                    <Binding Path="HeaderText" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="Header"/>
+                </TextBlock.Text>
+                <TextBlock.FontSize>
+                    <Binding Path="FontSize" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="32"/>
+                </TextBlock.FontSize>
+                <TextBlock.VerticalAlignment>Center
+                </TextBlock.VerticalAlignment>
+                <TextBlock.HorizontalAlignment>Center
+                </TextBlock.HorizontalAlignment>
+            </TextBlock>
         </Border>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       Grid.Column="0" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="1" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock.Text>
-                    <Binding Path="Symbols" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
-                </TextBlock.Text>
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
+            <Border Grid.Column="0">
+                <Border.Style>
+                    <StaticResource ResourceKey="SimpleOverlayTheme.Border.Empty"/>
+                </Border.Style>
+                <Border.Margin>10,5
+                </Border.Margin>
+                <TextBlock Grid.Column="0">
+                    <TextBlock.VerticalAlignment>Center
+                    </TextBlock.VerticalAlignment>
+                    <TextBlock.HorizontalAlignment>Right
+                    </TextBlock.HorizontalAlignment>
+                    <TextBlock.FontSize>
+                        <Binding Path="FontSize" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="32"/>
+                    </TextBlock.FontSize>
+                    <TextBlock.Text>
+                        <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="Value"/>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+            <Border Grid.Column="1">
+                <Border.Style>
+                    <Style TargetType="Border" BasedOn="{StaticResource SimpleOverlayTheme.Border.Empty}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SymbolsUse, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                </Border.Style>
+                <Border.BorderThickness>1,0,0,0
+                </Border.BorderThickness>
+                <Border.BorderBrush>
+                    <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Line"/>
+                </Border.BorderBrush>
+                <TextBlock>
+                    <TextBlock.VerticalAlignment>Center
+                    </TextBlock.VerticalAlignment>
+                    <TextBlock.HorizontalAlignment>Center
+                    </TextBlock.HorizontalAlignment>
+                    <TextBlock.FontSize>
+                        <Binding Path="FontSize" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="32"/>
+                    </TextBlock.FontSize>
+                    <TextBlock.Text>
+                        <Binding Path="Symbols" RelativeSource="{RelativeSource AncestorType=UserControl}" FallbackValue="Symbol"/>
+                    </TextBlock.Text>
+                    <TextBlock.Margin>10,5
+                    </TextBlock.Margin>
+                </TextBlock>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

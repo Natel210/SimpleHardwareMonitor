@@ -15,16 +15,16 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
         {
             InitializeComponent();
         }
-        //public static readonly DependencyProperty HeaderContentProperty
+        //public static readonly DependencyProperty CategoryContentProperty
         //    = DependencyProperty.Register(
-        //        nameof(HeaderContent),
+        //        nameof(CategoryContent),
         //        typeof(object),
         //        typeof(DashboardItem),
         //        new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
-        //public object? HeaderContent
+        //public object? CategoryContent
         //{
-        //    get { return GetValue(HeaderContentProperty); }
-        //    set { SetValue(HeaderContentProperty, value); }
+        //    get { return GetValue(CategoryContentProperty); }
+        //    set { SetValue(CategoryContentProperty, value); }
         //}
 
         public static readonly DependencyProperty HeaderTextProperty
@@ -56,7 +56,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
                 nameof(HeaderHeight),
                 typeof(double),
                 typeof(DashboardItem),
-                new FrameworkPropertyMetadata(45.0, _frameworkPropertyMetadataOptions));
+                new FrameworkPropertyMetadata(30.0, _frameworkPropertyMetadataOptions));
         public double HeaderHeight
         {
             get { return (double)GetValue(HeaderHeightProperty); }
@@ -64,7 +64,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(string), typeof(DashboardItem), new PropertyMetadata("0.0.00."));
+            DependencyProperty.Register("Value", typeof(string), typeof(DashboardItem), new PropertyMetadata("0"));
         public string Value
         {
             get { return (string)GetValue(ValueProperty); }

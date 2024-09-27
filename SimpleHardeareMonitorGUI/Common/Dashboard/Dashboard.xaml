@@ -5,64 +5,107 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
              mc:Ignorable="d" 
-             x:Name="dashboardControl"
-             Style="{StaticResource SimpleOverlayTheme.UserControl.Empty}"
-             d:DesignWidth="850">
-    <StackPanel Orientation="Horizontal">
-        <Border BorderBrush="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}" BorderThickness="0,0,1,0" Grid.Column="0" Background="Transparent">
-            <ContentPresenter Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}}" d:Content="{Binding ContentName, RelativeSource={RelativeSource AncestorType=UserControl}, FallbackValue=' Content '}" Width="Auto" d:Width="250"/>
+             Style="{StaticResource SimpleOverlayTheme.UserControl.Default}"
+             d:DesignWidth="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="Transparent">
+            <Border.BorderBrush>
+                <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Outline"/>
+            </Border.BorderBrush>
+            <Border.Style>
+                <StaticResource ResourceKey="SimpleOverlayTheme.Border.Empty"/>
+            </Border.Style>
+            <ContentPresenter>
+                <ContentPresenter.VerticalAlignment>Stretch
+                </ContentPresenter.VerticalAlignment>
+                <ContentPresenter.HorizontalAlignment>Stretch
+                </ContentPresenter.HorizontalAlignment>
+                <ContentPresenter.Content>
+                    <Binding>
+                        <Binding.Path>CategoryContent
+                        </Binding.Path>
+                        <Binding.RelativeSource>
+                            <RelativeSource AncestorType="UserControl"/>
+                        </Binding.RelativeSource>
+                        <d:Binding.FallbackValue>
+                            <TextBlock>
+                                <TextBlock.Text>CategoryContent
+                                </TextBlock.Text>
+                                <TextBlock.Margin>5,0
+                                </TextBlock.Margin>
+                                <TextBlock.VerticalAlignment>Center
+                                </TextBlock.VerticalAlignment>
+                                <TextBlock.HorizontalAlignment>Center
+                                </TextBlock.HorizontalAlignment>
+                            </TextBlock>
+                        </d:Binding.FallbackValue>
+                    </Binding>
+                           
+                </ContentPresenter.Content>
+            </ContentPresenter>
         </Border>
-        <local:DashboardItem>
-            <local:DashboardItem.BorderThickness>0,0,1,0
+        <local:DashboardItem Grid.Column="1">
+            <local:DashboardItem.BorderThickness>1,0,0,0
             </local:DashboardItem.BorderThickness>
-            <local:DashboardItem.HorizontalAlignment>Stretch
-            </local:DashboardItem.HorizontalAlignment>
+            <local:DashboardItem.HeaderBackground>
+                <StaticResource ResourceKey="SimpleOverlayTheme.OverlayBoader.Background.MouseOver"/>
+            </local:DashboardItem.HeaderBackground>
             <local:DashboardItem.HeaderText>
-                <Binding Path="Header1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item1_Header" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="H1" FallbackValue=""/>
             </local:DashboardItem.HeaderText>
             <local:DashboardItem.Value>
-                <Binding Path="Value1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item1_Value" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="V1" FallbackValue=""/>
             </local:DashboardItem.Value>
             <local:DashboardItem.SymbolsUse>
-                <Binding Path="SymbolsUse1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item1_SymbolsUse" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="True" FallbackValue="False"/>
             </local:DashboardItem.SymbolsUse>
             <local:DashboardItem.Symbols>
-                <Binding Path="Symbols1" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item1_Symbols" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="S1" FallbackValue=""/>
             </local:DashboardItem.Symbols>
         </local:DashboardItem>
-        <local:DashboardItem>
-            <local:DashboardItem.BorderThickness>0,0,1,0
+        <local:DashboardItem Grid.Column="2">
+            <local:DashboardItem.BorderThickness>1,0,0,0
             </local:DashboardItem.BorderThickness>
-            <local:DashboardItem.HorizontalAlignment>Stretch
-            </local:DashboardItem.HorizontalAlignment>
+            <local:DashboardItem.HeaderBackground>
+                <StaticResource ResourceKey="SimpleOverlayTheme.OverlayBoader.Background.MouseOver"/>
+            </local:DashboardItem.HeaderBackground>
             <local:DashboardItem.HeaderText>
-                <Binding Path="Header2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item2_Header" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="H2" FallbackValue=""/>
             </local:DashboardItem.HeaderText>
             <local:DashboardItem.Value>
-                <Binding Path="Value2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item2_Value" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="V2" FallbackValue=""/>
             </local:DashboardItem.Value>
             <local:DashboardItem.SymbolsUse>
-                <Binding Path="SymbolsUse2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item2_SymbolsUse" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="True" FallbackValue="False"/>
             </local:DashboardItem.SymbolsUse>
             <local:DashboardItem.Symbols>
-                <Binding Path="Symbols2" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item2_Symbols" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="S2" FallbackValue=""/>
             </local:DashboardItem.Symbols>
         </local:DashboardItem>
-        <local:DashboardItem>
-            <local:DashboardItem.HorizontalAlignment>Stretch
-            </local:DashboardItem.HorizontalAlignment>
+        <local:DashboardItem Grid.Column="3">
+            <local:DashboardItem.BorderThickness>1,0,0,0
+            </local:DashboardItem.BorderThickness>
+            <local:DashboardItem.HeaderBackground>
+                <StaticResource ResourceKey="SimpleOverlayTheme.OverlayBoader.Background.MouseOver"/>
+            </local:DashboardItem.HeaderBackground>
             <local:DashboardItem.HeaderText>
-                <Binding Path="Header3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item3_Header" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="H3" FallbackValue=""/>
             </local:DashboardItem.HeaderText>
             <local:DashboardItem.Value>
-                <Binding Path="Value3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item3_Value" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="V3" FallbackValue=""/>
             </local:DashboardItem.Value>
             <local:DashboardItem.SymbolsUse>
-                <Binding Path="SymbolsUse3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item3_SymbolsUse" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="True" FallbackValue="False"/>
             </local:DashboardItem.SymbolsUse>
             <local:DashboardItem.Symbols>
-                <Binding Path="Symbols3" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                <Binding Path="Item3_Symbols" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="S3" FallbackValue=""/>
             </local:DashboardItem.Symbols>
         </local:DashboardItem>
-    </StackPanel>
+    </Grid>
 </UserControl>
