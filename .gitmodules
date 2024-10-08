@@ -1,0 +1,4 @@
+[submodule "SimpleOverlayThemeUI"]
+	path = SimpleOverlayThemeUI
+	url = https://github.com/Natel210/SimpleOverlayThemeUI
+	branch = main

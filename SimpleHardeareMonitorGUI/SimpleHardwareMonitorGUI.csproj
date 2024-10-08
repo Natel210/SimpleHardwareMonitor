@@ -30,8 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SimpleHardwareMonitor\SimpleHardwareMonitor.csproj" />
     <ProjectReference Include="..\SimpleLogger\SimpleLogger.csproj" />
-    <ProjectReference Include="..\SimpleOverlayTheme\SimpleIniController\SimpleIniController.csproj" />
-    <ProjectReference Include="..\SimpleOverlayTheme\SimpleOverlayTheme\SimpleOverlayTheme.csproj" />
+    <ProjectReference Include="..\SimpleOverlayThemeUI\SimpleOverlayTheme\SimpleOverlayTheme.csproj" />
   </ItemGroup>
 
   <ItemGroup>
