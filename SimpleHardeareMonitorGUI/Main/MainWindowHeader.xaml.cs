@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using SimpleHardwareMonitorGUI.Setting;
+using SimpleOverlayTheme.ThemeSystem;
 namespace SimpleHardwareMonitorGUI.Main
 {
     public partial class MainWindowHeader : UserControl
@@ -50,6 +51,12 @@ namespace SimpleHardwareMonitorGUI.Main
 
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Manager.CurrentThemeName.CompareTo("Dark") is 0)
+                Manager.CurrentThemeName = "Light";
+            else if (Manager.CurrentThemeName.CompareTo("Light") is 0)
+                Manager.CurrentThemeName = "Dark";
+        }
     }
 }

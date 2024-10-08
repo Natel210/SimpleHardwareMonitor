@@ -11,8 +11,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary d:IsDesignTimeCreatable="True" Source="pack://application:,,,/Dummy/LightModeDummy.xaml"/>-->
-                <ResourceDictionary d:IsDesignTimeCreatable="True" Source="pack://application:,,,/Dummy/DarkModeDummy.xaml"/>
+                <ResourceDictionary d:IsDesignTimeCreatable="True" Source="pack://application:,,,/Dummy/LightModeDummy.xaml"/>
+                <!--<ResourceDictionary d:IsDesignTimeCreatable="True" Source="pack://application:,,,/Dummy/DarkModeDummy.xaml"/>-->
                 <ResourceDictionary Source="pack://application:,,,/SimpleOverlayTheme;component/Entry.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <sys:Double x:Key="WindowWidth">800.0</sys:Double>

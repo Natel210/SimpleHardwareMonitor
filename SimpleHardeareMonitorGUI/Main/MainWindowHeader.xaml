@@ -20,6 +20,7 @@
     </UserControl.Resources>
     <Grid >
         <Grid.Background>
+            <!--Black-->
             #60808080
             <!--Transparent-->
             <!--Gray-->
@@ -31,14 +32,15 @@
             </customControl:WindowHeader.TitleContent>
             <customControl:WindowHeader.FontSize>32
             </customControl:WindowHeader.FontSize>
-            <customControl:WindowHeader.UnderbarHeight>2
+            <!--<customControl:WindowHeader.UnderbarHeight>2
             </customControl:WindowHeader.UnderbarHeight>
             <customControl:WindowHeader.UnderbarSpace>3
-            </customControl:WindowHeader.UnderbarSpace>
-            <customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
-            </customControl:WindowHeader.ShowToggleMaximizeRestore>
+            </customControl:WindowHeader.UnderbarSpace>-->
+            <!--<customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
+            </customControl:WindowHeader.ShowToggleMaximizeRestore>-->
             <customControl:WindowHeader.SideContent>
                 <StackPanel x:Name="SideContentPenel" Orientation="Horizontal">
+                    <Button Width="150" Style="{StaticResource SimpleOverlayTheme.Button.Default}" Margin="5,0" Content="ChangeTheme" Background="Transparent" Click="Button_Click"/>
                     <ToggleButton>
                         <ToggleButton.Width>
                             <Binding Path="ActualHeight" ElementName="SideContentPenel"/>
@@ -60,10 +62,10 @@
                             <Style TargetType="ToggleButton" BasedOn="{StaticResource SimpleOverlayTheme.ToggleButton.ImageMask}">
                                 <Style.Triggers>
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter Property="Foreground" Value="#FF00FF00"/>
+                                        <Setter Property="Foreground" Value="#A040FF40"/>
                                     </Trigger>
                                     <Trigger Property="IsChecked" Value="False">
-                                        <Setter Property="Foreground" Value="#9CB45300"/>
+                                        <Setter Property="Foreground" Value="#A0BF7815"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -76,8 +78,8 @@
                         </buttonHelper:Mask.MaskBrushChecked>
                         <buttonHelper:OverlayCheckedBackground.Background>Transparent
                         </buttonHelper:OverlayCheckedBackground.Background>
-                        <buttonHelper:OverlayMask.OverlayMaskVisible>False
-                        </buttonHelper:OverlayMask.OverlayMaskVisible>
+                        <!--<buttonHelper:OverlayMask.OverlayMaskVisible>False
+                        </buttonHelper:OverlayMask.OverlayMaskVisible>-->
                         <buttonHelper:OverlayBackground.SetDefaultVisible>False
                         </buttonHelper:OverlayBackground.SetDefaultVisible>
                         <buttonHelper:OverlayBackground.SetOutlineVisible>False
@@ -97,8 +99,7 @@
                         <ToggleButton.IsChecked>
                             <Binding Path="WindowUnlocked" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type customControl:WindowHeader}}" Mode="TwoWay"/>
                         </ToggleButton.IsChecked>
-                        <d:ToggleButton.IsChecked>
-                            True
+                        <d:ToggleButton.IsChecked>True
                         </d:ToggleButton.IsChecked>
                         <ToggleButton.Background>Transparent
                         </ToggleButton.Background>
@@ -147,7 +148,6 @@
                         <buttonHelper:OverlayBackground.SetBackgroundVisible>False
                         </buttonHelper:OverlayBackground.SetBackgroundVisible>
                     </Button>
-                    
                 </StackPanel>
             </customControl:WindowHeader.SideContent>
         </customControl:WindowHeader>

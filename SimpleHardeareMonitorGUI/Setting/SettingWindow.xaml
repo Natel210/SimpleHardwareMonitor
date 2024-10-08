@@ -22,7 +22,13 @@
         </ObjectDataProvider>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <customControl:WindowHeader TitleContent=" Setting" BorderBrush="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.Active}" BorderThickness="1" Margin="0,0,0,5" ShowMinimize="Collapsed" ShowToggleMaximizeRestore="Collapsed"/>
+        <customControl:WindowHeader TitleContent=" Setting" BorderBrush="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.Active}">
+            <customControl:WindowHeader.ShowMinimize>Collapsed
+            </customControl:WindowHeader.ShowMinimize>
+            <customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
+            </customControl:WindowHeader.ShowToggleMaximizeRestore>
+
+        </customControl:WindowHeader>
         <TextBlock Text="1123"/>
         <Button Content="123" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
         
