@@ -34,6 +34,7 @@ namespace SimpleHardwareMonitorGUI.Main
             // 설정 버튼 클릭 시 처리할 내용
             SettingWindow settingWindow = new SettingWindow();
             settingWindow.DataContext = this.DataContext;
+            settingWindow.Owner = Window.GetWindow(this);
             settingWindow.ShowDialog();
 
         }

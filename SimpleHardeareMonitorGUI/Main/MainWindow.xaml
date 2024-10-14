@@ -9,10 +9,11 @@
         xmlns:dashboard="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
         mc:Ignorable="d"
         FontSize="32"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         WindowStyle="None"
+        AllowsTransparency="True"
         Title="{Binding TitleName, Mode=TwoWay}"
-        Style="{StaticResource SimpleOverlayTheme.Window.Chrome}"
+        Style="{StaticResource SimpleOverlayTheme.Window.Default}"
         
         Closed="Window_Closed">
 
@@ -29,7 +30,6 @@
         <Border.Triggers>
         </Border.Triggers>
         <StackPanel>
-
             <local:MainWindowHeader x:Name="testHeader"
                             MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
                             MainWindowLogging="{Binding RawData.LoggingEnabled, Mode=TwoWay}"/>

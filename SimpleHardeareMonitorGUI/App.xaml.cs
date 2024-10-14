@@ -10,16 +10,16 @@ namespace SimpleHardwareMonitorGUI
     /// </summary>
     public partial class App : Application
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();
+        //[DllImport("kernel32.dll", SetLastError = true)]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //static extern bool AllocConsole();
 
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             HardwareMonitor.Initialized();
-            AllocConsole();
+            //AllocConsole();
         }
 
         protected override void OnExit(ExitEventArgs e)
