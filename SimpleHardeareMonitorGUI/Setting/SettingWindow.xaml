@@ -6,43 +6,118 @@
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Setting"
         xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
         xmlns:rawdata="clr-namespace:SimpleHardwareMonitorGUI.rawdata"
+        xmlns:main="clr-namespace:SimpleHardwareMonitorGUI.Main"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:comboBoxHelper="clr-namespace:SimpleOverlayTheme.Object.ComboBoxObject.Helper;assembly=SimpleOverlayTheme"
         mc:Ignorable="d"
         Title="SettingWindow"
-        WindowStyle="None"
         Width="{StaticResource WindowWidth}" MinWidth="{StaticResource WindowWidth}" MaxWidth="{StaticResource WindowWidth}"
-        SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize"
-        Style="{StaticResource SimpleOverlayTheme.Window.Default}">
+        SizeToContent="Width"
+        Height="800"
+        Style="{StaticResource SimpleOverlayTheme.Window.Chrome}">
     <Window.Resources>
         <ObjectDataProvider x:Key="ERawDataIntervalProvider" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="rawdata:ERawDataInterval"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <GridLength x:Key="SettingLabelWidth">135.0</GridLength>
     </Window.Resources>
-    <StackPanel Orientation="Vertical">
-        <customControl:WindowHeader TitleContent=" Setting" BorderBrush="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.Active}">
-            <customControl:WindowHeader.ShowMinimize>Collapsed
-            </customControl:WindowHeader.ShowMinimize>
-            <customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
-            </customControl:WindowHeader.ShowToggleMaximizeRestore>
+    <Border BorderThickness="1">
+        <!--<Border.Style>
+            <Style TargetType="Border">
+                <Style.Triggers>
+                    --><!-- Window가 포커스를 잃으면 BorderBrush 색상을 변경하는 DataTrigger --><!--
+                    <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                        <Setter Property="BorderBrush" Value="Violet" />
+                    </DataTrigger>
+                    --><!-- Window가 포커스를 얻으면 다시 원래 색상으로 설정 --><!--
+                    <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                        <Setter Property="BorderBrush" Value="Red" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>-->
 
-        </customControl:WindowHeader>
-        <TextBlock Text="1123"/>
-        <Button Content="123" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
-        
-        
-        <ComboBox SelectedItem="{Binding SettingWindowLogging, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}}"
-                  ItemsSource="{Binding Source={StaticResource ERawDataIntervalProvider}}"/>
-        <Grid Width="300" Height="150">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Button Content="22" Grid.Row="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
-            <Button Content="33" Grid.Row="1" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
-        </Grid>
+        <StackPanel Orientation="Vertical">
+            <customControl:WindowHeader>
+                <customControl:WindowHeader.TitleContent>
+                    <Label>
+                        <Label.FontSize>24
+                        </Label.FontSize>
+                        <Label.Margin>0,0,0,0
+                        </Label.Margin>
+                        <Label.Background>Transparent
+                        </Label.Background>
+                        <Label.Content>Setting
+                        </Label.Content>
+                        <Label.Style>
+                            <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                        </Label.Style>
+                    </Label>
+                </customControl:WindowHeader.TitleContent>
+                <customControl:WindowHeader.ShowMinimize>Collapsed
+                </customControl:WindowHeader.ShowMinimize>
+                <customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
+                </customControl:WindowHeader.ShowToggleMaximizeRestore>
+            </customControl:WindowHeader>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label>
+                    <Label.Content>Herder Name :
+                    </Label.Content>
+                    <Label.Margin>0,0,5,0
+                    </Label.Margin>
+                    <Label.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                    </Label.Style>
+                </Label>
+                <TextBox>
+                    <TextBox.Width>200
+                    </TextBox.Width>
+                    <TextBox.VerticalAlignment>Stretch
+                    </TextBox.VerticalAlignment>
+                    <TextBox.HorizontalAlignment>Stretch
+                    </TextBox.HorizontalAlignment>
+                    <TextBox.VerticalContentAlignment>Center
+                    </TextBox.VerticalContentAlignment>
+                    <TextBox.Text>
+                        <Binding Path="TitleName" Mode="TwoWay"/>
+                    </TextBox.Text>
+                    <TextBox.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.TextBox.Default"/>
+                    </TextBox.Style>
+                </TextBox>
+                <Label>
+                    <Label.Content>Log Interval :
+                    </Label.Content>
+                    <Label.Margin>20,0,5,0
+                    </Label.Margin>
+                    <Label.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                    </Label.Style>
+                </Label>
+                <ComboBox Grid.Column="1">
+                    <ComboBox.Width>100
+                    </ComboBox.Width>
+                    <ComboBox.ItemsSource>
+                        <Binding Source="{StaticResource ERawDataIntervalProvider}" />
+                    </ComboBox.ItemsSource>
+                    <ComboBox.SelectedItem>
+                        <Binding Path="SettingWindowLogging" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}"/>
+                    </ComboBox.SelectedItem>
+                    <ComboBox.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.ComboBox.Default"/>
+                    </ComboBox.Style>
+                    <comboBoxHelper:Items.ItemPadding>5,0,0,0
+                    </comboBoxHelper:Items.ItemPadding>
+                </ComboBox>
 
-    </StackPanel>
+
+            </StackPanel>
+
+
+
+        </StackPanel>
+    </Border>
+
 </Window>

@@ -29,24 +29,11 @@ namespace SimpleHardwareMonitorGUI.Main
             set { SetValue(MainWindowLoggingProperty, value); }
         }
 
-
-
-
-        static bool testcode = false;
         private void Setting_Click(object sender, RoutedEventArgs e)
         {
-            if (testcode is true)
-            {
-                //GrayThemeUI.Main.ThemeDark();
-            }
-            else
-            {
-                //GrayThemeUI.Main.ThemeLight();
-            }
-            testcode = !testcode;
-
             // 설정 버튼 클릭 시 처리할 내용
             SettingWindow settingWindow = new SettingWindow();
+            settingWindow.DataContext = this.DataContext;
             settingWindow.ShowDialog();
 
         }
