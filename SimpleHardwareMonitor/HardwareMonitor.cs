@@ -24,19 +24,19 @@ namespace SimpleHardwareMonitor
         internal static int _updateInterval = 50;
         internal static void SetUpdateInterval(int updateInterval) { _updateInterval = updateInterval; }
         public static int UpdateInterval { get => _updateInterval; set => HardwareMonitorVM.instance.UpdateInterval = value; }
-        public static MotherboardData Motherboard { get => _motherboard.Data; }
-        public static SuperIOData SuperIO { get => _superIO.Data; }
-        public static CpuData Cpu { get => _cpu.Data; }
-        public static MemoryData Memory { get => _memory.Data; }
-        public static GpuNvidiaData GpuNvidia { get => _gpu_Nvidia.Data; }
-        public static GpuAmdData GpuAmd { get => _gpu_Amd.Data; }
-        public static GpuIntelData GpuIntel { get => _gpu_Intel.Data; }
-        public static StorageData Storage { get => _storage.Data; }
-        public static NetworkData Network { get => _network.Data; }
-        public static CoolerData Cooler { get => _cooler.Data; }
-        public static EmbeddedControllerData EmbeddedController { get => _embeddedController.Data; }
-        public static PsuData Psu { get => _psu.Data; }
-        public static BatteryData Battery { get => _battery.Data; }
+        public static MotherboardData? Motherboard { get => _motherboard?.Data; }
+        public static SuperIOData? SuperIO { get => _superIO?.Data; }
+        public static CpuData? Cpu { get => _cpu?.Data; }
+        public static MemoryData? Memory { get => _memory?.Data; }
+        public static GpuNvidiaData? GpuNvidia { get => _gpu_Nvidia?.Data; }
+        public static GpuAmdData? GpuAmd { get => _gpu_Amd?.Data; }
+        public static GpuIntelData? GpuIntel { get => _gpu_Intel?.Data; }
+        public static StorageData? Storage { get => _storage?.Data; }
+        public static NetworkData? Network { get => _network?.Data; }
+        public static CoolerData? Cooler { get => _cooler?.Data; }
+        public static EmbeddedControllerData? EmbeddedController { get => _embeddedController?.Data; }
+        public static PsuData? Psu { get => _psu?.Data; }
+        public static BatteryData? Battery { get => _battery?.Data; }
         /// <summary>
         /// Initialized.
         /// </summary>

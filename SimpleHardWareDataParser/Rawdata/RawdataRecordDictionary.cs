@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleLogger.Enum
+namespace SimpleHardWareDataParser.Rawdata
 {
-    public enum ELogClearErrorCode
+    internal class RawdataRecordDictionary : Dictionary<DateTime, RawdataItem>
     {
-        Unknown = -1,
-        OK = 0,
-        WorkException,
     }
 }

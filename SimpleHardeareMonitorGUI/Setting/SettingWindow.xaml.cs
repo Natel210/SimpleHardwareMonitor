@@ -1,6 +1,7 @@
-﻿using SimpleHardwareMonitorGUI.rawdata;
+﻿using SimpleHardwareMonitorGUI.Rawdata;
 using System.Windows;
-
+using System.Windows.Controls;
+using SimpleOverlayTheme.ThemeSystem;
 
 namespace SimpleHardwareMonitorGUI.Setting
 {
@@ -12,7 +13,7 @@ namespace SimpleHardwareMonitorGUI.Setting
         public SettingWindow()
         {
             InitializeComponent();
-
+            UpdateTheme();
             //var enumValues = Enum.GetValues(typeof(ERawDataInterval)).Cast<ERawDataInterval>().Select(e => new
             //{
             //    Value = e,
@@ -28,13 +29,39 @@ namespace SimpleHardwareMonitorGUI.Setting
 
         }
 
-        public static readonly DependencyProperty SettingWindowLoggingIntervalProperty =
-    DependencyProperty.Register("SettingWindowLogging", typeof(ERawDataInterval), typeof(SettingWindow), new PropertyMetadata(ERawDataInterval.m1));
+        public static readonly DependencyProperty SettingWindowLoggingIntervalProperty
+            = DependencyProperty.Register(
+                "SettingWindowLogging",
+                typeof(ERawDataInterval),
+                typeof(SettingWindow),
+                new PropertyMetadata(ERawDataInterval.m1));
 
         public ERawDataInterval SettingWindowLogging
         {
             get { return (ERawDataInterval)GetValue(SettingWindowLoggingIntervalProperty); }
             set { SetValue(SettingWindowLoggingIntervalProperty, value); }
+        }
+
+        private void UpdateTheme()
+        {
+            if (PART_ThemeList is null)
+                return;
+            PART_ThemeList.Items.Clear();
+            foreach (var item in Manager.DataDictionary.Keys)
+                PART_ThemeList.Items.Add(item);
+            PART_ThemeList.SelectedValue = Manager.CurrentThemeName;
+        }
+
+        private void PART_ThemeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PART_ThemeList.SelectedValue is string selectString)
+                Manager.CurrentThemeName = selectString;
+        }
+
+        private void Theme_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("준비 중입니다.","미완성");
+            UpdateTheme();
         }
     }
 }

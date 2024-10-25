@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleLogger.Enum
+namespace SimpleFileIO.Enum
 {
-    public enum ELogAddErrorCode
+    public enum EAddItemErrorCode
     {
         Unknown = -1,
         OK,
         WorkException,
+        DifferentDataType,
     }
 }

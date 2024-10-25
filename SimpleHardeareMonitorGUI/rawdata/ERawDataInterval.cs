@@ -1,5 +1,4 @@
-﻿using System;
-namespace SimpleHardwareMonitorGUI.rawdata
+﻿namespace SimpleHardwareMonitorGUI.Rawdata
 {
     public enum ERawDataInterval
     {

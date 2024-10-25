@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleLogger.Enum
+namespace SimpleFileIO.Enum
 {
-    public enum ELogWriteErrorCode
+    public enum EWriteItemErrorCode
     {
         Unknown = -1,
         OK = 0,

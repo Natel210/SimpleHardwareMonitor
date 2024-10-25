@@ -7,13 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHardwareMonitorGUI", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHardwareMonitor", "SimpleHardwareMonitor\SimpleHardwareMonitor.csproj", "{F67EB2CF-5DEB-4199-88BB-F839B3A1E2D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleLogger", "SimpleLogger\SimpleLogger.csproj", "{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileIO", "SimpleLogger\SimpleFileIO.csproj", "{972A468C-4D26-4C34-9E5E-1A5FE08D0A49}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third", "Third", "{ADFB2304-8B5E-41CA-9087-E49D2970A0B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleOverlayTheme", "SimpleOverlayThemeUI\SimpleOverlayTheme\SimpleOverlayTheme.csproj", "{BC918150-FF87-42A6-A62B-E77A36E80480}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleIniController", "SimpleOverlayThemeUI\SimpleIniController\SimpleIniController.csproj", "{A00346FF-41D3-4CDE-9A22-7F7E8F71E350}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHardWareDataParser", "SimpleHardWareDataParser\SimpleHardWareDataParser.csproj", "{7CB4765E-4BF0-46A8-89A8-9BF2EF11C704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TEST CONSOLE", "TEST CONSOLE\TEST CONSOLE.csproj", "{3A84C4D9-CDE4-46AD-9CDC-CFFED5872F01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,14 @@ Global
 		{A00346FF-41D3-4CDE-9A22-7F7E8F71E350}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A00346FF-41D3-4CDE-9A22-7F7E8F71E350}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A00346FF-41D3-4CDE-9A22-7F7E8F71E350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB4765E-4BF0-46A8-89A8-9BF2EF11C704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB4765E-4BF0-46A8-89A8-9BF2EF11C704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB4765E-4BF0-46A8-89A8-9BF2EF11C704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB4765E-4BF0-46A8-89A8-9BF2EF11C704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A84C4D9-CDE4-46AD-9CDC-CFFED5872F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A84C4D9-CDE4-46AD-9CDC-CFFED5872F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A84C4D9-CDE4-46AD-9CDC-CFFED5872F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A84C4D9-CDE4-46AD-9CDC-CFFED5872F01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

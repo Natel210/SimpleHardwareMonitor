@@ -1,14 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace SimpleHardwareMonitorGUI.common.dashboard
+namespace SimpleHardwareMonitorGUI.Common.Dashboard
 {
     /// <summary>
-    /// Dashboard.xaml에 대한 상호 작용 논리
+    /// DashboardBar.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Dashboard : UserControl
+    public partial class DashboardBar : UserControl
     {
-        public Dashboard()
+        public DashboardBar()
         {
             InitializeComponent();
         }
@@ -19,7 +19,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(CategoryContent),
                 typeof(object),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public object CategoryContent
         {
@@ -31,7 +31,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item1_Header),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item1_Header
         {
@@ -43,7 +43,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item1_Value),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata("", _frameworkPropertyMetadataOptions));
         public string? Item1_Value
         {
@@ -55,7 +55,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item1_SymbolsUse),
                 typeof(bool),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(false, _frameworkPropertyMetadataOptions));
         public bool Item1_SymbolsUse
         {
@@ -67,7 +67,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item1_Symbols),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item1_Symbols
         {
@@ -79,7 +79,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item2_Header),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item2_Header
         {
@@ -91,7 +91,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item2_Value),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item2_Value
         {
@@ -103,7 +103,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item2_SymbolsUse),
                 typeof(bool),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(false, _frameworkPropertyMetadataOptions));
         public bool Item2_SymbolsUse
         {
@@ -115,7 +115,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item2_Symbols),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item2_Symbols
         {
@@ -127,7 +127,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             DependencyProperty.Register(
                 nameof(Item3_Header),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item3_Header
         {
@@ -139,7 +139,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item3_Value),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item3_Value
         {
@@ -151,7 +151,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item3_SymbolsUse),
                 typeof(bool),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(false, _frameworkPropertyMetadataOptions));
         public bool Item3_SymbolsUse
         {
@@ -163,7 +163,7 @@ namespace SimpleHardwareMonitorGUI.common.dashboard
             = DependencyProperty.Register(
                 nameof(Item3_Symbols),
                 typeof(string),
-                typeof(Dashboard),
+                typeof(DashboardBar),
                 new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
         public string? Item3_Symbols
         {

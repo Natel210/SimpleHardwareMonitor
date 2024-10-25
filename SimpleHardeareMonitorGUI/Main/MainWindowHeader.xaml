@@ -7,15 +7,15 @@
              xmlns:buttonHelper="clr-namespace:SimpleOverlayTheme.Object.ButtonObject.Helper;assembly=SimpleOverlayTheme"
              xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
              mc:Ignorable="d"
-             d:Width="{StaticResource WindowWidth}"
-             d:Height="{StaticResource WindowHeaderHeight}"
+             d:Width="800"
+             d:Height="40"
              Style="{StaticResource SimpleOverlayTheme.UserControl.Default}">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ImageBrush x:Key="logImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/PhosphorIcons-HardDrivesThin.png" Stretch="Uniform"/>
-            <ImageBrush x:Key="lockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/BootstrapIcons-Lock.png" Stretch="Uniform"/>
-            <ImageBrush x:Key="unlockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/BootstrapIcons-Unlock.png" Stretch="Uniform"/>
-            <ImageBrush x:Key="settingImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/resource/PhosphorIcons-GearSixThin.png" Stretch="Uniform"/>
+            <ImageBrush x:Key="logImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/Resource/PhosphorIcons-HardDrivesThin.png" Stretch="Uniform"/>
+            <ImageBrush x:Key="lockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/Resource/BootstrapIcons-Lock.png" Stretch="Uniform"/>
+            <ImageBrush x:Key="unlockImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/Resource/BootstrapIcons-Unlock.png" Stretch="Uniform"/>
+            <ImageBrush x:Key="settingImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/Resource/PhosphorIcons-GearSixThin.png" Stretch="Uniform"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid >
@@ -30,17 +30,12 @@
             <customControl:WindowHeader.TitleContent>
                 <Binding Path="MainWindowTitle" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
             </customControl:WindowHeader.TitleContent>
+            <customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
+            </customControl:WindowHeader.ShowToggleMaximizeRestore>
             <customControl:WindowHeader.FontSize>32
             </customControl:WindowHeader.FontSize>
-            <!--<customControl:WindowHeader.UnderbarHeight>2
-            </customControl:WindowHeader.UnderbarHeight>
-            <customControl:WindowHeader.UnderbarSpace>3
-            </customControl:WindowHeader.UnderbarSpace>-->
-            <!--<customControl:WindowHeader.ShowToggleMaximizeRestore>Collapsed
-            </customControl:WindowHeader.ShowToggleMaximizeRestore>-->
             <customControl:WindowHeader.SideContent>
                 <StackPanel x:Name="SideContentPenel" Orientation="Horizontal">
-                    <Button Width="150" Style="{StaticResource SimpleOverlayTheme.Button.Default}" Margin="5,0" Content="ChangeTheme" Background="Transparent" Click="Button_Click"/>
                     <ToggleButton>
                         <ToggleButton.Width>
                             <Binding Path="ActualHeight" ElementName="SideContentPenel"/>
@@ -78,8 +73,6 @@
                         </buttonHelper:Mask.MaskBrushChecked>
                         <buttonHelper:OverlayCheckedBackground.Background>Transparent
                         </buttonHelper:OverlayCheckedBackground.Background>
-                        <!--<buttonHelper:OverlayMask.OverlayMaskVisible>False
-                        </buttonHelper:OverlayMask.OverlayMaskVisible>-->
                         <buttonHelper:OverlayBackground.SetDefaultVisible>False
                         </buttonHelper:OverlayBackground.SetDefaultVisible>
                         <buttonHelper:OverlayBackground.SetOutlineVisible>False

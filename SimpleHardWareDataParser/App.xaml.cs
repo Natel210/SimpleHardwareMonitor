@@ -1,32 +1,26 @@
-﻿using SimpleHardwareMonitor;
-using SimpleOverlayTheme.ThemeSystem;
+﻿using SimpleOverlayTheme.ThemeSystem;
+using System.Configuration;
+using System.Data;
 using System.Windows;
 
-namespace SimpleHardwareMonitorGUI
+namespace SimpleHardWareDataParser
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        //[DllImport("kernel32.dll", SetLastError = true)]
-        //[return: MarshalAs(UnmanagedType.Bool)]
-        //static extern bool AllocConsole();
-
-
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             Manager.InitializeModule();
-            HardwareMonitor.Initialized();
-            //AllocConsole();
+            Manager.CurrentThemeName = "Dark";
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            HardwareMonitor.Release();
             base.OnExit(e);
         }
-
     }
+
 }

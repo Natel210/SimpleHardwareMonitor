@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace SimpleHardwareMonitorGUI.common.dashboard
+namespace SimpleHardwareMonitorGUI.Common.Dashboard
 {
     /// <summary>
     /// GategoryItem.xaml에 대한 상호 작용 논리

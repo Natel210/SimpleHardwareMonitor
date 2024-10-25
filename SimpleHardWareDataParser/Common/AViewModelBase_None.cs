@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SimpleHardwareMonitorGUI.Common
+namespace SimpleHardWareDataParser.Common
 {
     public abstract class AViewModelBase_None : INotifyPropertyChanged
     {

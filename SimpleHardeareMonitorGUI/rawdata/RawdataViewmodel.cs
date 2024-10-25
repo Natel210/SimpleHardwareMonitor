@@ -1,26 +1,26 @@
-﻿using SimpleHardwareMonitor;
-using SimpleHardwareMonitor.data;
-using SimpleHardwareMonitorGUI.common;
-using SimpleLogger.Interface;
-using SimpleLogger.UserProperties;
+﻿using LibreHardwareMonitor.Hardware.Motherboard.Lpc.EC;
+using LibreHardwareMonitor.Hardware.Motherboard;
+using SimpleHardwareMonitor;
+using SimpleHardwareMonitorGUI.Common;
+using SimpleFileIO.UserProperties;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Devices.Geolocation;
+using System.Text.Json;
+using Windows.Devices.Power;
+using SimpleHardwareMonitor.data;
+using System.Diagnostics;
+using SimpleFileIO.Log.Text;
+using SimpleFileIO.Log.Csv;
 
-namespace SimpleHardwareMonitorGUI.rawdata
+namespace SimpleHardwareMonitorGUI.Rawdata
 {
     //static 
     public partial class RawdataViewmodel : AViewModelBase_None
     {
         private static readonly string _loggerName = "rawdataLogger";
-        private static readonly string _extensionDefault = "rawdata";
+        private static readonly string _extensionDefault = "Rawdata";
         public static RawdataViewmodel instance = new RawdataViewmodel();
     }
 
@@ -68,22 +68,43 @@ namespace SimpleHardwareMonitorGUI.rawdata
 
         private void DataLogging()
         {
-            var cpuData = HardwareMonitor.Cpu;
-            _rawdataLogger.Add($"{DateTime.Now:yyMMdd_HH:mm:ss.fff},{cpuData.Use:000.0},{cpuData.Temperature:000.0},{cpuData.Power:000.0}");
+
+            var tempItem = new RawdataItem();
+            tempItem.DateTime = DateTime.Now;
+            if (HardwareMonitor.Cpu is not null)
+            {
+                tempItem.CpuCoreCount = HardwareMonitor.Cpu.Value.CoreCount;
+                tempItem.CpuProcessorCount = HardwareMonitor.Cpu.Value.ProcessorCount;
+                tempItem.CpuUse = HardwareMonitor.Cpu.Value.Use;
+                tempItem.CpuUseByThreads = new List<float>(HardwareMonitor.Cpu.Value.UseByThreads);
+                tempItem.CpuVoltage = HardwareMonitor.Cpu.Value.Voltage;
+                tempItem.CpuVoltageByCore = new List<float>(HardwareMonitor.Cpu.Value.VoltageByCore);
+                tempItem.CpuPower = HardwareMonitor.Cpu.Value.Power;
+                tempItem.CpuPowerByCore = new List<float>(HardwareMonitor.Cpu.Value.PowerByCore);
+                tempItem.CpuTemperature = HardwareMonitor.Cpu.Value.Temperature;
+                tempItem.CpuTemperatureByCore = new List<float>(HardwareMonitor.Cpu.Value.TemperatureByCore);
+            }
+
+            _rawdataCSVLog.Add(tempItem);
         }
 
     }
     public partial class RawdataViewmodel : AViewModelBase_None
     {
         private Timer _loggingTimer;
-        private ILogger _rawdataLogger;
+        private ICSVLog _rawdataCSVLog;
         private DirectoryInfo _rootDirectory = new DirectoryInfo(".//");
         private string _extension = _extensionDefault;
+
         private bool _loggingEnabled = false;
         private ERawDataInterval _loggingInterval = ERawDataInterval.s1;
         private RawdataViewmodel()
         {
-            _rawdataLogger = SimpleLogger.Main.Builder.Create(_loggerName) ?? throw new Exception("don't create logger...");
+            PathProperties pathCSVLong = new();
+            pathCSVLong.RootDirectory = new("./");
+            pathCSVLong.FileName = "temp";
+            pathCSVLong.Extension = ".rawdata";
+            _rawdataCSVLog = SimpleFileIO.Manager.CreateCsvLog(_loggerName, pathCSVLong) ?? throw new Exception("don't create logger...");
             RootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".//");
             Extension = _extensionDefault;
             Load_INI();
@@ -105,8 +126,8 @@ namespace SimpleHardwareMonitorGUI.rawdata
                 return;
             ResettingLoggerProperties();
             DataLogging();
-            if (_rawdataLogger.IsWriting is false)
-                _rawdataLogger.Write();
+            if (_rawdataCSVLog.IsWriting is false)
+                _rawdataCSVLog.Write();
         }
         private void RestartLoggingTimer()
         {
@@ -142,7 +163,7 @@ namespace SimpleHardwareMonitorGUI.rawdata
         }
         private void ResettingLoggerProperties()
         {
-            LoggerProperties tempProperties = _rawdataLogger.Properties;
+            PathProperties tempProperties = _rawdataCSVLog.Properties;
             var curNow = DateTime.Now;
             switch (LoggingInterval)
             {
@@ -171,7 +192,7 @@ namespace SimpleHardwareMonitorGUI.rawdata
                     break;
             }
             tempProperties.Extension = Extension;
-            _rawdataLogger.Properties = tempProperties;
+            _rawdataCSVLog.Properties = tempProperties;
         }
     }
 }

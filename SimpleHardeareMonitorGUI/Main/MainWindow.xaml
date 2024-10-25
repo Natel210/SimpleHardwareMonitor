@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Main"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:dashboard="clr-namespace:SimpleHardwareMonitorGUI.common.dashboard"
+        xmlns:dashboard="clr-namespace:SimpleHardwareMonitorGUI.Common.Dashboard"
         mc:Ignorable="d"
         FontSize="32"
         ResizeMode="NoResize"
@@ -14,22 +14,19 @@
         AllowsTransparency="True"
         Title="{Binding TitleName, Mode=TwoWay}"
         Style="{StaticResource SimpleOverlayTheme.Window.Default}"
-        
-        Closed="Window_Closed">
-
-    <!--<i:Interaction.Behaviors>
-        <local:WindowResizeBehavior/>
-    </i:Interaction.Behaviors>-->
+        Width="500"
+        Height="200">
     <Window.DataContext>
         <local:MainWindowViewmodel/>
     </Window.DataContext>
-    <Window.Resources>
-        <sys:Double x:Key="dashboardHeaderWidth">150.0</sys:Double>
-    </Window.Resources>
-    <Border Margin="0" BorderThickness="1" BorderBrush="Gray">
-        <Border.Triggers>
-        </Border.Triggers>
+    <Border>
+        <Border.BorderThickness>1
+        </Border.BorderThickness>
+        <Border.BorderBrush>Gray
+        </Border.BorderBrush>
         <StackPanel>
+            <StackPanel.Orientation>Vertical
+            </StackPanel.Orientation>
             <local:MainWindowHeader x:Name="testHeader"
                             MainWindowTitle="{Binding TitleName, Mode=TwoWay}"
                             MainWindowLogging="{Binding RawData.LoggingEnabled, Mode=TwoWay}"/>
@@ -40,78 +37,78 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <dashboard:Dashboard Grid.Row="0" Margin="5,5,5,0">
-                        <dashboard:Dashboard.BorderBrush>
+                    <dashboard:DashboardBar Grid.Row="0" Margin="5,5,5,0">
+                        <dashboard:DashboardBar.BorderBrush>
                             <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Outline"/>
-                        </dashboard:Dashboard.BorderBrush>
-                        <dashboard:Dashboard.BorderThickness>
+                        </dashboard:DashboardBar.BorderBrush>
+                        <dashboard:DashboardBar.BorderThickness>
                             <StaticResource ResourceKey="SimpleOverlayTheme.DefaultThickness.Default"/>
-                        </dashboard:Dashboard.BorderThickness>
-                        <dashboard:Dashboard.CategoryContent>
+                        </dashboard:DashboardBar.BorderThickness>
+                        <dashboard:DashboardBar.CategoryContent>
                             <Border Width="150">
                                 <Button Content="CPU" Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                             </Border>
-                        </dashboard:Dashboard.CategoryContent>
-                        <dashboard:Dashboard.Item1_Header>Used
-                        </dashboard:Dashboard.Item1_Header>
-                        <dashboard:Dashboard.Item1_Value>
+                        </dashboard:DashboardBar.CategoryContent>
+                        <dashboard:DashboardBar.Item1_Header>Used
+                        </dashboard:DashboardBar.Item1_Header>
+                        <dashboard:DashboardBar.Item1_Value>
                             <Binding Path="HW.Cpu.Use" StringFormat="{}{0:F1}"/>
-                        </dashboard:Dashboard.Item1_Value>
-                        <dashboard:Dashboard.Item1_SymbolsUse>True
-                        </dashboard:Dashboard.Item1_SymbolsUse>
-                        <dashboard:Dashboard.Item1_Symbols>%
-                        </dashboard:Dashboard.Item1_Symbols>
-                        <dashboard:Dashboard.Item2_Header>Temperature
-                        </dashboard:Dashboard.Item2_Header>
-                        <dashboard:Dashboard.Item2_Value>
+                        </dashboard:DashboardBar.Item1_Value>
+                        <dashboard:DashboardBar.Item1_SymbolsUse>True
+                        </dashboard:DashboardBar.Item1_SymbolsUse>
+                        <dashboard:DashboardBar.Item1_Symbols>%
+                        </dashboard:DashboardBar.Item1_Symbols>
+                        <dashboard:DashboardBar.Item2_Header>Temperature
+                        </dashboard:DashboardBar.Item2_Header>
+                        <dashboard:DashboardBar.Item2_Value>
                             <Binding Path="HW.Cpu.Temperature" StringFormat="{}{0:F1}"/>
-                        </dashboard:Dashboard.Item2_Value>
-                        <dashboard:Dashboard.Item2_SymbolsUse>True
-                        </dashboard:Dashboard.Item2_SymbolsUse>
-                        <dashboard:Dashboard.Item2_Symbols>°C
-                        </dashboard:Dashboard.Item2_Symbols>
-                        <dashboard:Dashboard.Item3_Header>Power
-                        </dashboard:Dashboard.Item3_Header>
-                        <dashboard:Dashboard.Item3_Value>
+                        </dashboard:DashboardBar.Item2_Value>
+                        <dashboard:DashboardBar.Item2_SymbolsUse>True
+                        </dashboard:DashboardBar.Item2_SymbolsUse>
+                        <dashboard:DashboardBar.Item2_Symbols>°C
+                        </dashboard:DashboardBar.Item2_Symbols>
+                        <dashboard:DashboardBar.Item3_Header>Power
+                        </dashboard:DashboardBar.Item3_Header>
+                        <dashboard:DashboardBar.Item3_Value>
                             <Binding Path="HW.Cpu.Power" StringFormat="{}{0:F1}"/>
-                        </dashboard:Dashboard.Item3_Value>
-                        <dashboard:Dashboard.Item3_SymbolsUse>True
-                        </dashboard:Dashboard.Item3_SymbolsUse>
-                        <dashboard:Dashboard.Item3_Symbols>W
-                        </dashboard:Dashboard.Item3_Symbols>
-                    </dashboard:Dashboard>
-                    <dashboard:Dashboard Grid.Row="1" Margin="5,5,5,0" >
-                        <dashboard:Dashboard.BorderBrush>
+                        </dashboard:DashboardBar.Item3_Value>
+                        <dashboard:DashboardBar.Item3_SymbolsUse>True
+                        </dashboard:DashboardBar.Item3_SymbolsUse>
+                        <dashboard:DashboardBar.Item3_Symbols>W
+                        </dashboard:DashboardBar.Item3_Symbols>
+                    </dashboard:DashboardBar>
+                    <dashboard:DashboardBar Grid.Row="1" Margin="5,5,5,0" >
+                        <dashboard:DashboardBar.BorderBrush>
                             <StaticResource ResourceKey="SimpleOverlayTheme.DefaultBrush.Outline"/>
-                        </dashboard:Dashboard.BorderBrush>
-                        <dashboard:Dashboard.BorderThickness>
+                        </dashboard:DashboardBar.BorderBrush>
+                        <dashboard:DashboardBar.BorderThickness>
                             <StaticResource ResourceKey="SimpleOverlayTheme.DefaultThickness.Default"/>
-                        </dashboard:Dashboard.BorderThickness>
-                        <dashboard:Dashboard.CategoryContent>
+                        </dashboard:DashboardBar.BorderThickness>
+                        <dashboard:DashboardBar.CategoryContent>
                             <Border Width="150">
                                 <Button Content="Memory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                 Background="Transparent" FontSize="32" BorderThickness="0" Style="{StaticResource SimpleOverlayTheme.Button.Default}"/>
                             </Border>
-                        </dashboard:Dashboard.CategoryContent>
-                        <dashboard:Dashboard.Item1_Header>Used Percent
-                        </dashboard:Dashboard.Item1_Header>
-                        <dashboard:Dashboard.Item1_Value>
+                        </dashboard:DashboardBar.CategoryContent>
+                        <dashboard:DashboardBar.Item1_Header>Used Percent
+                        </dashboard:DashboardBar.Item1_Header>
+                        <dashboard:DashboardBar.Item1_Value>
                             <Binding Path="HW.Memory.Value" StringFormat="{}{0:F1}"/>
-                        </dashboard:Dashboard.Item1_Value>
-                        <dashboard:Dashboard.Item1_SymbolsUse>True
-                        </dashboard:Dashboard.Item1_SymbolsUse>
-                        <dashboard:Dashboard.Item1_Symbols>%
-                        </dashboard:Dashboard.Item1_Symbols>
-                        <dashboard:Dashboard.Item2_Header>Used
-                        </dashboard:Dashboard.Item2_Header>
-                        <dashboard:Dashboard.Item2_Value>
+                        </dashboard:DashboardBar.Item1_Value>
+                        <dashboard:DashboardBar.Item1_SymbolsUse>True
+                        </dashboard:DashboardBar.Item1_SymbolsUse>
+                        <dashboard:DashboardBar.Item1_Symbols>%
+                        </dashboard:DashboardBar.Item1_Symbols>
+                        <dashboard:DashboardBar.Item2_Header>Used
+                        </dashboard:DashboardBar.Item2_Header>
+                        <dashboard:DashboardBar.Item2_Value>
                             <Binding Path="HW.Cpu.Use" StringFormat="{}{0:F2}"/>
-                        </dashboard:Dashboard.Item2_Value>
-                        <dashboard:Dashboard.Item2_SymbolsUse>True
-                        </dashboard:Dashboard.Item2_SymbolsUse>
-                        <dashboard:Dashboard.Item2_Symbols>GB
-                        </dashboard:Dashboard.Item2_Symbols>
-                    </dashboard:Dashboard>
+                        </dashboard:DashboardBar.Item2_Value>
+                        <dashboard:DashboardBar.Item2_SymbolsUse>True
+                        </dashboard:DashboardBar.Item2_SymbolsUse>
+                        <dashboard:DashboardBar.Item2_Symbols>GB
+                        </dashboard:DashboardBar.Item2_Symbols>
+                    </dashboard:DashboardBar>
                 </Grid>
             </Border>
         </StackPanel>

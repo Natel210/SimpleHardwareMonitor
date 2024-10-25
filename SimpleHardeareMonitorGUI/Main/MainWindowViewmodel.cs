@@ -1,6 +1,6 @@
 ﻿using SimpleHardwareMonitor;
-using SimpleHardwareMonitorGUI.common;
-using SimpleHardwareMonitorGUI.rawdata;
+using SimpleHardwareMonitorGUI.Common;
+using SimpleHardwareMonitorGUI.Rawdata;
 
 namespace SimpleHardwareMonitorGUI.Main
 {
@@ -42,6 +42,6 @@ namespace SimpleHardwareMonitorGUI.Main
     {
         private HardwareMonitorVM _hardwareMonitorViewmodel;
         private RawdataViewmodel _rawdataViewmodel;
-        private string _titleName = "타이틀 !!!";
+        private string _titleName = "HardWare Monitor";
     }
 }
