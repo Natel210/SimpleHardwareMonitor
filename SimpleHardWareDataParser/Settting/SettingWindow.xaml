@@ -10,7 +10,9 @@
         ResizeMode="CanResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Style="{StaticResource SimpleOverlayTheme.Window.Default}"
+        Background="Gray"
+        Title="Setting"
+        Style="{StaticResource SimpleOverlayTheme.Window.CustomHeader}"
         Height="450"
         Width="800">
     <Border>
@@ -23,7 +25,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <customControl:WindowHeader Grid.Row="0">
+            <!--<customControl:WindowHeader Grid.Row="0">
                 <customControl:WindowHeader.TitleContent>
                     <Label>
                         <Label.FontSize>24
@@ -39,7 +41,7 @@
                         </Label.Style>
                     </Label>
                 </customControl:WindowHeader.TitleContent>
-            </customControl:WindowHeader>
+            </customControl:WindowHeader>-->
             <TabControl Grid.Row="1" TabStripPlacement="Left" HorizontalContentAlignment="Left">
                 <TabItem>
                     <TabItem.Header>

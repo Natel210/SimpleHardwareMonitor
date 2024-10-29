@@ -9,7 +9,7 @@
         FontSize="32"
         ResizeMode="CanResize"
         WindowStyle="None"
-        AllowsTransparency="True"
+        AllowsTransparency="False"
         Title="{Binding TitleName, Mode=TwoWay}"
         Style="{StaticResource SimpleOverlayTheme.Window.Default}"
         Width="1200"
@@ -17,11 +17,19 @@
     <Window.DataContext>
         <local:MainWindowViewmodel/>
     </Window.DataContext>
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="5" CornerRadius="0" CaptionHeight="0"
+              GlassFrameThickness="0" UseAeroCaptionButtons="False">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
     <Border>
         <Border.BorderThickness>1
         </Border.BorderThickness>
         <Border.BorderBrush>Gray
         </Border.BorderBrush>
+        <Border.Margin>
+            <Binding Path="Margin" RelativeSource="{RelativeSource AncestorType=Window}"/>
+        </Border.Margin>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
