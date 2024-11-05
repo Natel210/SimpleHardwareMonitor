@@ -5,27 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardWareDataParser.Settting"
         xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
-        mc:Ignorable="d"
-        FontSize="16"
-        ResizeMode="CanResize"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Gray"
-        Title="Setting"
-        Style="{StaticResource SimpleOverlayTheme.Window.CustomHeader}"
-        Height="450"
-        Width="800">
-    <Border>
-        <Border.BorderThickness>1
-        </Border.BorderThickness>
-        <Border.BorderBrush>Gray
-        </Border.BorderBrush>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <!--<customControl:WindowHeader Grid.Row="0">
+        xmlns:windowHelper="clr-namespace:SimpleOverlayTheme.Object.WindowObject.Helper;assembly=SimpleOverlayTheme"
+        mc:Ignorable="d">
+    <Window.Title>Setting
+    </Window.Title>
+    <Window.Height>450
+    </Window.Height>
+    <Window.Width>800
+    </Window.Width>
+    <Window.Style>
+        <StaticResource ResourceKey="SimpleOverlayTheme.Window.CustomHeader"/>
+    </Window.Style>
+    <windowHelper:Items.WindowTitleHeader>
+        <customControl:WindowHeader Height="40">
+            <customControl:WindowHeader.TitleContent>
+                <Label>
+                    <Label.Background>Transparent
+                    </Label.Background>
+                    <Label.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                    </Label.Style>
+                    <Label.Content>
+                        <Binding Path="Title" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                    </Label.Content>
+                </Label>
+            </customControl:WindowHeader.TitleContent>
+        </customControl:WindowHeader>
+    </windowHelper:Items.WindowTitleHeader>
+    <Window.Content>
+        <Border>
+            <!--<customControl:WindowHeader Grid.Row="0" Height="50" VerticalAlignment="Top">
                 <customControl:WindowHeader.TitleContent>
                     <Label>
                         <Label.FontSize>24
@@ -42,22 +51,52 @@
                     </Label>
                 </customControl:WindowHeader.TitleContent>
             </customControl:WindowHeader>-->
-            <TabControl Grid.Row="1" TabStripPlacement="Left" HorizontalContentAlignment="Left">
-                <TabItem>
-                    <TabItem.Header>
-                        <TextBlock Text="11111"/>
-                        <!--<Label Content="General" Style="{StaticResource SimpleOverlayTheme.Label.Default}" HorizontalAlignment="Left"/>-->
-                    </TabItem.Header>
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <TextBlock Text="22222222222"/>
-                        <!--<Label Content="Raw Data" Style="{StaticResource SimpleOverlayTheme.Label.Default}" HorizontalAlignment="Left"/>-->
-                    </TabItem.Header>
-                </TabItem>
-            </TabControl>
-        </Grid>
-        
-        
-    </Border>
+            <!--<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        -->
+            <!--<customControl:WindowHeader Grid.Row="0">
+            <customControl:WindowHeader.TitleContent>
+                <Label>
+                    <Label.FontSize>24
+                    </Label.FontSize>
+                    <Label.Margin>0,0,0,0
+                    </Label.Margin>
+                    <Label.Background>Transparent
+                    </Label.Background>
+                    <Label.Content>Setting
+                    </Label.Content>
+                    <Label.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                    </Label.Style>
+                </Label>
+            </customControl:WindowHeader.TitleContent>
+        </customControl:WindowHeader>-->
+            <!--
+        <TabControl Grid.Row="1" TabStripPlacement="Left" HorizontalContentAlignment="Left">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="11111"/>
+                    -->
+            <!--<Label Content="General" Style="{StaticResource SimpleOverlayTheme.Label.Default}" HorizontalAlignment="Left"/>-->
+            <!--
+                </TabItem.Header>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="22222222222"/>
+                    -->
+            <!--<Label Content="Raw Data" Style="{StaticResource SimpleOverlayTheme.Label.Default}" HorizontalAlignment="Left"/>-->
+            <!--
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
+    </Grid>-->
+
+            <Button Width="300" Content="TEST TEST" VerticalAlignment="Bottom"/>
+        </Border>
+    </Window.Content>
+
+    
 </Window>

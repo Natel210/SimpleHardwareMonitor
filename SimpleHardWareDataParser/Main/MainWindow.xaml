@@ -6,62 +6,69 @@
         xmlns:local="clr-namespace:SimpleHardWareDataParser.Main"
         xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
         xmlns:dataGridHelper="clr-namespace:SimpleOverlayTheme.Object.DataGridObject.Helper;assembly=SimpleOverlayTheme"
+        xmlns:windowHelper="clr-namespace:SimpleOverlayTheme.Object.WindowObject.Helper;assembly=SimpleOverlayTheme"
         FontSize="32"
-        ResizeMode="CanResize"
-        WindowStyle="None"
-        AllowsTransparency="False"
         Title="{Binding TitleName, Mode=TwoWay}"
-        Style="{StaticResource SimpleOverlayTheme.Window.Default}"
         Width="1200"
-        Height="600">
+        Height="600"
+        WindowState="Maximized">
+    <Window.Style>
+        <StaticResource ResourceKey="SimpleOverlayTheme.Window.CustomHeader"/>
+    </Window.Style>
     <Window.DataContext>
         <local:MainWindowViewmodel/>
     </Window.DataContext>
-    <WindowChrome.WindowChrome>
-        <WindowChrome ResizeBorderThickness="5" CornerRadius="0" CaptionHeight="0"
-              GlassFrameThickness="0" UseAeroCaptionButtons="False">
-        </WindowChrome>
-    </WindowChrome.WindowChrome>
+    <windowHelper:Items.WindowTitleHeader>
+        <customControl:WindowHeader Grid.Row="0">
+            <customControl:WindowHeader.TitleContent>
+                <Label>
+                    <Label.FontSize>24
+                    </Label.FontSize>
+                    <Label.Margin>0,0,0,0
+                    </Label.Margin>
+                    <Label.Background>Transparent
+                    </Label.Background>
+                    <Label.Content>
+                        <Binding Path="TitleName" Mode="TwoWay"/>
+                    </Label.Content>
+                    <Label.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                    </Label.Style>
+                </Label>
+            </customControl:WindowHeader.TitleContent>
+            <customControl:WindowHeader.SideContent>
+                <Button Content="TEST" Click="Button_Click"/>
+            </customControl:WindowHeader.SideContent>
+        </customControl:WindowHeader>
+    </windowHelper:Items.WindowTitleHeader>
     <Border>
-        <Border.BorderThickness>1
+        <!--<Border.BorderThickness>1
         </Border.BorderThickness>
         <Border.BorderBrush>Gray
         </Border.BorderBrush>
         <Border.Margin>
             <Binding Path="Margin" RelativeSource="{RelativeSource AncestorType=Window}"/>
-        </Border.Margin>
+        </Border.Margin>-->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <customControl:WindowHeader Grid.Row="0">
-                <customControl:WindowHeader.TitleContent>
-                    <Label>
-                        <Label.FontSize>24
-                        </Label.FontSize>
-                        <Label.Margin>0,0,0,0
-                        </Label.Margin>
-                        <Label.Background>Transparent
-                        </Label.Background>
-                        <Label.Content>
-                            <Binding Path="TitleName" Mode="TwoWay"/>
-                        </Label.Content>
-                        <Label.Style>
-                            <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                        </Label.Style>
-                    </Label>
-                </customControl:WindowHeader.TitleContent>
-                <customControl:WindowHeader.SideContent>
-                    <Button Content="TEST" Click="Button_Click"/>
-                </customControl:WindowHeader.SideContent>
-            </customControl:WindowHeader>
-            <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black">
+
+            <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <Grid></Grid>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
                 
             </TabControl>
-            
-            <DataGrid Grid.Row="2" x:Name="dataGrid" FontSize="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="Cell">
+
+            <DataGrid x:Name="dataGrid" FontSize="12" Grid.Row="2"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
+                          SelectionMode="Extended" SelectionUnit="Cell"
+                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource SimpleOverlayTheme.DataGridColumnHeader.Default}">
                         <Setter Property="FontSize" Value="20"/>
@@ -74,7 +81,16 @@
                 <DataGrid.Style>
                     <StaticResource ResourceKey="SimpleOverlayTheme.DataGrid.Default"/>
                 </DataGrid.Style>
+                <DataGrid.EnableRowVirtualization>True
+                </DataGrid.EnableRowVirtualization>
+                <VirtualizingStackPanel.IsVirtualizing>True
+                </VirtualizingStackPanel.IsVirtualizing>
+                <VirtualizingStackPanel.VirtualizationMode>Recycling
+                </VirtualizingStackPanel.VirtualizationMode>
+
             </DataGrid>
+
+
         </Grid>
     </Border>
 </Window>

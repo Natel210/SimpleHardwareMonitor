@@ -28,6 +28,7 @@ namespace SimpleHardWareDataParser.Main
 
 
             PART_TabItem.ItemsSource = RawdataRecordManager._rawdataSplitInfo.Keys;
+            
             PART_TabItem.SelectionChanged += (object sender, SelectionChangedEventArgs e) => {
                 if (PART_TabItem.SelectedItem.ToString() is string selectItemName )
                 {
