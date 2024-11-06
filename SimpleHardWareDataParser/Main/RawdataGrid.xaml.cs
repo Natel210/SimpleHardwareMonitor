@@ -1,6 +1,7 @@
 ﻿using SimpleHardWareDataParser.Rawdata;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,19 @@ using System.Windows.Shapes;
 
 namespace SimpleHardWareDataParser.Main
 {
+
+    
+
     /// <summary>
     /// RawdataGrid.xaml에 대한 상호 작용 논리
     /// </summary>
+    [TemplatePart(Name = "PART_TabItem", Type = typeof(TabControl))]
+    [TemplatePart(Name = "PART_DataGrid", Type = typeof(DataGrid))]
+    
     public partial class RawdataGrid : UserControl
     {
+        private Dictionary<string, object> Attributes { get; set; } = [];
+
         public RawdataGrid()
         {
             InitializeComponent();
@@ -45,14 +54,45 @@ namespace SimpleHardWareDataParser.Main
                 //tabItem.Content = frame; // 또는 page로 설정 가능
                 //PART_TabItem.Items.Add(tabItem);
 
+
+                
+
+
+
+
+
                 PART_TabItem.ItemsSource = RawdataRecordManager._rawdataSplitInfo.Keys;
                 PART_TabItem.SelectionChanged += (object sender, SelectionChangedEventArgs e) => {
+
+
+                    List<dynamic> dynamicDataTable = new();
+
                     if (PART_TabItem.SelectedItem.ToString() is string selectItemName)
                     {
-                        dataGrid.ItemsSource = RawdataRecordManager.Data[selectItemName].Values; ;
+                        foreach (var item in RawdataRecordManager.Data[selectItemName].Values)
+                        {
+                            dynamic dynamicRecord = new ExpandoObject();
+                            dynamicRecord.CpuUse = item.CpuUse;
+                            dynamicRecord.CpuPower = item.CpuPower;
+                            dynamicRecord.CpuTemperature = item.CpuTemperature;
+                            //dynamicRecord.CpuUse = item.CpuUse;
+                            //dynamicRecord.CpuUse = item.CpuUse;
+                            dynamicDataTable.Add(dynamicRecord);
+                        }
+
+                        PART_DataGrid.ItemsSource = dynamicDataTable;
+
+                        //PART_DataGrid.ItemsSource = RawdataRecordManager.Data[selectItemName].Values;
                     }
                 };
             }
         }
+
+        private void UpdateDataGrid()
+        {
+
+        }
+
+
     }
 }

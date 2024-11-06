@@ -9,6 +9,13 @@ namespace SimpleHardwareMonitor.viewmodel
     public partial class CpuVM : INotifyPropertyChanged
     {
         public static CpuVM instance = new CpuVM();
+
+        public string Name
+        {
+            get => _name;
+            internal set => Set(ref _name, value);
+        }
+
         public int CoreCount
         {
             get => _coreCount;
@@ -62,6 +69,7 @@ namespace SimpleHardwareMonitor.viewmodel
     }
     public partial class CpuVM : INotifyPropertyChanged
     {
+        private string _name;
         private int _coreCount;
         private int _processorCount;
         private float _use;

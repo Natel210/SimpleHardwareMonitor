@@ -65,9 +65,9 @@
                 
             </TabControl>
 
-            <DataGrid x:Name="dataGrid" FontSize="12" Grid.Row="2"
+            <DataGrid x:Name="PART_DataGrid" FontSize="12" Grid.Row="2"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
-                          SelectionMode="Extended" SelectionUnit="Cell"
+                          SelectionMode="Extended" SelectionUnit="Cell" AutoGenerateColumns ="True"
                           VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource SimpleOverlayTheme.DataGridColumnHeader.Default}">

@@ -12,13 +12,23 @@ namespace SimpleHardwareMonitor.monitor
 {
     internal partial class CpuMonitor : AHardwareMonitor<CpuData>
     {
+        //private PerformanceCounter _usePerformance;
         private PerformanceCounter _usePerformance;
         private List<PerformanceCounter> _usePerformanceByThreads;
         public CpuMonitor(IHardware hardware) : base(hardware) { }
         protected sealed override void Init()
         {
+            ManagementObjectSearcher searcherName = new ManagementObjectSearcher("select Name from Win32_Processor");
+            foreach (ManagementObject obj in searcherName.Get())
+            {
+                _data.Name = obj["Name"].ToString();
+                break;
+            }
+            CpuVM.instance.Name = _data.Name;
             _data.CoreCount = GetPhysicalCoreCount();
+            CpuVM.instance.CoreCount = _data.CoreCount;
             _data.ProcessorCount = Environment.ProcessorCount;
+            CpuVM.instance.ProcessorCount = _data.ProcessorCount;
             _usePerformance = new PerformanceCounter("Processor Information", "% Processor Utility", "0,_Total", true);
             _data.UseByThreads = new List<float>();
             _usePerformanceByThreads = new List<PerformanceCounter>();

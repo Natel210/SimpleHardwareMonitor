@@ -16,16 +16,26 @@
 
         </TabControl>
 
-        <DataGrid Grid.Row="1" x:Name="dataGrid" FontSize="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="Cell">
+        <DataGrid Grid.Row="1" x:Name="PART_DataGrid" FontSize="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="Cell">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource SimpleOverlayTheme.DataGridColumnHeader.Default}">
                     <Setter Property="FontSize" Value="20"/>
                     <Setter Property="Padding" Value="5,0"/>
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <!--<Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>-->
                     <Setter Property="dataGridHelper:Header.ContentPadding" Value="20,0"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell" BasedOn="{StaticResource SimpleOverlayTheme.DataGridCell.Default}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <!--<Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>-->
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Style>
                 <StaticResource ResourceKey="SimpleOverlayTheme.DataGrid.Default"/>
             </DataGrid.Style>

@@ -4,6 +4,8 @@ namespace SimpleHardwareMonitor.data
 {
     public struct CpuData
     {
+        public string Name { get; internal set; }
+
         public int CoreCount { get; internal set; }
 
         public int ProcessorCount { get; internal set; }
