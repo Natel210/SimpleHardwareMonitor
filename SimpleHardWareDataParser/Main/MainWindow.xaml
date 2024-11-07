@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardWareDataParser.Main"
+        xmlns:dataList="clr-namespace:SimpleHardWareDataParser.Main.RawDataList"
         xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
         xmlns:dataGridHelper="clr-namespace:SimpleOverlayTheme.Object.DataGridObject.Helper;assembly=SimpleOverlayTheme"
         xmlns:windowHelper="clr-namespace:SimpleOverlayTheme.Object.WindowObject.Helper;assembly=SimpleOverlayTheme"
@@ -50,22 +51,18 @@
             <Binding Path="Margin" RelativeSource="{RelativeSource AncestorType=Window}"/>
         </Border.Margin>-->
         <Grid>
-            <Grid.RowDefinitions>
+            <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+            </TabControl>
+
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
-            <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <Grid></Grid>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-                
-            </TabControl>
 
-            <DataGrid x:Name="PART_DataGrid" FontSize="12" Grid.Row="2"
+
+            <!--<DataGrid x:Name="PART_DataGrid" FontSize="12" Grid.Row="2"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
                           SelectionMode="Extended" SelectionUnit="Cell" AutoGenerateColumns ="True"
                           VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
@@ -88,7 +85,7 @@
                 <VirtualizingStackPanel.VirtualizationMode>Recycling
                 </VirtualizingStackPanel.VirtualizationMode>
 
-            </DataGrid>
+            </DataGrid>-->
 
 
         </Grid>

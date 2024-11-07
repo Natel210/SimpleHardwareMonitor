@@ -14,8 +14,4 @@
     <ProjectReference Include="..\SimpleOverlayThemeUI\SimpleOverlayTheme\SimpleOverlayTheme.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Main\DataList\" />
-  </ItemGroup>
-
 </Project>

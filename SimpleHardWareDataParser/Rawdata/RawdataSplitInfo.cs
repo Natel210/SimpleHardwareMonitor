@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleHardWareDataParser.Rawdata
 {
-    internal class RawdataSplitInfo
+    public class RawdataSplitInfo
     {
         internal string SplitName { get; set; } = "";
         internal DateTime SplitStart { get; set; }

@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -13,9 +14,10 @@ namespace SimpleHardWareDataParser.Rawdata
 {
     static internal class RawdataRecordManager
     {
-        static public RawdataRecordDictionary _originData = new();
+        static private RawdataRecordDictionary _originData = new();
+        static public RawdataRecordDictionary OriginData { get => _originData; }
 
-        static public Dictionary<string,RawdataSplitInfo> _rawdataSplitInfo = new();
+        static public Dictionary<string,RawdataSplitInfo> RawDataSplitInfo = new();
 
         static internal Dictionary<string, RawdataRecordDictionary> Data { get; } = [];
 
@@ -33,7 +35,7 @@ namespace SimpleHardWareDataParser.Rawdata
                 Debug.WriteLine(file);
             }
             Debug.WriteLine("-------------\n");
-            _originData.Clear();
+            RawdataRecordDictionary tempData = new ();
             foreach (var file in files)
             {
                 using (var reader = new StreamReader(file))
@@ -41,16 +43,20 @@ namespace SimpleHardWareDataParser.Rawdata
                 {
                     var records = csv.GetRecords<RawdataItem>();
                     foreach (var record in records)
-                        _originData.Add(record.DateTime, record);
+                    {
+                        tempData[record.DateTime] = record;
+                    }
+                    //_originData.Add(record.DateTime, record);
                 }
             }
+            _originData = new(tempData.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
             return true;
         }
 
         static internal void Split()
         {
             Data.Clear();
-            foreach (var item in _rawdataSplitInfo)
+            foreach (var item in RawDataSplitInfo)
             {
                 var tempData = _originData
                     .Where(d => d.Key >= item.Value.SplitStart && d.Key <= item.Value.SplitEnd)
@@ -65,7 +71,6 @@ namespace SimpleHardWareDataParser.Rawdata
 
             }
         }
-
 
 
 
