@@ -20,7 +20,8 @@ namespace SimpleHardwareMonitorGUI.Rawdata
     public partial class RawdataViewmodel : AViewModelBase_None
     {
         private static readonly string _loggerName = "rawdataLogger";
-        private static readonly string _extensionDefault = "Rawdata";
+        private static readonly string _titleNameDefault = "";
+        private static readonly string _extensionDefault = "rawdata";
         public static RawdataViewmodel instance = new RawdataViewmodel();
     }
 
@@ -35,6 +36,12 @@ namespace SimpleHardwareMonitorGUI.Rawdata
                     ResettingLoggerProperties();
             }
         }
+        public string TitleName
+        {
+            get => _titleName;
+            set => Set(ref _titleName, value, nameof(TitleName));
+        }
+
         public string Extension
         {
             get => _extension;
@@ -50,7 +57,10 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             set
             {
                 if(Set(ref _loggingInterval, value, nameof(LoggingInterval)) is true)
+                {
                     ResettingLoggerProperties();
+                    RestartLoggingTimer();
+                }
             }
         }
         public bool LoggingEnabled
@@ -94,6 +104,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         private Timer _loggingTimer;
         private ICSVLog _rawdataCSVLog;
         private DirectoryInfo _rootDirectory = new DirectoryInfo(".//");
+        private string _titleName = _titleNameDefault;
         private string _extension = _extensionDefault;
 
         private bool _loggingEnabled = false;
@@ -137,8 +148,6 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             DateTime nextTime = DateTime.Now;
             switch (LoggingInterval)
             {
-                case ERawDataInterval.ms250:
-                case ERawDataInterval.ms500:
                 case ERawDataInterval.s1:
                     nextTime = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, currentDate.Hour, currentDate.Minute, currentDate.Second, 0).AddSeconds(1);
                     break;
@@ -165,32 +174,30 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         {
             PathProperties tempProperties = _rawdataCSVLog.Properties;
             var curNow = DateTime.Now;
+            DateTime fileTime = new DateTime();
             switch (LoggingInterval)
             {
-                case ERawDataInterval.ms250:
-                case ERawDataInterval.ms500:
                 case ERawDataInterval.s1:
                 case ERawDataInterval.s5:
                 case ERawDataInterval.s10:
                 case ERawDataInterval.s20:
                 case ERawDataInterval.s30:
-                    tempProperties.RootDirectory = new DirectoryInfo(Path.Combine(RootDirectory.FullName, $"{curNow:yyMMdd_HH}\\"));
-                    tempProperties.FileName = $"{curNow.Minute:D2}";
+                    fileTime = new DateTime(curNow.Year, curNow.Month, curNow.Day, curNow.Hour, curNow.Minute, 0, 0);
                     break;
                 case ERawDataInterval.m1:
                 case ERawDataInterval.m10:
                 case ERawDataInterval.m20:
                 case ERawDataInterval.m30:
-                    tempProperties.RootDirectory = new DirectoryInfo(Path.Combine(RootDirectory.FullName, "Hour", $"{curNow:yyMMdd}\\"));
-                    tempProperties.FileName = $"{curNow.Hour:D2}";
+                    fileTime = new DateTime(curNow.Year, curNow.Month, curNow.Day, curNow.Hour, 0, 0, 0);
                     break;
                 case ERawDataInterval.h1:
-                    tempProperties.RootDirectory = new DirectoryInfo(Path.Combine(RootDirectory.FullName,"Day", $"{curNow:yyMM}\\"));
-                    tempProperties.FileName = $"{curNow.Day:D2}";
+                    fileTime = new DateTime(curNow.Year, curNow.Month, curNow.Day, 0, 0, 0, 0);
                     break;
                 default:
                     break;
             }
+            tempProperties.RootDirectory = new DirectoryInfo(Path.Combine(RootDirectory.FullName, $"{TitleName}\\{fileTime:yyMMdd}\\"));
+            tempProperties.FileName = $"{TitleName}_{fileTime:HHmmss}";
             tempProperties.Extension = Extension;
             _rawdataCSVLog.Properties = tempProperties;
         }

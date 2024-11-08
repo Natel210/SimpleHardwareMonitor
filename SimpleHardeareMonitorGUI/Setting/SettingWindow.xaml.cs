@@ -29,19 +29,6 @@ namespace SimpleHardwareMonitorGUI.Setting
 
         }
 
-        public static readonly DependencyProperty SettingWindowLoggingIntervalProperty
-            = DependencyProperty.Register(
-                "SettingWindowLogging",
-                typeof(ERawDataInterval),
-                typeof(SettingWindow),
-                new PropertyMetadata(ERawDataInterval.m1));
-
-        public ERawDataInterval SettingWindowLogging
-        {
-            get { return (ERawDataInterval)GetValue(SettingWindowLoggingIntervalProperty); }
-            set { SetValue(SettingWindowLoggingIntervalProperty, value); }
-        }
-
         private void UpdateTheme()
         {
             if (PART_ThemeList is null)
@@ -62,6 +49,12 @@ namespace SimpleHardwareMonitorGUI.Setting
         {
             MessageBox.Show("준비 중입니다.","미완성");
             UpdateTheme();
+        }
+
+        private void LoggingInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if (PART_ThemeList.SelectedValue is string selectString)
+            //    Manager. = selectString;
         }
     }
 }

@@ -92,7 +92,7 @@
                         <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
                     </Label.Style>
                 </Label>
-                <ComboBox>
+                <ComboBox SelectionChanged="LoggingInterval_SelectionChanged">
                     <ComboBox.Margin>5,0,0,0
                     </ComboBox.Margin>
                     <ComboBox.VerticalAlignment>Stretch
@@ -107,7 +107,8 @@
                         <Binding Source="{StaticResource ERawDataIntervalProvider}" />
                     </ComboBox.ItemsSource>
                     <ComboBox.SelectedItem>
-                        <Binding Path="SettingWindowLogging" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}"/>
+                        <Binding Path="RawData.LoggingInterval" Mode="TwoWay"/>
+                        <!--<Binding Path="SettingWindowLogging" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SettingWindow}}"/>-->
                     </ComboBox.SelectedItem>
                     <ComboBox.Style>
                         <StaticResource ResourceKey="SimpleOverlayTheme.ComboBox.Default"/>

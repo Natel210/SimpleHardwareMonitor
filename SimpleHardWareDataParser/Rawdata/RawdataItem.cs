@@ -27,7 +27,7 @@ namespace SimpleHardWareDataParser.Rawdata
         [Name("CPU PowerByCore")]
         [TypeConverter(typeof(CSVLogListConverter<float>))]
         public List<float> CpuPowerByCore { get; set; } = [];
-        [Name("CPU TemperatureByCore")]
+        [Name("CPU Temperature")]
         public float CpuTemperature { get; set; } = 0.0f;
         [Name("CPU TemperatureByCore")]
         [TypeConverter(typeof(CSVLogListConverter<float>))]

@@ -2,8 +2,6 @@
 {
     public enum ERawDataInterval
     {
-        ms250 = 250,
-        ms500 = 500,
         s1 = 1000,
         s5 = 5000,
         s10 = 10000,

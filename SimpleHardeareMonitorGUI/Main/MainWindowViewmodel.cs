@@ -11,6 +11,7 @@ namespace SimpleHardwareMonitorGUI.Main
         {
             _hardwareMonitorViewmodel = HardwareMonitorVM.instance ?? throw new ArgumentNullException(nameof(HardwareMonitorVM.instance));
             _rawdataViewmodel = RawdataViewmodel.instance ?? throw new ArgumentNullException(nameof(RawdataViewmodel.instance));
+            _rawdataViewmodel.TitleName = _titleName;
         }
 
         ~MainWindowViewmodel()
@@ -33,7 +34,11 @@ namespace SimpleHardwareMonitorGUI.Main
         public string TitleName
         {
             get => _titleName;
-            set => Set(ref _titleName, value, nameof(TitleName));
+            set {
+                Set(ref _titleName, value, nameof(TitleName));
+                RawData.TitleName = value;
+            }
+                
         }
     }
 
