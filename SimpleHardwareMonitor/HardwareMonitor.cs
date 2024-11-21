@@ -140,6 +140,7 @@ namespace SimpleHardwareMonitor
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    var startTime= DateTime.UtcNow.Ticks;
 
                     UpdateHardware(_motherboard);
                     UpdateHardware(_superIO);
@@ -154,6 +155,9 @@ namespace SimpleHardwareMonitor
                     UpdateHardware(_embeddedController);
                     UpdateHardware(_psu);
                     UpdateHardware(_battery);
+
+                    var endTime = DateTime.UtcNow.Ticks;
+                    var cal = endTime - startTime;
                     await Task.Delay(UpdateInterval);
                 }
             }

@@ -24,6 +24,16 @@ namespace SimpleHardWareDataParser.Main.RawDataList
     /// </summary>
     public partial class RawDataList : UserControl
     {
+        public string CPU_USE_MIN { get; private set; }
+        public string CPU_USE_AVG { get; private set; }
+        public string CPU_USE_MAX { get; private set; }
+        public string CPU_POW_MIN { get; private set; }
+        public string CPU_POW_AVG { get; private set; }
+        public string CPU_POW_MAX { get; private set; }
+        public string CPU_TEMP_MIN { get; private set; }
+        public string CPU_TEMP_AVG { get; private set; }
+        public string CPU_TEMP_MAX { get; private set; }
+
         public RawDataList()
         {
             InitializeComponent();
@@ -115,12 +125,18 @@ namespace SimpleHardWareDataParser.Main.RawDataList
             PART_DataGrid.ItemsSource = dynamicDataTable;
             if (cpuUseList.Count is not 0)
             {
+                CPU_USE_MIN = $"{cpuUseList.Min():F1}";
+                CPU_USE_AVG = $"{cpuUseList.Average():F1}";
+                CPU_USE_MAX = $"{ cpuUseList.Max():F1}";
                 Part_CpuUseAvg.Content = $"Use Avg: {cpuUseList.Average():F1} %";
                 Part_CpuUseMin.Content = $"Use Min: {cpuUseList.Min():F1} %";
                 Part_CpuUseMax.Content = $"Use Max: {cpuUseList.Max():F1} %";
             }
             else
             {
+                CPU_USE_MIN = $"";
+                CPU_USE_AVG = $"";
+                CPU_USE_MAX = $"";
                 Part_CpuUseAvg.Content = $"Use Avg: N/A";
                 Part_CpuUseMin.Content = $"Use Min: N/A";
                 Part_CpuUseMax.Content = $"Use Max: N/A";
@@ -128,30 +144,48 @@ namespace SimpleHardWareDataParser.Main.RawDataList
 
             if (cpuPowList.Count is not 0)
             {
+                CPU_POW_MIN = $"{cpuPowList.Min():F1}";
+                CPU_POW_AVG = $"{cpuPowList.Average():F1}";
+                CPU_POW_MAX = $"{cpuPowList.Max():F1}";
                 Part_CpuPowAvg.Content = $"Pow Avg: {cpuPowList.Average():F1} W";
                 Part_CpuPowMin.Content = $"Pow Min: {cpuPowList.Min():F1} W";
                 Part_CpuPowMax.Content = $"Pow Max: {cpuPowList.Max():F1} W";
             }
             else
             {
+                CPU_POW_MIN = $"";
+                CPU_POW_AVG = $"";
+                CPU_POW_MAX = $"";
                 Part_CpuPowAvg.Content = $"Pow Avg: N/A";
                 Part_CpuPowMin.Content = $"Pow Min: N/A";
                 Part_CpuPowMax.Content = $"Pow Max: N/A";
             }
 
-            if (cpuPowList.Count is not 0)
+            if (cpuTempList.Count is not 0)
             {
+                CPU_TEMP_MIN = $"{cpuTempList.Min():F1}";
+                CPU_TEMP_AVG = $"{cpuTempList.Average():F1}";
+                CPU_TEMP_MAX = $"{cpuTempList.Max():F1}";
                 Part_CpuTempAvg.Content = $"Temp Avg: {cpuTempList.Average():F1} °C";
                 Part_CpuTempMin.Content = $"Temp Min: {cpuTempList.Min():F1} °C";
                 Part_CpuTempMax.Content = $"Temp Max: {cpuTempList.Max():F1} °C";
             }
             else
             {
+                CPU_TEMP_MIN = $"";
+                CPU_TEMP_AVG = $"";
+                CPU_TEMP_MAX = $"";
                 Part_CpuTempAvg.Content = $"Temp Avg: N/A";
                 Part_CpuTempMin.Content = $"Temp Min: N/A";
                 Part_CpuTempMax.Content = $"Temp Max: N/A";
             }
+
             
+
+            
+
+
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

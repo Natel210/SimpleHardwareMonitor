@@ -42,7 +42,7 @@
             </customControl:WindowHeader.SideContent>
         </customControl:WindowHeader>
     </windowHelper:Items.WindowTitleHeader>
-    <Border>
+    <StackPanel Orientation="Vertical">
         <!--<Border.BorderThickness>1
         </Border.BorderThickness>
         <Border.BorderBrush>Gray
@@ -50,44 +50,52 @@
         <Border.Margin>
             <Binding Path="Margin" RelativeSource="{RelativeSource AncestorType=Window}"/>
         </Border.Margin>-->
-        <Grid>
-            <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
-            </TabControl>
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="800" FontSize="16" Text="{Binding RootDirectory, Mode=TwoWay}" Style="{StaticResource ResourceKey=SimpleOverlayTheme.TextBox.Default}"/>
+            <Button Content="Change Root Path" Click="ChangeRootPath_Button_Click"/>
+        </StackPanel>
+        <Border Height="900">
+            <Grid>
+                <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+                </TabControl>
 
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>-->
-
-
-
-            <!--<DataGrid x:Name="PART_DataGrid" FontSize="12" Grid.Row="2"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
-                          SelectionMode="Extended" SelectionUnit="Cell" AutoGenerateColumns ="True"
-                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource SimpleOverlayTheme.DataGridColumnHeader.Default}">
-                        <Setter Property="FontSize" Value="20"/>
-                        <Setter Property="Padding" Value="5,0"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="dataGridHelper:Header.ContentPadding" Value="20,0"/>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
-                <DataGrid.Style>
-                    <StaticResource ResourceKey="SimpleOverlayTheme.DataGrid.Default"/>
-                </DataGrid.Style>
-                <DataGrid.EnableRowVirtualization>True
-                </DataGrid.EnableRowVirtualization>
-                <VirtualizingStackPanel.IsVirtualizing>True
-                </VirtualizingStackPanel.IsVirtualizing>
-                <VirtualizingStackPanel.VirtualizationMode>Recycling
-                </VirtualizingStackPanel.VirtualizationMode>
-
-            </DataGrid>-->
+                <!--<Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>-->
 
 
-        </Grid>
-    </Border>
+
+                <!--<DataGrid x:Name="PART_DataGrid" FontSize="12" Grid.Row="2"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
+                  SelectionMode="Extended" SelectionUnit="Cell" AutoGenerateColumns ="True"
+                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
+        <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource SimpleOverlayTheme.DataGridColumnHeader.Default}">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Padding" Value="5,0"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="dataGridHelper:Header.ContentPadding" Value="20,0"/>
+            </Style>
+        </DataGrid.ColumnHeaderStyle>
+        <DataGrid.Style>
+            <StaticResource ResourceKey="SimpleOverlayTheme.DataGrid.Default"/>
+        </DataGrid.Style>
+        <DataGrid.EnableRowVirtualization>True
+        </DataGrid.EnableRowVirtualization>
+        <VirtualizingStackPanel.IsVirtualizing>True
+        </VirtualizingStackPanel.IsVirtualizing>
+        <VirtualizingStackPanel.VirtualizationMode>Recycling
+        </VirtualizingStackPanel.VirtualizationMode>
+
+    </DataGrid>-->
+
+
+            </Grid>
+        </Border>
+            
+        
+    </StackPanel>
 </Window>

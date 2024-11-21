@@ -1,6 +1,7 @@
 ﻿using SimpleFileIO.Log.Csv;
 using SimpleFileIO.Log.Text;
-using SimpleFileIO.UserProperties;
+using SimpleFileIO.State.Ini;
+using SimpleFileIO.Utility;
 using System.Linq;
 
 namespace SimpleFileIO
@@ -9,48 +10,72 @@ namespace SimpleFileIO
     {
         #region TextLog
         
-        public static ITextLog? CreateTextLog(string logName, PathProperties loggerProperties)
+        public static ITextLog? CreateTextLog(string name, PathProperty properties)
         {
-            return TextLogManager.Create(logName, loggerProperties);
+            return TextLogManager.Create(name, properties);
         }
 
-        public static bool AddTextLog(string logName, ITextLog loggerInstance)
+        public static bool AddTextLog(string name, ITextLog instance)
         {
-            return TextLogManager.Add(logName, loggerInstance);
+            return TextLogManager.Add(name, instance);
         }
 
-        public static ITextLog? GetTextLog(string logName)
+        public static ITextLog? GetTextLog(string name)
         {
-            return TextLogManager.Get(logName);
+            return TextLogManager.Get(name);
         }
 
         public static List<string> GetTextLogListName()
         {
-            return TextLogManager.GetLogListName();
+            return TextLogManager.GetItemListName();
         }
 
         #endregion
 
         #region CSVLog
 
-        public static ICSVLog? CreateCsvLog(string logName, PathProperties loggerProperties)
+        public static ICSVLog? CreateCsvLog(string name, PathProperty properties)
         {
-            return CSVLogManager.Create(logName, loggerProperties);
+            return CSVLogManager.Create(name, properties);
         }
 
-        public static bool AddCsvLog(string logName, ICSVLog loggerInstance)
+        public static bool AddCsvLog(string name, ICSVLog instance)
         {
-            return CSVLogManager.Add(logName, loggerInstance);
+            return CSVLogManager.Add(name, instance);
         }
 
-        public static ICSVLog? GetCsvLog(string logName)
+        public static ICSVLog? GetCsvLog(string name)
         {
-            return CSVLogManager.Get(logName);
+            return CSVLogManager.Get(name);
         }
 
         public static List<string> GetCsvLogListName()
         {
-            return CSVLogManager.GetLogListName();
+            return CSVLogManager.GetItemListName();
+        }
+
+        #endregion
+
+        #region INIState
+
+        public static IINIState? CreateIniState(string name, PathProperty properties)
+        {
+            return INIStateManager.Create(name, properties);
+        }
+
+        public static bool AddIniState(string name, IINIState instance)
+        {
+            return INIStateManager.Add(name, instance);
+        }
+
+        public static IINIState? GetIniState(string name)
+        {
+            return INIStateManager.Get(name);
+        }
+
+        public static List<string> GetIniStateListName()
+        {
+            return INIStateManager.GetItemListName();
         }
 
         #endregion

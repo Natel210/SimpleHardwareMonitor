@@ -3,6 +3,8 @@ using SimpleHardWareDataParser.Rawdata;
 using SimpleHardWareDataParser.Settting;
 using System.Dynamic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,81 +19,8 @@ namespace SimpleHardWareDataParser.Main
         public MainWindow()
         {
             InitializeComponent();
-            RawdataRecordManager.Load(new DirectoryInfo("./"));
-            if (RawdataRecordManager.OriginData.Count is 0)
-                return;
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "ALL",
-                new() {
-                    SplitName = "ALL",
-                    SplitStart = RawdataRecordManager.OriginData.First().Key,
-                    SplitEnd = RawdataRecordManager.OriginData.Last().Key
-                });
 
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "6-10-45",
-                new() {
-                    SplitName = "6-10-45",
-                    SplitStart = new DateTime(2024, 11, 05, 18, 00, 00),
-                    SplitEnd = new DateTime(2024, 11, 06, 10, 45, 00)
-                });
-
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "6-13-05",
-                new() {
-                    SplitName = "6-13-05",
-                    SplitStart = new DateTime(2024, 11, 06, 10, 55, 01),
-                    SplitEnd = new DateTime(2024, 11, 06, 13, 05, 00)
-                });
-
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "6-17-05",
-                new() {
-                    SplitName = "6-17-05",
-                    SplitStart = new DateTime(2024, 11, 06, 13, 05, 01),
-                    SplitEnd = new DateTime(2024, 11, 06, 17, 05, 00)
-                });
-
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "7-08-45",
-                new() {
-                    SplitName = "7-08-45",
-                    SplitStart = new DateTime(2024, 11, 06, 17, 05, 01),
-                    SplitEnd = new DateTime(2024, 11, 07, 08, 45, 00)
-                });
-
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "7-11-30",
-                new() {
-                    SplitName = "7-11-30",
-                    SplitStart = new DateTime(2024, 11, 07, 08, 45, 01),
-                    SplitEnd = new DateTime(2024, 11, 07, 11, 30, 00)
-                });
-
-            RawdataRecordManager.RawDataSplitInfo.Add(
-                "7-14-00",
-                new() {
-                    SplitName = "7-14-00",
-                    SplitStart = new DateTime(2024, 11, 07, 11, 30, 01),
-                    SplitEnd = new DateTime(2024, 11, 07, 14, 00, 00)
-                });
-
-
-            RawdataRecordManager.Split();
-
-            PART_TabItem.Items.Clear();
-
-            foreach (var item in RawdataRecordManager.RawDataSplitInfo.Keys)
-            {
-                TabItem tabItem = new()
-                {
-                    Header = item
-                };
-                var frame = new Frame();
-                frame.Content = new RawDataList.RawDataList(RawdataRecordManager.RawDataSplitInfo[item], RawdataRecordManager.Data[item]);
-                tabItem.Content = frame;
-                PART_TabItem.Items.Add(tabItem);
-            }
+            MakeGrid();
 
 
             //PART_TabItem.ItemsSource = RawdataRecordManager.RawDataSplitInfo.Keys;
@@ -190,6 +119,188 @@ namespace SimpleHardWareDataParser.Main
         {
             SettingWindow settingWindow = new SettingWindow();
             settingWindow.Show();
+        }
+
+        private void ChangeRootPath_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MakeGrid();
+        }
+
+
+        private void MakeGrid()
+        {
+            PART_TabItem.Items.Clear();
+            var mainWindowViewmodel = DataContext as MainWindowViewmodel;
+            string getRootDirectory;
+            if (mainWindowViewmodel is not null)
+                getRootDirectory = mainWindowViewmodel.RootDirectory;
+            else
+                getRootDirectory = "./Admin/";
+            RawdataRecordManager.Load(new DirectoryInfo(getRootDirectory));
+            if (RawdataRecordManager.OriginData.Count is 0)
+                return;
+            MakeSplitFormat();
+            RawdataRecordManager.Split();
+
+            string getterAllDatas = "";
+            List<string> getterDatas = [];
+            foreach (var item in RawdataRecordManager.RawDataSplitInfo.Keys)
+            {
+                TabItem tabItem = new()
+                {
+                    Header = item
+                };
+                var frame = new Frame();
+                var rowList = new RawDataList.RawDataList(RawdataRecordManager.RawDataSplitInfo[item], RawdataRecordManager.Data[item]);
+
+                if (item is "ALL")
+                {
+                    getterAllDatas = $"{rowList.CPU_USE_MIN}\t{rowList.CPU_USE_AVG}\t{rowList.CPU_USE_MAX}\t{rowList.CPU_TEMP_MIN}\t{rowList.CPU_TEMP_AVG}\t{rowList.CPU_TEMP_MAX}\t{rowList.CPU_POW_MIN}\t{rowList.CPU_POW_AVG}\t{rowList.CPU_POW_MAX}";
+                }
+                else
+                {
+                    getterDatas.Add($"{rowList.CPU_USE_MIN}\t{rowList.CPU_USE_AVG}\t{rowList.CPU_USE_MAX}\t{rowList.CPU_TEMP_MIN}\t{rowList.CPU_TEMP_AVG}\t{rowList.CPU_TEMP_MAX}\t{rowList.CPU_POW_MIN}\t{rowList.CPU_POW_AVG}\t{rowList.CPU_POW_MAX}");
+                }
+
+
+                frame.Content = rowList;
+                tabItem.Content = frame;
+                PART_TabItem.Items.Add(tabItem);
+            }
+
+            using (StreamWriter writer = new StreamWriter("./getteringALLData.datas", true, Encoding.UTF8))
+            {
+                writer.WriteLine(getterAllDatas);
+            }
+
+            using (StreamWriter writer = new StreamWriter("./getteringData.datas", false, Encoding.UTF8))
+            {
+                foreach (var item in getterDatas)
+                {
+                    writer.WriteLine(item);
+                }
+            }
+        }
+
+        private void MakeSplitFormat()
+        {
+            RawdataRecordManager.RawDataSplitInfo.Clear();
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "ALL",
+                new()
+                {
+                    SplitName = "ALL",
+                    SplitStart = RawdataRecordManager.OriginData.First().Key,
+                    SplitEnd = RawdataRecordManager.OriginData.Last().Key
+                });
+
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "1",
+                new()
+                {
+                    SplitName = "1",
+                    //SplitStart = new DateTime(2024, 11, 11, 10, 00, 00),
+                    //SplitEnd = new DateTime(2024, 11, 11, 16, 00, 00)
+
+                    SplitStart = new DateTime(2024, 11, 11, 18, 00, 00),
+                    SplitEnd = new DateTime(2024, 11, 12, 00, 00, 00)
+                });
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "2",
+                new()
+                {
+                    SplitName = "2",
+                    //SplitStart = new DateTime(2024, 11, 11, 16, 00, 00),
+                    //SplitEnd = new DateTime(2024, 11, 12, 01, 00, 00)
+
+                    SplitStart = new DateTime(2024, 11, 12, 00, 00, 00),
+                    SplitEnd = new DateTime(2024, 11, 12, 09, 00, 00)
+                });
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "3",
+                new()
+                {
+                    SplitName = "3",
+                    //SplitStart = new DateTime(2024, 11, 12, 01, 00, 01),
+                    //SplitEnd = new DateTime(2024, 11, 12, 07, 00, 00)
+
+                    SplitStart = new DateTime(2024, 11, 12, 09, 00, 00),
+                    SplitEnd = new DateTime(2024, 11, 12, 15, 00, 00)
+                });
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "4",
+                new()
+                {
+                    SplitName = "4",
+                    //SplitStart = new DateTime(2024, 11, 12, 07, 00, 01),
+                    //SplitEnd = new DateTime(2024, 11, 12, 11, 00, 00)
+
+                    SplitStart = new DateTime(2024, 11, 12, 15, 00, 00),
+                    SplitEnd = new DateTime(2024, 11, 12, 19, 00, 00)
+                });
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "5",
+                new()
+                {
+                    SplitName = "5",
+                    //SplitStart = new DateTime(2024, 11, 12, 11, 00, 01),
+                    //SplitEnd = new DateTime(2024, 11, 13, 01, 00, 00)
+
+                    SplitStart = new DateTime(2024, 11, 12, 19, 00, 00),
+                    SplitEnd = new DateTime(2024, 11, 13, 09, 00, 00)
+                });
+
+
+
+            //RawdataRecordManager.RawDataSplitInfo.Add(
+            //    "1",
+            //    new()
+            //    {
+            //        SplitName = "1",
+            //        SplitStart = new DateTime(2024, 11, 09, 07, 00, 00),
+            //        SplitEnd = new DateTime(2024, 11, 09, 16, 00, 00)
+
+            //        //SplitStart = new DateTime(2024, 11, 09, 15, 00, 00),
+            //        //SplitEnd = new DateTime(2024, 11, 10, 00, 00, 00)
+            //    });
+
+            //RawdataRecordManager.RawDataSplitInfo.Add(
+            //    "2",
+            //    new()
+            //    {
+            //        SplitName = "2",
+            //        SplitStart = new DateTime(2024, 11, 09, 16, 00, 01),
+            //        SplitEnd = new DateTime(2024, 11, 10, 00, 00, 00)
+            //    });
+
+            //RawdataRecordManager.RawDataSplitInfo.Add(
+            //    "3",
+            //    new()
+            //    {
+            //        SplitName = "3",
+            //        SplitStart = new DateTime(2024, 11, 10, 00, 00, 01),
+            //        SplitEnd = new DateTime(2024, 11, 10, 08, 00, 00)
+            //    });
+
+            //RawdataRecordManager.RawDataSplitInfo.Add(
+            //    "4",
+            //    new()
+            //    {
+            //        SplitName = "4",
+            //        SplitStart = new DateTime(2024, 11, 10, 08, 00, 01),
+            //        SplitEnd = new DateTime(2024, 11, 10, 16, 00, 00)
+            //    });
+
+            //RawdataRecordManager.RawDataSplitInfo.Add(
+            //    "5",
+            //    new()
+            //    {
+            //        SplitName = "5",
+            //        SplitStart = new DateTime(2024, 11, 10, 16, 00, 01),
+            //        SplitEnd = new DateTime(2024, 11, 11, 02, 00, 00)
+            //    });
+
+
         }
     }
 }

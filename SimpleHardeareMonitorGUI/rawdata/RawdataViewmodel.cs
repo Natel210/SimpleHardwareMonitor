@@ -2,7 +2,6 @@
 using LibreHardwareMonitor.Hardware.Motherboard;
 using SimpleHardwareMonitor;
 using SimpleHardwareMonitorGUI.Common;
-using SimpleFileIO.UserProperties;
 using System;
 using System.IO;
 using System.Net;
@@ -13,19 +12,25 @@ using SimpleHardwareMonitor.data;
 using System.Diagnostics;
 using SimpleFileIO.Log.Text;
 using SimpleFileIO.Log.Csv;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using SimpleFileIO.Utility;
 
 namespace SimpleHardwareMonitorGUI.Rawdata
 {
     //static 
-    public partial class RawdataViewmodel : AViewModelBase_None
+    public partial class RawdataViewmodel : INotifyPropertyChanged
     {
         private static readonly string _loggerName = "rawdataLogger";
         private static readonly string _titleNameDefault = "";
         private static readonly string _extensionDefault = "rawdata";
+
+
+
         public static RawdataViewmodel instance = new RawdataViewmodel();
     }
 
-    public partial class RawdataViewmodel : AViewModelBase_None
+    public partial class RawdataViewmodel
     {
         public DirectoryInfo RootDirectory
         {
@@ -33,7 +38,9 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             set
             {
                 if(Set(ref _rootDirectory, value, nameof(RootDirectory)) is true)
-                    ResettingLoggerProperties();
+                    _rawdataCSVLog.Property = MakeCurrentPathProperty();
+
+
             }
         }
         public string TitleName
@@ -48,7 +55,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             set
             {
                 if(Set(ref _extension, value, nameof(Extension)) is true)
-                    ResettingLoggerProperties();
+                    _rawdataCSVLog.Property = MakeCurrentPathProperty();
             }
         }
         public ERawDataInterval LoggingInterval
@@ -58,7 +65,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             {
                 if(Set(ref _loggingInterval, value, nameof(LoggingInterval)) is true)
                 {
-                    ResettingLoggerProperties();
+                    _rawdataCSVLog.Property = MakeCurrentPathProperty();
                     RestartLoggingTimer();
                 }
             }
@@ -72,7 +79,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
 
 
     }
-    public partial class RawdataViewmodel : AViewModelBase_None
+    public partial class RawdataViewmodel
     {
 
 
@@ -80,7 +87,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         {
 
             var tempItem = new RawdataItem();
-            tempItem.DateTime = DateTime.Now;
+            tempItem.DateTime = DateTime.UtcNow;
             if (HardwareMonitor.Cpu is not null)
             {
                 tempItem.CpuCoreCount = HardwareMonitor.Cpu.Value.CoreCount;
@@ -99,11 +106,11 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         }
 
     }
-    public partial class RawdataViewmodel : AViewModelBase_None
+    public partial class RawdataViewmodel
     {
         private Timer _loggingTimer;
         private ICSVLog _rawdataCSVLog;
-        private DirectoryInfo _rootDirectory = new DirectoryInfo(".//");
+        private DirectoryInfo _rootDirectory = new ("./");
         private string _titleName = _titleNameDefault;
         private string _extension = _extensionDefault;
 
@@ -111,14 +118,15 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         private ERawDataInterval _loggingInterval = ERawDataInterval.s1;
         private RawdataViewmodel()
         {
-            PathProperties pathCSVLong = new();
-            pathCSVLong.RootDirectory = new("./");
-            pathCSVLong.FileName = "temp";
-            pathCSVLong.Extension = ".rawdata";
-            _rawdataCSVLog = SimpleFileIO.Manager.CreateCsvLog(_loggerName, pathCSVLong) ?? throw new Exception("don't create logger...");
-            RootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".//");
-            Extension = _extensionDefault;
+            //def set
+            _rootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".//");
+            _extension = _extensionDefault;
+            _rawdataCSVLog = SimpleFileIO.Manager.CreateCsvLog(_loggerName, MakeCurrentPathProperty()) ?? throw new Exception("don't create logger...");
+
+            //load ini
             Load_INI();
+
+            //make timer
             _loggingTimer = new Timer(SaveData, null, 0, (int)LoggingInterval);
             RestartLoggingTimer();
         }
@@ -128,24 +136,39 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         /// </summary>
         private void Load_INI()
         {
+
+
+
+            //_rootDirectory
+            //    _extension
+            //    _titleName
+
+
+
+
+
             //if is chatnged
-            ResettingLoggerProperties();
+            _rawdataCSVLog.Property = MakeCurrentPathProperty();
         }
         private void SaveData(object? state)
         {
             if (LoggingEnabled is false)
                 return;
-            ResettingLoggerProperties();
+            _rawdataCSVLog.Property = MakeCurrentPathProperty();
             DataLogging();
             if (_rawdataCSVLog.IsWriting is false)
                 _rawdataCSVLog.Write();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void RestartLoggingTimer()
         {
             TimeSpan currentInterval = TimeSpan.FromMilliseconds((double)LoggingInterval);
-            DateTime currentDate = DateTime.Now;
-            TimeSpan waitTime;
-            DateTime nextTime = DateTime.Now;
+            DateTime currentDate = DateTime.UtcNow;
+            
+            DateTime nextTime = DateTime.UtcNow;
             switch (LoggingInterval)
             {
                 case ERawDataInterval.s1:
@@ -167,13 +190,20 @@ namespace SimpleHardwareMonitorGUI.Rawdata
                 default:
                     break;
             }
-            waitTime = nextTime - DateTime.Now;
+
+            TimeSpan waitTime;
+            waitTime = nextTime - DateTime.UtcNow;
             _loggingTimer.Change(waitTime, currentInterval);
         }
-        private void ResettingLoggerProperties()
+
+        /// <summary>
+        /// enables hourly recording according to the <see cref="LoggingInterval"/>.<br/>
+        /// make log, from <see cref="DateTime.UtcNow"/> and <see cref="LoggingInterval"/>.
+        /// </summary>
+        private PathProperty MakeCurrentPathProperty()
         {
-            PathProperties tempProperties = _rawdataCSVLog.Properties;
-            var curNow = DateTime.Now;
+            PathProperty tempPathProperty = new();
+            var curNow = DateTime.UtcNow;
             DateTime fileTime = new DateTime();
             switch (LoggingInterval)
             {
@@ -196,10 +226,30 @@ namespace SimpleHardwareMonitorGUI.Rawdata
                 default:
                     break;
             }
-            tempProperties.RootDirectory = new DirectoryInfo(Path.Combine(RootDirectory.FullName, $"{TitleName}\\{fileTime:yyMMdd}\\"));
-            tempProperties.FileName = $"{TitleName}_{fileTime:HHmmss}";
-            tempProperties.Extension = Extension;
-            _rawdataCSVLog.Properties = tempProperties;
+            tempPathProperty.RootDirectory = new(Path.Combine(RootDirectory.FullName, $"{TitleName}\\{fileTime:yyMMdd}\\"));
+            tempPathProperty.FileName = $"{TitleName}_{fileTime:HHmmss}";
+            tempPathProperty.Extension = Extension;
+            return tempPathProperty;
+        }
+    }
+
+    //INotifyPropertyChanged
+    public partial class RawdataViewmodel
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected bool Set<T>(ref T field, T newValue, [CallerMemberName] string? propertyName = null) where T : notnull
+        {
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+                return false;
+            field = newValue;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

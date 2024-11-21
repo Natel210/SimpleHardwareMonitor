@@ -59,15 +59,15 @@
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Separator"/>
                 </Label.Style>
             </Label>
-            <Label x:Name="Part_CpuUseAvg">
-                <Label.Content>Use Avg: 
+            <Label x:Name="Part_CpuUseMin">
+                <Label.Content>Use Min:
                 </Label.Content>
                 <Label.Style>
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
                 </Label.Style>
             </Label>
-            <Label x:Name="Part_CpuUseMin">
-                <Label.Content>Use Min:
+            <Label x:Name="Part_CpuUseAvg">
+                <Label.Content>Use Avg: 
                 </Label.Content>
                 <Label.Style>
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
@@ -80,22 +80,8 @@
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
                 </Label.Style>
             </Label>
-            <Label x:Name="Part_CpuPowAvg">
-                <Label.Content>Pow Avg:
-                </Label.Content>
-                <Label.Style>
-                    <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                </Label.Style>
-            </Label>
-            <Label x:Name="Part_CpuPowMin">
-                <Label.Content>Pow Min:
-                </Label.Content>
-                <Label.Style>
-                    <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                </Label.Style>
-            </Label>
-            <Label x:Name="Part_CpuPowMax">
-                <Label.Content>Pow Max:
+            <Label x:Name="Part_CpuTempMin">
+                <Label.Content>Temp Min:
                 </Label.Content>
                 <Label.Style>
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
@@ -108,15 +94,29 @@
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
                 </Label.Style>
             </Label>
-            <Label x:Name="Part_CpuTempMin">
-                <Label.Content>Temp Min:
+            <Label x:Name="Part_CpuTempMax">
+                <Label.Content>Temp Max:
                 </Label.Content>
                 <Label.Style>
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
                 </Label.Style>
             </Label>
-            <Label x:Name="Part_CpuTempMax">
-                <Label.Content>Temp Max:
+            <Label x:Name="Part_CpuPowMin">
+                <Label.Content>Pow Min:
+                </Label.Content>
+                <Label.Style>
+                    <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                </Label.Style>
+            </Label>
+            <Label x:Name="Part_CpuPowAvg">
+                <Label.Content>Pow Avg:
+                </Label.Content>
+                <Label.Style>
+                    <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                </Label.Style>
+            </Label>
+            <Label x:Name="Part_CpuPowMax">
+                <Label.Content>Pow Max:
                 </Label.Content>
                 <Label.Style>
                     <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>

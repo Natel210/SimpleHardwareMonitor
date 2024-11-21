@@ -23,7 +23,7 @@ namespace SimpleHardWareDataParser.Rawdata
 
         static internal bool Load(DirectoryInfo directoryinfo)
         {
-            directoryinfo = new DirectoryInfo("./");
+            //directoryinfo = new DirectoryInfo("./");
 
             if (Directory.Exists(directoryinfo.FullName) is false)
                 return false;

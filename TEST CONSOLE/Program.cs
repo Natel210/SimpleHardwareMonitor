@@ -2,12 +2,12 @@
 //Console.WriteLine("Hello, World!");
 using CsvHelper;
 using SimpleFileIO;
-using SimpleFileIO.UserProperties;
+using SimpleFileIO.Utility;
 using System.Globalization;
 using TEST_CONSOLE;
 
 Manager.CreateCsvLog("test1",
-    new PathProperties {
+    new PathProperty {
         RootDirectory = new DirectoryInfo("./"),
         FileName = "TEST",
         Extension = "csvlog"
@@ -26,4 +26,3 @@ using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
 {
     temp1 = csv.GetRecords<testdata2>().ToList();
 }
-int a = 0;

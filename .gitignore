@@ -594,3 +594,8 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode
+
+
+# 사용자 지정 특수화된 제외 제거
+# 필요시에 아래의 항목에 제외를 제거하세요.
+!/Log/*.cs

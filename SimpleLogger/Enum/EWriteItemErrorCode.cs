@@ -16,6 +16,6 @@ namespace SimpleFileIO.Enum
         InvalidEmpty, // The copied log item is empty. It is suspected to be a malfunction because it was operated after determining that it was empty in advance.
         TaskRunWritingException, // An error occurred while writing to the actual file.
         TaskRunCancellationTokenException, //Problem with refraining from tokens and task variables during task run operation.
-
+        TaskRunInvalidRootPath, // not root path null
     }
 }
