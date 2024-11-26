@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLogger\SimpleFileIO.csproj" />
+    <ProjectReference Include="..\SimpleFileIO\SimpleFileIO.csproj" />
     <ProjectReference Include="..\SimpleOverlayThemeUI\SimpleIniController\SimpleIniController.csproj" />
     <ProjectReference Include="..\SimpleOverlayThemeUI\SimpleOverlayTheme\SimpleOverlayTheme.csproj" />
   </ItemGroup>

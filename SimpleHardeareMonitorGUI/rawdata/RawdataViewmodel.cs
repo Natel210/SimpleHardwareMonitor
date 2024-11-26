@@ -15,6 +15,7 @@ using SimpleFileIO.Log.Csv;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SimpleFileIO.Utility;
+using SimpleFileIO.State.Ini;
 
 namespace SimpleHardwareMonitorGUI.Rawdata
 {
@@ -24,7 +25,8 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         private static readonly string _loggerName = "rawdataLogger";
         private static readonly string _titleNameDefault = "";
         private static readonly string _extensionDefault = "rawdata";
-
+        private static readonly PathProperty _iniPathProperty = new() { RootDirectory = new("./"), FileName = "", Extension="ini"};
+       
 
 
         public static RawdataViewmodel instance = new RawdataViewmodel();
@@ -110,6 +112,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
     {
         private Timer _loggingTimer;
         private ICSVLog _rawdataCSVLog;
+        private IINIState _iniState;
         private DirectoryInfo _rootDirectory = new ("./");
         private string _titleName = _titleNameDefault;
         private string _extension = _extensionDefault;
@@ -122,7 +125,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             _rootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".//");
             _extension = _extensionDefault;
             _rawdataCSVLog = SimpleFileIO.Manager.CreateCsvLog(_loggerName, MakeCurrentPathProperty()) ?? throw new Exception("don't create logger...");
-
+            _iniState = SimpleFileIO.Manager.CreateIniState(_loggerName, MakeCurrentPathProperty()) ?? throw new Exception("don't create logger...");
             //load ini
             Load_INI();
 
@@ -136,18 +139,6 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         /// </summary>
         private void Load_INI()
         {
-
-
-
-            //_rootDirectory
-            //    _extension
-            //    _titleName
-
-
-
-
-
-            //if is chatnged
             _rawdataCSVLog.Property = MakeCurrentPathProperty();
         }
         private void SaveData(object? state)

@@ -11,7 +11,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLogger\SimpleFileIO.csproj" />
+    <ProjectReference Include="..\SimpleFileIO\SimpleFileIO.csproj" />
   </ItemGroup>
 
 </Project>
