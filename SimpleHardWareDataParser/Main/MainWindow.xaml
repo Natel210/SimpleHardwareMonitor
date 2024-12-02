@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleHardWareDataParser.Main"
+        xmlns:localItems="clr-namespace:SimpleHardWareDataParser.Main.Items"
         xmlns:dataList="clr-namespace:SimpleHardWareDataParser.Main.RawDataList"
+        xmlns:buttonHelper="clr-namespace:SimpleOverlayTheme.Object.ButtonObject.Helper;assembly=SimpleOverlayTheme"
         xmlns:customControl="clr-namespace:SimpleOverlayTheme.CustomControl;assembly=SimpleOverlayTheme"
         xmlns:dataGridHelper="clr-namespace:SimpleOverlayTheme.Object.DataGridObject.Helper;assembly=SimpleOverlayTheme"
         xmlns:windowHelper="clr-namespace:SimpleOverlayTheme.Object.WindowObject.Helper;assembly=SimpleOverlayTheme"
@@ -13,6 +15,13 @@
         Width="1200"
         Height="600"
         WindowState="Maximized">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ImageBrush x:Key="folderOpen" ImageSource="pack://application:,,,/SimpleHardWareDataParser;component/Resource/PhosphorIcons-FolderOpenThin.png" Stretch="Uniform"/>
+            <ImageBrush x:Key="folder" ImageSource="pack://application:,,,/SimpleHardWareDataParser;component/Resource/PhosphorIcons-FolderThin.png" Stretch="Uniform"/>
+        </ResourceDictionary>
+
+    </Window.Resources>
     <Window.Style>
         <StaticResource ResourceKey="SimpleOverlayTheme.Window.CustomHeader"/>
     </Window.Style>
@@ -43,6 +52,13 @@
         </customControl:WindowHeader>
     </windowHelper:Items.WindowTitleHeader>
     <StackPanel Orientation="Vertical">
+        <localItems:PathPanel>
+            <localItems:PathPanel.Margin>5
+            </localItems:PathPanel.Margin>
+            <localItems:PathPanel.RootDirectory>
+                <Binding Path="RootDirectory" Mode="TwoWay"/>
+            </localItems:PathPanel.RootDirectory>
+        </localItems:PathPanel>
         <!--<Border.BorderThickness>1
         </Border.BorderThickness>
         <Border.BorderBrush>Gray
@@ -50,10 +66,105 @@
         <Border.Margin>
             <Binding Path="Margin" RelativeSource="{RelativeSource AncestorType=Window}"/>
         </Border.Margin>-->
-        <StackPanel Orientation="Horizontal">
-            <TextBox Width="800" FontSize="16" Text="{Binding RootDirectory, Mode=TwoWay}" Style="{StaticResource ResourceKey=SimpleOverlayTheme.TextBox.Default}"/>
-            <Button Content="Change Root Path" Click="ChangeRootPath_Button_Click"/>
+
+        <StackPanel Orientation="Vertical">
+            
+            <Grid x:Name="Main">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!--<Binding Path="Item1_Header" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="H1" FallbackValue=""/>-->
+                <TextBox Grid.Column="0">
+                    <TextBox.MinWidth>800</TextBox.MinWidth>
+                    <TextBox.MaxLines>1</TextBox.MaxLines>
+                    <TextBox.MinLines>1</TextBox.MinLines>
+                    <TextBox.Text>
+                        <Binding Path="RootDirectory" Mode="TwoWay"/>
+                    </TextBox.Text>
+                    <!--<TextBox.Text>
+                        <Binding Path="RootDirectory" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="./" FallbackValue=""/>
+                    </TextBox.Text>-->
+                    <TextBox.FontSize>24
+                    </TextBox.FontSize>
+                    <TextBox.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.TextBox.Default"/>
+                    </TextBox.Style>
+                </TextBox>
+
+
+                <!--<TextBox Width="800" FontSize="24" Text="{Binding RootDirectory, Mode=TwoWay}" Style="{StaticResource ResourceKey=SimpleOverlayTheme.TextBox.Default}"/>-->
+                <Button Grid.Column="1" Content="Change Root Path" Margin="5,0" BorderThickness="0" Click="ChangeRootPath_Button_Click">
+                    <Button.Width>
+                        <Binding Path="ActualHeight" ElementName="Main"/>
+                    </Button.Width>
+                    <Button.Height>
+                        <Binding Path="ActualHeight" ElementName="Main"/>
+                    </Button.Height>
+                    <Button.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.Button.ImageMask"/>
+                    </Button.Style>
+                    <buttonHelper:Mask.MaskBrushDefault>
+                        <DynamicResource ResourceKey="folder"/>
+                    </buttonHelper:Mask.MaskBrushDefault>
+                    <buttonHelper:Mask.IsMaskMouseOver>True
+                    </buttonHelper:Mask.IsMaskMouseOver>
+                    <buttonHelper:Mask.MaskBrushMouseOver>
+                        <DynamicResource ResourceKey="folderOpen"/>
+                    </buttonHelper:Mask.MaskBrushMouseOver>
+                    <buttonHelper:OverlayBackground.SetDefaultVisible>False
+                    </buttonHelper:OverlayBackground.SetDefaultVisible>
+                    <buttonHelper:OverlayBackground.SetOutlineVisible>False
+                    </buttonHelper:OverlayBackground.SetOutlineVisible>
+                    <buttonHelper:OverlayBackground.SetBackgroundVisible>False
+                    </buttonHelper:OverlayBackground.SetBackgroundVisible>
+                    <buttonHelper:OverlayMask.OverlayMaskVisible>True
+                    </buttonHelper:OverlayMask.OverlayMaskVisible>
+                    <buttonHelper:OverlayMask.SetDefaultVisible>False
+                    </buttonHelper:OverlayMask.SetDefaultVisible>
+                </Button>
+                <CheckBox Grid.Column="2" >
+                    <CheckBox.HorizontalContentAlignment>Center
+                    </CheckBox.HorizontalContentAlignment>
+                    <CheckBox.VerticalContentAlignment>Center
+                    </CheckBox.VerticalContentAlignment>
+                    <CheckBox.ToolTip>Using group...
+                    </CheckBox.ToolTip>
+                    <CheckBox.FontSize>16
+                    </CheckBox.FontSize>
+                    <CheckBox.Content>
+                        <Label>
+                            <Label.Content>
+                                <TextBlock>
+                                    <TextBlock.Text>USE
+                                    </TextBlock.Text>
+                                    <TextBlock.FontSize>24
+                                    </TextBlock.FontSize>
+                                    <TextBlock.Style>
+                                        <StaticResource ResourceKey="SimpleOverlayTheme.TextBlock.Default"/>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Label.Content>
+                            <Label.Style>
+                                <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
+                            </Label.Style>
+                            <Label.VerticalAlignment>Center
+                            </Label.VerticalAlignment>
+                            <Label.HorizontalAlignment>Center
+                            </Label.HorizontalAlignment>
+                        </Label>
+                    </CheckBox.Content>
+
+                    <CheckBox.Style>
+                        <StaticResource ResourceKey="SimpleOverlayTheme.CheckBox.Default"/>
+                    </CheckBox.Style>
+                </CheckBox>
+            </Grid>
+
+
         </StackPanel>
+        
         <Border Height="900">
             <Grid>
                 <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">

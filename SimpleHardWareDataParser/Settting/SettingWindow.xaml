@@ -33,69 +33,26 @@
         </customControl:WindowHeader>
     </windowHelper:Items.WindowTitleHeader>
     <Window.Content>
-        <Border>
-            <!--<customControl:WindowHeader Grid.Row="0" Height="50" VerticalAlignment="Top">
-                <customControl:WindowHeader.TitleContent>
-                    <Label>
-                        <Label.FontSize>24
-                        </Label.FontSize>
-                        <Label.Margin>0,0,0,0
-                        </Label.Margin>
-                        <Label.Background>Transparent
-                        </Label.Background>
-                        <Label.Content>Setting
-                        </Label.Content>
-                        <Label.Style>
-                            <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                        </Label.Style>
-                    </Label>
-                </customControl:WindowHeader.TitleContent>
-            </customControl:WindowHeader>-->
-            <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        -->
-            <!--<customControl:WindowHeader Grid.Row="0">
-            <customControl:WindowHeader.TitleContent>
-                <Label>
-                    <Label.FontSize>24
-                    </Label.FontSize>
-                    <Label.Margin>0,0,0,0
-                    </Label.Margin>
-                    <Label.Background>Transparent
-                    </Label.Background>
-                    <Label.Content>Setting
-                    </Label.Content>
-                    <Label.Style>
-                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                    </Label.Style>
-                </Label>
-            </customControl:WindowHeader.TitleContent>
-        </customControl:WindowHeader>-->
-            <!--
-        <TabControl Grid.Row="1" TabStripPlacement="Left" HorizontalContentAlignment="Left">
-            <TabItem>
-                <TabItem.Header>
-                    <TextBlock Text="11111"/>
-                    -->
-            <!--<Label Content="General" Style="{StaticResource SimpleOverlayTheme.Label.Default}" HorizontalAlignment="Left"/>-->
-            <!--
-                </TabItem.Header>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <TextBlock Text="22222222222"/>
-                    -->
-            <!--<Label Content="Raw Data" Style="{StaticResource SimpleOverlayTheme.Label.Default}" HorizontalAlignment="Left"/>-->
-            <!--
-                </TabItem.Header>
-            </TabItem>
-        </TabControl>
-    </Grid>-->
-
+        <StackPanel>
+            <TabControl TabStripPlacement="Left" Background="Transparent" BorderThickness="0">
+                <TabItem>
+                    <TabItem.Header>Time
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <local:SettingTime/>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>2
+                    </TabItem.Header>
+                </TabItem>
+                <!--<TabControl.Style>
+                    <StaticResource ResourceKey="SimpleOverlayTheme.TabControl.Default"/>
+                </TabControl.Style>-->
+            </TabControl>
+            
             <Button Width="300" Content="TEST TEST" VerticalAlignment="Bottom"/>
-        </Border>
+        </StackPanel>
     </Window.Content>
 
     

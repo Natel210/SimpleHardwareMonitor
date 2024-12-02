@@ -125,7 +125,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             _rootDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".//");
             _extension = _extensionDefault;
             _rawdataCSVLog = SimpleFileIO.Manager.CreateCsvLog(_loggerName, MakeCurrentPathProperty()) ?? throw new Exception("don't create logger...");
-            _iniState = SimpleFileIO.Manager.CreateIniState(_loggerName, MakeCurrentPathProperty()) ?? throw new Exception("don't create logger...");
+            _iniState = SimpleFileIO.Manager.CreateIniState(_loggerName, MakeCurrentPathProperty()) ?? throw new Exception("don't create ini...");
             //load ini
             Load_INI();
 
