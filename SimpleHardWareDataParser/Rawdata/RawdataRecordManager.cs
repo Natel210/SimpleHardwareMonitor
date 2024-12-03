@@ -14,6 +14,8 @@ namespace SimpleHardWareDataParser.Rawdata
 {
     static internal class RawdataRecordManager
     {
+        static private readonly string _exception = @"*.rawdata";
+
         static private RawdataRecordDictionary _originData = new();
         static public RawdataRecordDictionary OriginData { get => _originData; }
 
@@ -28,7 +30,7 @@ namespace SimpleHardWareDataParser.Rawdata
             if (Directory.Exists(directoryinfo.FullName) is false)
                 return false;
 
-            var files = Directory.EnumerateFiles(directoryinfo.FullName, "*.rawdata", SearchOption.AllDirectories);
+            var files = Directory.EnumerateFiles(directoryinfo.FullName, _exception, SearchOption.AllDirectories);
             Debug.WriteLine("-------------파일들");
             foreach (var file in files)
             {
@@ -43,10 +45,7 @@ namespace SimpleHardWareDataParser.Rawdata
                 {
                     var records = csv.GetRecords<RawdataItem>();
                     foreach (var record in records)
-                    {
                         tempData[record.DateTime] = record;
-                    }
-                    //_originData.Add(record.DateTime, record);
                 }
             }
             _originData = new(tempData.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));

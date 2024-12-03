@@ -23,98 +23,6 @@ namespace SimpleHardWareDataParser.Main
             InitializeComponent();
 
             MakeGrid();
-
-
-            //PART_TabItem.ItemsSource = RawdataRecordManager.RawDataSplitInfo.Keys;
-
-            //PART_TabItem.Items["11"]
-
-
-            //InitializeComponent();
-            //PART_TabItem.ItemsSource = null;
-            //PART_TabItem.Items.Clear();
-            //foreach (var key in RawdataRecordManager.RawDataSplitInfo.Keys)
-            //{
-            //    //var tabItem = new TabItem
-            //    //{
-            //    //    Header = key // 탭의 제목으로 key를 설정
-            //    //};
-
-            //    //// 페이지나 유저 컨트롤을 생성하여 탭의 Content로 추가합니다.
-            //    //// 예시로 UserControlExample이라는 유저 컨트롤을 추가
-            //    //var userControl = new RawdataGrid(); // UserControlExample은 원하는 컨트롤로 대체 가능
-            //    //userControl.dataGrid.ItemsSource = RawdataRecordManager.Data[key].Values;
-            //    //// 또는 특정 페이지를 추가할 수도 있습니다.
-            //    //// var page = new PageExample(); // PageExample은 원하는 페이지로 대체 가능
-
-            //    //var frame = new Frame();
-            //    //frame.Content = userControl;
-            //    //tabItem.Content = frame; // 또는 page로 설정 가능
-            //    //PART_TabItem.Items.Add(tabItem);
-
-
-
-
-
-
-
-
-            //    PART_TabItem.ItemsSource = RawdataRecordManager.RawDataSplitInfo.Keys;
-            //    PART_TabItem.SelectionChanged += (object sender, SelectionChangedEventArgs e) =>
-            //    {
-
-
-            //        List<dynamic> dynamicDataTable = new();
-
-            //        if (PART_TabItem.SelectedItem.ToString() is string selectItemName)
-            //        {
-            //            foreach (var item in RawdataRecordManager.Data[selectItemName].Values)
-            //            {
-            //                dynamic dynamicRecord = new ExpandoObject();
-            //                dynamicRecord.Date = item.DateTime;
-            //                dynamicRecord.CpuUse = item.CpuUse;
-            //                dynamicRecord.CpuPower = item.CpuPower;
-            //                dynamicRecord.CpuTemperature = item.CpuTemperature;
-            //                //dynamicRecord.CpuUse = item.CpuUse;
-            //                //dynamicRecord.CpuUse = item.CpuUse;
-            //                dynamicDataTable.Add(dynamicRecord);
-            //            }
-
-            //            PART_DataGrid.ItemsSource = dynamicDataTable;
-
-            //            //PART_DataGrid.ItemsSource = RawdataRecordManager.Data[selectItemName].Values;
-            //        }
-
-            //        PART_DataGrid.Columns.Clear();
-            //        PART_DataGrid.Columns.Add(new DataGridTextColumn
-            //        {
-            //            Header = "Date",
-            //            Binding = new Binding("Date")
-            //        });
-
-            //        PART_DataGrid.Columns.Add(new DataGridTextColumn
-            //        {
-            //            Header = "CPU Use (%)",
-            //            Binding = new Binding("CpuUse")
-            //        });
-
-            //        PART_DataGrid.Columns.Add(new DataGridTextColumn
-            //        {
-            //            Header = "CPU Power (W)",
-            //            Binding = new Binding("CpuPower")
-            //        });
-
-            //        PART_DataGrid.Columns.Add(new DataGridTextColumn
-            //        {
-            //            Header = "CPU Temperature (C)",
-            //            Binding = new Binding("CpuTemperature")
-            //        });
-
-            //        // DataGrid에 데이터 바인딩
-            //        PART_DataGrid.ItemsSource = dynamicDataTable;
-
-            //    };
-            //}
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -160,11 +68,28 @@ namespace SimpleHardWareDataParser.Main
 
                 if (item is "ALL")
                 {
-                    getterAllDatas = $"{"TEMP"},{RawdataRecordManager.RawDataSplitInfo[item].SplitStart.ToString("yyyy-MM-dd HH:mm")},{RawdataRecordManager.RawDataSplitInfo[item].SplitEnd.ToString("yyyy-MM-dd HH:mm")},{rowList.CPU_USE_MIN},{rowList.CPU_USE_AVG},{rowList.CPU_USE_MAX},{rowList.CPU_TEMP_MIN},{rowList.CPU_TEMP_AVG},{rowList.CPU_TEMP_MAX},{rowList.CPU_POW_MIN},{rowList.CPU_POW_AVG},{rowList.CPU_POW_MAX}";
+                    var startDateTime = RawdataRecordManager.RawDataSplitInfo[item].SplitStart;
+                    var endDateTime = RawdataRecordManager.RawDataSplitInfo[item].SplitEnd;
+                    if (mainWindowViewmodel is not null)
+                    {
+                        startDateTime = startDateTime.Add(mainWindowViewmodel.Setting.TimeZoneDifference);
+                        endDateTime = endDateTime.Add(mainWindowViewmodel.Setting.TimeZoneDifference);
+                    }
+
+
+                    getterAllDatas = $"{"TEMP"},{startDateTime.ToString("yyyy-MM-dd HH:mm")},{endDateTime.ToString("yyyy-MM-dd HH:mm")},{rowList.CPU_USE_MIN},{rowList.CPU_USE_AVG},{rowList.CPU_USE_MAX},{rowList.CPU_TEMP_MIN},{rowList.CPU_TEMP_AVG},{rowList.CPU_TEMP_MAX},{rowList.CPU_POW_MIN},{rowList.CPU_POW_AVG},{rowList.CPU_POW_MAX}";
                 }
                 else
                 {
-                    getterDatas.Add($"{"TEMP"},{RawdataRecordManager.RawDataSplitInfo[item].SplitEnd.ToString("yyyy-MM-dd HH:mm")},{rowList.CPU_USE_MIN},{rowList.CPU_USE_AVG},{rowList.CPU_USE_MAX},{rowList.CPU_TEMP_MIN},{rowList.CPU_TEMP_AVG},{rowList.CPU_TEMP_MAX},{rowList.CPU_POW_MIN},{rowList.CPU_POW_AVG},{rowList.CPU_POW_MAX}");
+                    var startDateTime = RawdataRecordManager.RawDataSplitInfo[item].SplitStart;
+                    var endDateTime = RawdataRecordManager.RawDataSplitInfo[item].SplitEnd;
+                    if (mainWindowViewmodel is not null)
+                    {
+                        startDateTime = startDateTime.Add(mainWindowViewmodel.Setting.TimeZoneDifference);
+                        endDateTime = endDateTime.Add(mainWindowViewmodel.Setting.TimeZoneDifference);
+                    }
+
+                    getterDatas.Add($"{"TEMP"},{endDateTime.ToString("yyyy-MM-dd HH:mm")},{rowList.CPU_USE_MIN},{rowList.CPU_USE_AVG},{rowList.CPU_USE_MAX},{rowList.CPU_TEMP_MIN},{rowList.CPU_TEMP_AVG},{rowList.CPU_TEMP_MAX},{rowList.CPU_POW_MIN},{rowList.CPU_POW_AVG},{rowList.CPU_POW_MAX}");
                 }
 
 
@@ -215,58 +140,78 @@ namespace SimpleHardWareDataParser.Main
                 new()
                 {
                     SplitName = "1",
-                    //SplitStart = new DateTime(2024, 11, 25, 01, 00, 00),
-                    //SplitEnd = new DateTime(2024, 11, 25, 10, 00, 00)
+                    SplitStart = new DateTime(2024, 11, 28, 10, 00, 00),
+                    SplitEnd = new DateTime(2024, 11, 29, 01, 00, 00)
 
-                    SplitStart = new DateTime(2024, 11, 25, 09, 00, 00),
-                    SplitEnd = new DateTime(2024, 11, 25, 18, 00, 00)
+                    //SplitStart = new DateTime(2024, 11, 28, 18, 00, 00),
+                    //SplitEnd = new DateTime(2024, 11, 29, 09, 00, 00)
                 });
             RawdataRecordManager.RawDataSplitInfo.Add(
                 "2",
                 new()
                 {
                     SplitName = "2",
-                    //SplitStart = new DateTime(2024, 11, 25, 10, 00, 01),
-                    //SplitEnd = new DateTime(2024, 11, 26, 01, 00, 00)
+                    SplitStart = new DateTime(2024, 11, 29, 01, 00, 01),
+                    SplitEnd = new DateTime(2024, 11, 29, 10, 00, 00)
 
-                    SplitStart = new DateTime(2024, 11, 25, 18, 00, 01),
-                    SplitEnd = new DateTime(2024, 11, 26, 09, 00, 00)
+                    //SplitStart = new DateTime(2024, 11, 29, 09, 00, 01),
+                    //SplitEnd = new DateTime(2024, 11, 29, 18, 00, 00)
                 });
             RawdataRecordManager.RawDataSplitInfo.Add(
                 "3",
                 new()
                 {
                     SplitName = "3",
-                    //SplitStart = new DateTime(2024, 11, 26, 01, 00, 01),
-                    //SplitEnd = new DateTime(2024, 11, 26, 10, 00, 00)
+                    SplitStart = new DateTime(2024, 11, 29, 10, 00, 01),
+                    SplitEnd = new DateTime(2024, 11, 30, 01, 00, 00)
 
-                    SplitStart = new DateTime(2024, 11, 26, 09, 00, 01),
-                    SplitEnd = new DateTime(2024, 11, 26, 18, 00, 00)
+                    //SplitStart = new DateTime(2024, 11, 29, 18, 00, 01),
+                    //SplitEnd = new DateTime(2024, 11, 30, 09, 00, 00)
                 });
             RawdataRecordManager.RawDataSplitInfo.Add(
                 "4",
                 new()
                 {
                     SplitName = "4",
-                    //SplitStart = new DateTime(2024, 11, 26, 10, 00, 01),
-                    //SplitEnd = new DateTime(2024, 11, 27, 01, 00, 00)
+                    SplitStart = new DateTime(2024, 11, 30, 01, 00, 01),
+                    SplitEnd = new DateTime(2024, 11, 30, 10, 00, 00)
 
-                    SplitStart = new DateTime(2024, 11, 26, 18, 00, 01),
-                    SplitEnd = new DateTime(2024, 11, 27, 09, 00, 00)
+                    //SplitStart = new DateTime(2024, 11, 30, 09, 00, 01),
+                    //SplitEnd = new DateTime(2024, 11, 30, 18, 00, 00)
                 });
             RawdataRecordManager.RawDataSplitInfo.Add(
                 "5",
                 new()
                 {
                     SplitName = "5",
-                    //SplitStart = new DateTime(2024, 11, 27, 01, 00, 01),
-                    //SplitEnd = new DateTime(2024, 11, 27, 10, 00, 00)
+                    SplitStart = new DateTime(2024, 11, 30, 10, 00, 01),
+                    SplitEnd = new DateTime(2024, 12, 01, 01, 00, 00)
 
-                    SplitStart = new DateTime(2024, 11, 27, 09, 00, 01),
-                    SplitEnd = new DateTime(2024, 11, 27, 18, 00, 00)
+                    //SplitStart = new DateTime(2024, 11, 30, 18, 00, 01),
+                    //SplitEnd = new DateTime(2024, 12, 01, 09, 00, 00)
                 });
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "6",
+                new()
+                {
+                    SplitName = "6",
+                    SplitStart = new DateTime(2024, 12, 01, 01, 00, 01),
+                    SplitEnd = new DateTime(2024, 12, 01, 10, 00, 00)
 
+                    //SplitStart = new DateTime(2024, 12, 01, 09, 00, 01),
+                    //SplitEnd = new DateTime(2024, 12, 01, 18, 00, 00)
+                });
+            RawdataRecordManager.RawDataSplitInfo.Add(
+                "7",
+                new()
+                {
+                    SplitName = "7",
+                    SplitStart = new DateTime(2024, 12, 01, 10, 00, 01),
+                    SplitEnd = new DateTime(2024, 12, 02, 01, 00, 00)
 
+                    //SplitStart = new DateTime(2024, 12, 01, 18, 00, 01),
+                    //SplitEnd = new DateTime(2024, 12, 02, 09, 00, 00)
+                });
 
 
         }
