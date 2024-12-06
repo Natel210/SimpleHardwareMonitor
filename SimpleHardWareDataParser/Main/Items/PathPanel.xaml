@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <ImageBrush x:Key="folderOpen" ImageSource="pack://application:,,,/SimpleHardWareDataParser;component/Resource/PhosphorIcons-FolderOpenThin.png" Stretch="Uniform"/>
             <ImageBrush x:Key="folder" ImageSource="pack://application:,,,/SimpleHardWareDataParser;component/Resource/PhosphorIcons-FolderThin.png" Stretch="Uniform"/>
+            <ImageBrush x:Key="refresh" ImageSource="pack://application:,,,/SimpleHardWareDataParser;component/Resource/PhosphorIcons-ArrowsCounterClockwiseThin.png" Stretch="Uniform"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.Style>
@@ -18,9 +19,17 @@
     </UserControl.Style>
 
     <UserControl.Content>
-        <GroupBox>
-            <GroupBox.Header>123
-
+        <GroupBox Style="{StaticResource SimpleOverlayTheme.GroupBox.Fold}">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Label
+                        Margin="10,0,0,0"
+                        Content="Set Path"
+                        FontSize="32"
+                        HorizontalAlignment="Left"
+                        Background="Transparent"
+                        Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                </StackPanel>
             </GroupBox.Header>
             <GroupBox.Content>
                 <ScrollViewer>
@@ -29,117 +38,59 @@
                     <ScrollViewer.HorizontalScrollBarVisibility>Disabled
                     </ScrollViewer.HorizontalScrollBarVisibility>
                     <Grid x:Name="Main">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <!--<Grid Grid.Row="0">
-
-                        </Grid>
-                        <Grid Grid.Row="0">
-
-                        </Grid>-->
-
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0">
-                            <TextBox.MinWidth>800</TextBox.MinWidth>
-                            <TextBox.MaxLines>1</TextBox.MaxLines>
-                            <TextBox.MinLines>1</TextBox.MinLines>
-                            <TextBox.Text>
-                                <Binding Path="RootDirectory" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="./" FallbackValue=""/>
-                            </TextBox.Text>
-                            <TextBox.FontSize>24
-                            </TextBox.FontSize>
-                            <TextBox.Style>
-                                <StaticResource ResourceKey="SimpleOverlayTheme.TextBox.Default"/>
-                            </TextBox.Style>
-                        </TextBox>
-                        <Button Grid.Column="1">
-                            <Button.ToolTip>Directory Searching
-                            </Button.ToolTip>
-                            <Button.Width>
-                                <Binding Path="ActualHeight" ElementName="Main"/>
-                            </Button.Width>
-                            <Button.Height>
-                                <Binding Path="ActualHeight" ElementName="Main"/>
-                            </Button.Height>
-                            <Button.Margin>5,0
-                            </Button.Margin>
-                            <Button.BorderThickness>0
-                            </Button.BorderThickness>
-                            <Button.Style>
-                                <StaticResource ResourceKey="SimpleOverlayTheme.Button.ImageMask"/>
-                            </Button.Style>
-                            <buttonHelper:Mask.MaskBrushDefault>
-                                <DynamicResource ResourceKey="folder"/>
-                            </buttonHelper:Mask.MaskBrushDefault>
-                            <buttonHelper:Mask.IsMaskMouseOver>True
-                            </buttonHelper:Mask.IsMaskMouseOver>
-                            <buttonHelper:Mask.MaskBrushMouseOver>
-                                <DynamicResource ResourceKey="folderOpen"/>
-                            </buttonHelper:Mask.MaskBrushMouseOver>
-                            <buttonHelper:OverlayBackground.SetDefaultVisible>False
-                            </buttonHelper:OverlayBackground.SetDefaultVisible>
-                            <buttonHelper:OverlayBackground.SetOutlineVisible>False
-                            </buttonHelper:OverlayBackground.SetOutlineVisible>
-                            <buttonHelper:OverlayBackground.SetBackgroundVisible>False
-                            </buttonHelper:OverlayBackground.SetBackgroundVisible>
-                            <buttonHelper:OverlayMask.OverlayMaskVisible>True
-                            </buttonHelper:OverlayMask.OverlayMaskVisible>
-                            <buttonHelper:OverlayMask.SetDefaultVisible>False
-                            </buttonHelper:OverlayMask.SetDefaultVisible>
-                        </Button>
-                        <CheckBox Grid.Column="2" >
-                            <CheckBox.HorizontalContentAlignment>Center
-                            </CheckBox.HorizontalContentAlignment>
-                            <CheckBox.VerticalContentAlignment>Center
-                            </CheckBox.VerticalContentAlignment>
-                            <CheckBox.ToolTip>Using group...
-                            </CheckBox.ToolTip>
-                            <CheckBox.FontSize>16
-                            </CheckBox.FontSize>
-                            <CheckBox.Content>
-                                <Label>
-                                    <Label.Content>
-                                        <TextBlock>
-                                            <TextBlock.Text>IsGroup
-                                            </TextBlock.Text>
-                                            <TextBlock.FontSize>24
-                                            </TextBlock.FontSize>
-                                            <TextBlock.Style>
-                                                <StaticResource ResourceKey="SimpleOverlayTheme.TextBlock.Default"/>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Label.Content>
-                                    <Label.Style>
-                                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                                    </Label.Style>
-                                    <Label.VerticalAlignment>Center
-                                    </Label.VerticalAlignment>
-                                    <Label.HorizontalAlignment>Center
-                                    </Label.HorizontalAlignment>
-                                </Label>
-                            </CheckBox.Content>
-
-                            <CheckBox.Style>
-                                <StaticResource ResourceKey="SimpleOverlayTheme.CheckBox.Default"/>
-                            </CheckBox.Style>
-                        </CheckBox>
+                        <!--Directory Path-->
+                        <TextBox
+                            Grid.Column="0"
+                            Text="{Binding RootDirectory, RelativeSource='{RelativeSource AncestorType=UserControl}', FallbackValue='./'}"
+                            MinWidth="800"
+                            MaxLines="1"
+                            MinLines="1"
+                            FontSize="24"
+                            Padding="5,2,0,2"
+                            Style="{StaticResource SimpleOverlayTheme.TextBox.Default}"/>
+                        <!--Directory Searching Button-->
+                        <Button
+                            Grid.Column="1"
+                            Margin="5,0"
+                            BorderThickness="0"
+                            Width="{Binding ActualHeight, ElementName='Main'}"
+                            Height="{Binding ActualHeight, ElementName='Main'}"
+                            ToolTip="Directory Searching"
+                            Click="DirectorySearchingButtonClick"
+                            Style="{StaticResource SimpleOverlayTheme.Button.ImageMask}"
+                            buttonHelper:Mask.MaskBrushDefault="{DynamicResource folder}"
+                            buttonHelper:Mask.IsMaskMouseOver="True"
+                            buttonHelper:Mask.MaskBrushMouseOver="{DynamicResource folderOpen}"
+                            buttonHelper:OverlayBackground.SetDefaultVisible="False"
+                            buttonHelper:OverlayBackground.SetBackgroundVisible="False"
+                            buttonHelper:OverlayBackground.SetOutlineVisible="False"
+                            buttonHelper:OverlayMask.OverlayMaskVisible="True"
+                            buttonHelper:OverlayMask.SetDefaultVisible="True"/>
+                        <!--Reloading Button-->
+                        <Button
+                            Grid.Column="2"
+                            Margin="5,0"
+                            BorderThickness="0"
+                            ToolTip="Reloading"    
+                            Width="{Binding ActualHeight, ElementName=Main}"
+                            Height="{Binding ActualHeight, ElementName=Main}"
+                            Click="ReloadingButtonClick"
+                            Style="{StaticResource SimpleOverlayTheme.Button.ImageMask}"
+                            buttonHelper:Mask.MaskBrushDefault="{DynamicResource refresh}"
+                            buttonHelper:Mask.IsMaskMouseOver="False"
+                            buttonHelper:OverlayBackground.SetDefaultVisible="False"
+                            buttonHelper:OverlayBackground.SetBackgroundVisible="False"
+                            buttonHelper:OverlayBackground.SetOutlineVisible="False"
+                            buttonHelper:OverlayMask.OverlayMaskVisible="True"
+                            buttonHelper:OverlayMask.SetDefaultVisible="True"/>
                     </Grid>
                 </ScrollViewer>
             </GroupBox.Content>
-            <GroupBox.Style>
-                <StaticResource ResourceKey="SimpleOverlayTheme.GroupBox.Fold"/>
-            </GroupBox.Style>
         </GroupBox>
     </UserControl.Content>
-        
-    
-    
-    
 </UserControl>

@@ -31,20 +31,12 @@
     <windowHelper:Items.WindowTitleHeader>
         <customControl:WindowHeader Grid.Row="0">
             <customControl:WindowHeader.TitleContent>
-                <Label>
-                    <Label.FontSize>24
-                    </Label.FontSize>
-                    <Label.Margin>0,0,0,0
-                    </Label.Margin>
-                    <Label.Background>Transparent
-                    </Label.Background>
-                    <Label.Content>
-                        <Binding Path="TitleName" Mode="TwoWay"/>
-                    </Label.Content>
-                    <Label.Style>
-                        <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                    </Label.Style>
-                </Label>
+                <Label
+                    Background="Transparent"
+                    FontSize="24"
+                    Margin="0,0,0,0"
+                    Content="{Binding TitleName, Mode=TwoWay}"
+                    Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
             </customControl:WindowHeader.TitleContent>
             <customControl:WindowHeader.SideContent>
                 <Button Content="TEST" Click="Button_Click"/>
@@ -52,161 +44,7 @@
         </customControl:WindowHeader>
     </windowHelper:Items.WindowTitleHeader>
     <StackPanel Orientation="Vertical">
-        <localItems:PathPanel>
-            <localItems:PathPanel.Margin>5
-            </localItems:PathPanel.Margin>
-            <localItems:PathPanel.RootDirectory>
-                <Binding Path="RootDirectory" Mode="TwoWay"/>
-            </localItems:PathPanel.RootDirectory>
-        </localItems:PathPanel>
-        <!--<Border.BorderThickness>1
-        </Border.BorderThickness>
-        <Border.BorderBrush>Gray
-        </Border.BorderBrush>
-        <Border.Margin>
-            <Binding Path="Margin" RelativeSource="{RelativeSource AncestorType=Window}"/>
-        </Border.Margin>-->
-
-        <StackPanel Orientation="Vertical">
-            
-            <Grid x:Name="Main">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <!--<Binding Path="Item1_Header" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="H1" FallbackValue=""/>-->
-                <TextBox Grid.Column="0">
-                    <TextBox.MinWidth>800</TextBox.MinWidth>
-                    <TextBox.MaxLines>1</TextBox.MaxLines>
-                    <TextBox.MinLines>1</TextBox.MinLines>
-                    <TextBox.Text>
-                        <Binding Path="RootDirectory" Mode="TwoWay"/>
-                    </TextBox.Text>
-                    <!--<TextBox.Text>
-                        <Binding Path="RootDirectory" RelativeSource="{RelativeSource AncestorType=UserControl}" d:FallbackValue="./" FallbackValue=""/>
-                    </TextBox.Text>-->
-                    <TextBox.FontSize>24
-                    </TextBox.FontSize>
-                    <TextBox.Style>
-                        <StaticResource ResourceKey="SimpleOverlayTheme.TextBox.Default"/>
-                    </TextBox.Style>
-                </TextBox>
-
-
-                <!--<TextBox Width="800" FontSize="24" Text="{Binding RootDirectory, Mode=TwoWay}" Style="{StaticResource ResourceKey=SimpleOverlayTheme.TextBox.Default}"/>-->
-                <Button Grid.Column="1" Content="Change Root Path" Margin="5,0" BorderThickness="0" Click="ChangeRootPath_Button_Click">
-                    <Button.Width>
-                        <Binding Path="ActualHeight" ElementName="Main"/>
-                    </Button.Width>
-                    <Button.Height>
-                        <Binding Path="ActualHeight" ElementName="Main"/>
-                    </Button.Height>
-                    <Button.Style>
-                        <StaticResource ResourceKey="SimpleOverlayTheme.Button.ImageMask"/>
-                    </Button.Style>
-                    <buttonHelper:Mask.MaskBrushDefault>
-                        <DynamicResource ResourceKey="folder"/>
-                    </buttonHelper:Mask.MaskBrushDefault>
-                    <buttonHelper:Mask.IsMaskMouseOver>True
-                    </buttonHelper:Mask.IsMaskMouseOver>
-                    <buttonHelper:Mask.MaskBrushMouseOver>
-                        <DynamicResource ResourceKey="folderOpen"/>
-                    </buttonHelper:Mask.MaskBrushMouseOver>
-                    <buttonHelper:OverlayBackground.SetDefaultVisible>False
-                    </buttonHelper:OverlayBackground.SetDefaultVisible>
-                    <buttonHelper:OverlayBackground.SetOutlineVisible>False
-                    </buttonHelper:OverlayBackground.SetOutlineVisible>
-                    <buttonHelper:OverlayBackground.SetBackgroundVisible>False
-                    </buttonHelper:OverlayBackground.SetBackgroundVisible>
-                    <buttonHelper:OverlayMask.OverlayMaskVisible>True
-                    </buttonHelper:OverlayMask.OverlayMaskVisible>
-                    <buttonHelper:OverlayMask.SetDefaultVisible>False
-                    </buttonHelper:OverlayMask.SetDefaultVisible>
-                </Button>
-                <CheckBox Grid.Column="2" >
-                    <CheckBox.HorizontalContentAlignment>Center
-                    </CheckBox.HorizontalContentAlignment>
-                    <CheckBox.VerticalContentAlignment>Center
-                    </CheckBox.VerticalContentAlignment>
-                    <CheckBox.ToolTip>Using group...
-                    </CheckBox.ToolTip>
-                    <CheckBox.FontSize>16
-                    </CheckBox.FontSize>
-                    <CheckBox.Content>
-                        <Label>
-                            <Label.Content>
-                                <TextBlock>
-                                    <TextBlock.Text>USE
-                                    </TextBlock.Text>
-                                    <TextBlock.FontSize>24
-                                    </TextBlock.FontSize>
-                                    <TextBlock.Style>
-                                        <StaticResource ResourceKey="SimpleOverlayTheme.TextBlock.Default"/>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Label.Content>
-                            <Label.Style>
-                                <StaticResource ResourceKey="SimpleOverlayTheme.Label.Default"/>
-                            </Label.Style>
-                            <Label.VerticalAlignment>Center
-                            </Label.VerticalAlignment>
-                            <Label.HorizontalAlignment>Center
-                            </Label.HorizontalAlignment>
-                        </Label>
-                    </CheckBox.Content>
-
-                    <CheckBox.Style>
-                        <StaticResource ResourceKey="SimpleOverlayTheme.CheckBox.Default"/>
-                    </CheckBox.Style>
-                </CheckBox>
-            </Grid>
-
-
-        </StackPanel>
-        
-        <Border Height="900">
-            <Grid>
-                <TabControl x:Name="PART_TabItem" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
-                </TabControl>
-
-                <!--<Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>-->
-
-
-
-                <!--<DataGrid x:Name="PART_DataGrid" FontSize="12" Grid.Row="2"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"
-                  SelectionMode="Extended" SelectionUnit="Cell" AutoGenerateColumns ="True"
-                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
-        <DataGrid.ColumnHeaderStyle>
-            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource SimpleOverlayTheme.DataGridColumnHeader.Default}">
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Padding" Value="5,0"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="dataGridHelper:Header.ContentPadding" Value="20,0"/>
-            </Style>
-        </DataGrid.ColumnHeaderStyle>
-        <DataGrid.Style>
-            <StaticResource ResourceKey="SimpleOverlayTheme.DataGrid.Default"/>
-        </DataGrid.Style>
-        <DataGrid.EnableRowVirtualization>True
-        </DataGrid.EnableRowVirtualization>
-        <VirtualizingStackPanel.IsVirtualizing>True
-        </VirtualizingStackPanel.IsVirtualizing>
-        <VirtualizingStackPanel.VirtualizationMode>Recycling
-        </VirtualizingStackPanel.VirtualizationMode>
-
-    </DataGrid>-->
-
-
-            </Grid>
-        </Border>
-            
-        
+        <localItems:PathPanel Margin="5" RootDirectory="{Binding RootDirectory, Mode=TwoWay}"/>
+        <localItems:PrimaryPanel RootDirectory="{Binding RootDirectory, Mode=TwoWay}"/>
     </StackPanel>
 </Window>

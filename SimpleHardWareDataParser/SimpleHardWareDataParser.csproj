@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resource\PhosphorIcons-ArrowsCounterClockwiseThin.png" />
     <None Remove="Resource\PhosphorIcons-FolderOpenThin.png" />
     <None Remove="Resource\PhosphorIcons-FolderThin.png" />
   </ItemGroup>
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resource\PhosphorIcons-ArrowsCounterClockwiseThin.png" />
     <Resource Include="Resource\PhosphorIcons-FolderOpenThin.png" />
     <Resource Include="Resource\PhosphorIcons-FolderThin.png" />
   </ItemGroup>

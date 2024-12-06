@@ -1,4 +1,5 @@
-﻿using SimpleHardWareDataParser.Rawdata;
+﻿using SimpleHardWareDataParser.Main.Items;
+using SimpleHardWareDataParser.Rawdata;
 using SimpleOverlayTheme.ThemeSystem;
 using System;
 using System.Collections.Generic;
@@ -24,68 +25,76 @@ namespace SimpleHardWareDataParser.Main.RawDataList
     /// </summary>
     public partial class RawDataList : UserControl
     {
-        public string CPU_USE_MIN { get; private set; }
-        public string CPU_USE_AVG { get; private set; }
-        public string CPU_USE_MAX { get; private set; }
-        public string CPU_POW_MIN { get; private set; }
-        public string CPU_POW_AVG { get; private set; }
-        public string CPU_POW_MAX { get; private set; }
-        public string CPU_TEMP_MIN { get; private set; }
-        public string CPU_TEMP_AVG { get; private set; }
-        public string CPU_TEMP_MAX { get; private set; }
+        private static readonly FrameworkPropertyMetadataOptions _frameworkPropertyMetadataOptions = FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure;
 
-        public RawDataList()
+        public static readonly DependencyProperty PrimaryProperty
+            = DependencyProperty.Register(
+                nameof(Primary),
+                typeof(string),
+                typeof(PathPanel),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string Primary
         {
-            InitializeComponent();
-            SplitInfo = new();
-            Data = new();
+            get { return (string)GetValue(PrimaryProperty); }
+            set 
+            {
+                SetValue(PrimaryProperty, value);
+                CheckVaildData();
+                UpdateGridList();
+            }
         }
 
-        internal RawDataList(RawdataSplitInfo splitInfo, RawdataRecordDictionary data)
+        public static readonly DependencyProperty SplitNameProperty
+            = DependencyProperty.Register(
+                nameof(SplitName),
+                typeof(string),
+                typeof(PathPanel),
+                new FrameworkPropertyMetadata(null, _frameworkPropertyMetadataOptions));
+        public string SplitName
         {
-            //internal RawdataSplitInfo
-            InitializeComponent();
-            SplitInfo = splitInfo;
-            Data = data;
-            UpdateGridList();
+            get { return (string)GetValue(SplitNameProperty); }
+            set 
+            {
+                SetValue(SplitNameProperty, value);
+                CheckVaildData();
+                UpdateGridList();
+            }
         }
 
-        internal void SetData(RawdataSplitInfo splitInfo, RawdataRecordDictionary data)
+
+        private bool CheckVaildData()
         {
-            SplitInfo = splitInfo;
-            Data = data;
+            var checkDataDic = RawdataRecordManager.DataDic;
+            if (checkDataDic is null)
+                return false;
+            if (checkDataDic.ContainsKey(Primary))
+                return false;
+            if(checkDataDic[Primary].ContainsKey(SplitName))
+                return false;
+            return true;
         }
 
-        internal void UpdateGridList()
+        private void UpdateDataList()
         {
-            if (RawdataRecordManager.Data.ContainsKey(SplitInfo.SplitName) is false)
+            if (CheckVaildData() is false)
                 return;
+            var dataDic = RawdataRecordManager.DataDic[Primary][SplitName];
 
+        }
 
-
-
-
-
-
-            List<float> cpuUseList = [];
-            List<float> cpuPowList = [];
-            List<float> cpuTempList = [];
-
+        private void UpdateGridList()
+        {
+            if(CheckVaildData() is false)
+                return;
+            var dataDic = RawdataRecordManager.DataDic[Primary][SplitName];
             List<dynamic> dynamicDataTable = new();
-            foreach (var item in RawdataRecordManager.Data[SplitInfo.SplitName].Values)
+            foreach (var item in RawdataRecordManager.DataDic[Primary][SplitName].Data.Values)
             {
                 dynamic dynamicRecord = new ExpandoObject();
                 dynamicRecord.DateTime = item.DateTime.ToString("yy.MM.dd HH:mm:ss");
                 dynamicRecord.CpuUse = $"{item.CpuUse:F1}";
                 dynamicRecord.CpuPower = $"{item.CpuPower:F1}";
                 dynamicRecord.CpuTemperature = $"{item.CpuTemperature:F1}";
-
-                if (item.CpuUse is not 0.0f)
-                    cpuUseList.Add(item.CpuUse);
-                if (item.CpuPower is not 0.0f)
-                    cpuPowList.Add(item.CpuPower);
-                if (item.CpuTemperature is not 0.0f)
-                    cpuTempList.Add(item.CpuTemperature);
 
                 dynamicDataTable.Add(dynamicRecord);
             }
@@ -123,70 +132,108 @@ namespace SimpleHardWareDataParser.Main.RawDataList
 
             // DataGrid에 데이터 바인딩
             PART_DataGrid.ItemsSource = dynamicDataTable;
-            if (cpuUseList.Count is not 0)
-            {
-                CPU_USE_MIN = $"{cpuUseList.Min():F1}";
-                CPU_USE_AVG = $"{cpuUseList.Average():F1}";
-                CPU_USE_MAX = $"{ cpuUseList.Max():F1}";
-                Part_CpuUseAvg.Content = $"Use Avg: {cpuUseList.Average():F1} %";
-                Part_CpuUseMin.Content = $"Use Min: {cpuUseList.Min():F1} %";
-                Part_CpuUseMax.Content = $"Use Max: {cpuUseList.Max():F1} %";
-            }
-            else
-            {
-                CPU_USE_MIN = $"";
-                CPU_USE_AVG = $"";
-                CPU_USE_MAX = $"";
-                Part_CpuUseAvg.Content = $"Use Avg: N/A";
-                Part_CpuUseMin.Content = $"Use Min: N/A";
-                Part_CpuUseMax.Content = $"Use Max: N/A";
-            }
-
-            if (cpuPowList.Count is not 0)
-            {
-                CPU_POW_MIN = $"{cpuPowList.Min():F1}";
-                CPU_POW_AVG = $"{cpuPowList.Average():F1}";
-                CPU_POW_MAX = $"{cpuPowList.Max():F1}";
-                Part_CpuPowAvg.Content = $"Pow Avg: {cpuPowList.Average():F1} W";
-                Part_CpuPowMin.Content = $"Pow Min: {cpuPowList.Min():F1} W";
-                Part_CpuPowMax.Content = $"Pow Max: {cpuPowList.Max():F1} W";
-            }
-            else
-            {
-                CPU_POW_MIN = $"";
-                CPU_POW_AVG = $"";
-                CPU_POW_MAX = $"";
-                Part_CpuPowAvg.Content = $"Pow Avg: N/A";
-                Part_CpuPowMin.Content = $"Pow Min: N/A";
-                Part_CpuPowMax.Content = $"Pow Max: N/A";
-            }
-
-            if (cpuTempList.Count is not 0)
-            {
-                CPU_TEMP_MIN = $"{cpuTempList.Min():F1}";
-                CPU_TEMP_AVG = $"{cpuTempList.Average():F1}";
-                CPU_TEMP_MAX = $"{cpuTempList.Max():F1}";
-                Part_CpuTempAvg.Content = $"Temp Avg: {cpuTempList.Average():F1} °C";
-                Part_CpuTempMin.Content = $"Temp Min: {cpuTempList.Min():F1} °C";
-                Part_CpuTempMax.Content = $"Temp Max: {cpuTempList.Max():F1} °C";
-            }
-            else
-            {
-                CPU_TEMP_MIN = $"";
-                CPU_TEMP_AVG = $"";
-                CPU_TEMP_MAX = $"";
-                Part_CpuTempAvg.Content = $"Temp Avg: N/A";
-                Part_CpuTempMin.Content = $"Temp Min: N/A";
-                Part_CpuTempMax.Content = $"Temp Max: N/A";
-            }
-
-            
-
-            
-
-
-
         }
+
+
+
+
+        public RawDataList()
+        {
+            InitializeComponent();
+        }
+
+        //internal RawDataList(RawdataSplitInfo splitInfo)
+        //{
+        //    //internal RawdataSplitInfo
+        //    InitializeComponent();
+        //    var data2 = RawdataRecordManager.DataDic[""][splitInfo.SplitName];
+        //    DataContext = new RawdataRecorderViewmodel(data2);
+
+        //    UpdateGridList();
+        //}
+
+        //internal void SetData(RawdataSplitInfo splitInfo, RawdataRecorder data)
+        //{
+        //    SplitInfo = splitInfo;
+        //    Data = data;
+        ////}
+
+        //internal void UpdateGridList()
+        //{
+        //    if (RawdataRecordManager.DataDic[""].ContainsKey(SplitInfo.SplitName) is false)
+        //        return;
+
+
+
+
+
+
+
+            
+        //    //if (cpuUseList.Count is not 0)
+        //    //{
+        //    //    CPU_USE_MIN = $"{cpuUseList.Min():F1}";
+        //    //    CPU_USE_AVG = $"{cpuUseList.Average():F1}";
+        //    //    CPU_USE_MAX = $"{ cpuUseList.Max():F1}";
+        //    //    Part_CpuUseAvg.Content = $"Use Avg: {cpuUseList.Average():F1} %";
+        //    //    Part_CpuUseMin.Content = $"Use Min: {cpuUseList.Min():F1} %";
+        //    //    Part_CpuUseMax.Content = $"Use Max: {cpuUseList.Max():F1} %";
+        //    //}
+        //    //else
+        //    //{
+        //    //    CPU_USE_MIN = $"";
+        //    //    CPU_USE_AVG = $"";
+        //    //    CPU_USE_MAX = $"";
+        //    //    Part_CpuUseAvg.Content = $"Use Avg: N/A";
+        //    //    Part_CpuUseMin.Content = $"Use Min: N/A";
+        //    //    Part_CpuUseMax.Content = $"Use Max: N/A";
+        //    //}
+
+        //    //if (cpuPowList.Count is not 0)
+        //    //{
+        //    //    CPU_POW_MIN = $"{cpuPowList.Min():F1}";
+        //    //    CPU_POW_AVG = $"{cpuPowList.Average():F1}";
+        //    //    CPU_POW_MAX = $"{cpuPowList.Max():F1}";
+        //    //    Part_CpuPowAvg.Content = $"Pow Avg: {cpuPowList.Average():F1} W";
+        //    //    Part_CpuPowMin.Content = $"Pow Min: {cpuPowList.Min():F1} W";
+        //    //    Part_CpuPowMax.Content = $"Pow Max: {cpuPowList.Max():F1} W";
+        //    //}
+        //    //else
+        //    //{
+        //    //    CPU_POW_MIN = $"";
+        //    //    CPU_POW_AVG = $"";
+        //    //    CPU_POW_MAX = $"";
+        //    //    Part_CpuPowAvg.Content = $"Pow Avg: N/A";
+        //    //    Part_CpuPowMin.Content = $"Pow Min: N/A";
+        //    //    Part_CpuPowMax.Content = $"Pow Max: N/A";
+        //    //}
+
+        //    //if (cpuTempList.Count is not 0)
+        //    //{
+        //    //    CPU_TEMP_MIN = $"{cpuTempList.Min():F1}";
+        //    //    CPU_TEMP_AVG = $"{cpuTempList.Average():F1}";
+        //    //    CPU_TEMP_MAX = $"{cpuTempList.Max():F1}";
+        //    //    Part_CpuTempAvg.Content = $"Temp Avg: {cpuTempList.Average():F1} °C";
+        //    //    Part_CpuTempMin.Content = $"Temp Min: {cpuTempList.Min():F1} °C";
+        //    //    Part_CpuTempMax.Content = $"Temp Max: {cpuTempList.Max():F1} °C";
+        //    //}
+        //    //else
+        //    //{
+        //    //    CPU_TEMP_MIN = $"";
+        //    //    CPU_TEMP_AVG = $"";
+        //    //    CPU_TEMP_MAX = $"";
+        //    //    Part_CpuTempAvg.Content = $"Temp Avg: N/A";
+        //    //    Part_CpuTempMin.Content = $"Temp Min: N/A";
+        //    //    Part_CpuTempMax.Content = $"Temp Max: N/A";
+        //    //}
+
+            
+
+            
+
+
+
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -196,8 +243,7 @@ namespace SimpleHardWareDataParser.Main.RawDataList
 
     public partial class RawDataList
     {
-        public RawdataSplitInfo SplitInfo { get; private set; }
-        public RawdataRecordDictionary Data { get; private set; }
+
 
 
 

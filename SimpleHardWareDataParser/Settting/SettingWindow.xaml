@@ -51,7 +51,7 @@
                 </TabControl.Style>-->
             </TabControl>
             
-            <Button Width="300" Content="TEST TEST" VerticalAlignment="Bottom"/>
+            <Button Width="300" Content="TEST TEST" VerticalAlignment="Bottom" Click="Button_Click"/>
         </StackPanel>
     </Window.Content>
 

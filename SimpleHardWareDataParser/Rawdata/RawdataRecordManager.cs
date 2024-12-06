@@ -14,64 +14,75 @@ namespace SimpleHardWareDataParser.Rawdata
 {
     static internal class RawdataRecordManager
     {
+        static private Dictionary</* originData */string, /*all data*/Dictionary<DateTime, RawdataItem>> _originDataDic = [];
+        static private Dictionary</* originData */string, Dictionary</* split name */string,RawdataRecorder>> _dataDic = [];
+        static private Dictionary</* split */string, RawdataSplitInfo> _splitTemplate = [];
+        static private Dictionary</* split */string, RawdataSplitInfo> _newSplitTemplate = [];
         static private readonly string _exception = @"*.rawdata";
 
-        static private RawdataRecordDictionary _originData = new();
-        static public RawdataRecordDictionary OriginData { get => _originData; }
-
-        static public Dictionary<string,RawdataSplitInfo> RawDataSplitInfo = new();
-
-        static internal Dictionary<string, RawdataRecordDictionary> Data { get; } = [];
-
-        static internal bool Load(DirectoryInfo directoryinfo)
+        /// <summary>
+        /// modifications are not reflected in <see cref="SplitTemplate"/> get.<br/>
+        /// after updating with set, call <see cref="CalculateData"/>>.
+        /// </summary>
+        static public Dictionary<string, RawdataSplitInfo> SplitTemplate { get => new(_splitTemplate); set => _newSplitTemplate = value; }
+        static public Dictionary<string, Dictionary</* split name */string, RawdataRecorder>> DataDic { get => new(_dataDic); }
+        static public bool Load(DirectoryInfo rootDirectoryinfo)
         {
-            //directoryinfo = new DirectoryInfo("./");
+            bool result = false;
+            if (Directory.Exists(rootDirectoryinfo.FullName) is false)
+                return result;
 
-            if (Directory.Exists(directoryinfo.FullName) is false)
-                return false;
+            var files = Directory.EnumerateFiles(rootDirectoryinfo.FullName, _exception, SearchOption.AllDirectories);
 
-            var files = Directory.EnumerateFiles(directoryinfo.FullName, _exception, SearchOption.AllDirectories);
-            Debug.WriteLine("-------------파일들");
+#if DEBUG
+            Debug.WriteLine("**** check file list ****");
             foreach (var file in files)
+                Debug.WriteLine($"* {file}");
+            Debug.WriteLine("****************\n");
+#endif
+            try
             {
-                Debug.WriteLine(file);
-            }
-            Debug.WriteLine("-------------\n");
-            RawdataRecordDictionary tempData = new ();
-            foreach (var file in files)
-            {
-                using (var reader = new StreamReader(file))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                RawdataRecorder tempData = new();
+                foreach (var file in files)
                 {
-                    var records = csv.GetRecords<RawdataItem>();
-                    foreach (var record in records)
-                        tempData[record.DateTime] = record;
+                    using (var reader = new StreamReader(file))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var records = csv.GetRecords<RawdataItem>();
+                        foreach (var record in records)
+                        {
+                            if (_originDataDic.ContainsKey(record.Primary) is false)
+                                _originDataDic[record.Primary] = new();
+                            _originDataDic[record.Primary][record.DateTime] = record;
+                        }
+                    }
                 }
+                result = true;
             }
-            _originData = new(tempData.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
-            return true;
-        }
-
-        static internal void Split()
-        {
-            Data.Clear();
-            foreach (var item in RawDataSplitInfo)
+            catch (Exception)
             {
-                var tempData = _originData
-                    .Where(d => d.Key >= item.Value.SplitStart && d.Key <= item.Value.SplitEnd)
-                    .ToDictionary(d => d.Key, d => d.Value);
-
-
-                var splitData = new RawdataRecordDictionary();
-                foreach (var data in tempData)
-                    splitData.Add(data.Key, data.Value);
-
-                Data.Add(item.Key, splitData);
-
+                result = false;
+#if DEBUG
+                throw;
+#endif
             }
+            return result;
         }
 
-
-
+        static public void CalculateData()
+        {
+            _dataDic.Clear();
+            _splitTemplate = new(_newSplitTemplate);
+            foreach (var originData in _originDataDic)
+            {
+                Dictionary</* split name */string, RawdataRecorder> tempValue = [];
+                foreach (var split in _splitTemplate)
+                {
+                    tempValue[split.Key] = new();
+                    tempValue[split.Key].SetData(split.Value.SplitStart, split.Value.SplitEnd, originData.Value);
+                }
+                _dataDic.Add(originData.Key, tempValue);
+            }
+        }
     }
 }

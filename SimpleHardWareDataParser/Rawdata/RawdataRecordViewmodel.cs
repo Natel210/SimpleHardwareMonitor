@@ -10,6 +10,9 @@ namespace SimpleHardWareDataParser.Rawdata
 {
     internal class RawdataRecordViewmodel : AViewModelBase_None
     {
+        static 
+
+
         public ObservableCollection<RawdataItem> DataRecords { get; set; } = new();
     }
 }

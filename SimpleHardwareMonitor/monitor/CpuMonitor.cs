@@ -7,6 +7,7 @@ using System;
 using System.Management;
 using System.Collections.ObjectModel;
 using SimpleHardwareMonitor.viewmodel;
+using System.Linq;
 
 namespace SimpleHardwareMonitor.monitor
 {
@@ -35,11 +36,14 @@ namespace SimpleHardwareMonitor.monitor
             for (int i = 0; i < Environment.ProcessorCount; ++i)
             {
                 _usePerformanceByThreads.Add(new PerformanceCounter("Processor Information", "% Processor Utility", $"0,{i}"));
-                _data.UseByThreads.Add(0.0f);
+                _data.UseByThreads.Add(-1.0f);
             }
             _data.VoltageByCore = new List<float>();
+            _data.VoltageByCore.AddRange(Enumerable.Repeat(-1.0f, _data.CoreCount));
             _data.PowerByCore = new List<float>();
+            _data.PowerByCore.AddRange(Enumerable.Repeat(-1.0f, _data.CoreCount));
             _data.TemperatureByCore = new List<float>();
+            _data.TemperatureByCore.AddRange(Enumerable.Repeat(-1.0f, _data.CoreCount));
         }
         protected sealed override void PrevUpdate()
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleOverlayTheme.ThemeSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,22 @@ namespace SimpleHardWareDataParser.Settting
         public SettingWindow()
         {
             InitializeComponent();
+        }
+
+        private bool _changeTest = false;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _changeTest = !_changeTest;
+            if (_changeTest)
+            {
+                Manager.CurrentThemeName = "Dark";
+            }
+            else
+            {
+                Manager.CurrentThemeName = "Light";
+            }
+            
         }
     }
 }
