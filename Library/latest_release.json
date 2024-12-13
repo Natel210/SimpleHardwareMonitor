@@ -1,0 +1,42 @@
+{
+  "url": "https://api.github.com/repos/Natel210/SimpleFileIO/releases/187231150",
+  "assets_url": "https://api.github.com/repos/Natel210/SimpleFileIO/releases/187231150/assets",
+  "upload_url": "https://uploads.github.com/repos/Natel210/SimpleFileIO/releases/187231150/assets{?name,label}",
+  "html_url": "https://github.com/Natel210/SimpleFileIO/releases/tag/v1.0.0",
+  "id": 187231150,
+  "author": {
+    "login": "github-actions[bot]",
+    "id": 41898282,
+    "node_id": "MDM6Qm90NDE4OTgyODI=",
+    "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/github-actions%5Bbot%5D",
+    "html_url": "https://github.com/apps/github-actions",
+    "followers_url": "https://api.github.com/users/github-actions%5Bbot%5D/followers",
+    "following_url": "https://api.github.com/users/github-actions%5Bbot%5D/following{/other_user}",
+    "gists_url": "https://api.github.com/users/github-actions%5Bbot%5D/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/github-actions%5Bbot%5D/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/github-actions%5Bbot%5D/subscriptions",
+    "organizations_url": "https://api.github.com/users/github-actions%5Bbot%5D/orgs",
+    "repos_url": "https://api.github.com/users/github-actions%5Bbot%5D/repos",
+    "events_url": "https://api.github.com/users/github-actions%5Bbot%5D/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/github-actions%5Bbot%5D/received_events",
+    "type": "Bot",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "node_id": "RE_kwDONSf59c4LKOuu",
+  "tag_name": "v1.0.0",
+  "target_commitish": "2c3925d807e62c0adfe460feab2a1cfa29c15729",
+  "name": "Release v1.0.0",
+  "draft": false,
+  "prerelease": false,
+  "created_at": "2024-11-25T03:52:31Z",
+  "published_at": "2024-11-25T08:15:21Z",
+  "assets": [
+
+  ],
+  "tarball_url": "https://api.github.com/repos/Natel210/SimpleFileIO/tarball/v1.0.0",
+  "zipball_url": "https://api.github.com/repos/Natel210/SimpleFileIO/zipball/v1.0.0",
+  "body": "## What's New\nThis release includes the following build artifacts:\n- Debug Build\n- Release Build"
+}

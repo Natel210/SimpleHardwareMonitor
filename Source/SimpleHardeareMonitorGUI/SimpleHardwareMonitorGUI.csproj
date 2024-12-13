@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.22000.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\header\**" />
+    <EmbeddedResource Remove="Common\header\**" />
+    <None Remove="Common\header\**" />
+    <Page Remove="Common\header\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resource\BootstrapIcons-Lock.png" />
+    <None Remove="Resource\BootstrapIcons-Unlock.png" />
+    <None Remove="Resource\Codicons-ChromeClose.png" />
+    <None Remove="Resource\Codicons-ChromeMaximize.png" />
+    <None Remove="Resource\Codicons-ChromeMinimize.png" />
+    <None Remove="Resource\Codicons-ChromeRestore.png" />
+    <None Remove="Resource\PhosphorIcons-GearSixThin.png" />
+    <None Remove="Resource\PhosphorIcons-HardDrivesThin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleHardwareMonitor\SimpleHardwareMonitor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\BootstrapIcons-Lock.png" />
+    <Resource Include="Resource\BootstrapIcons-Unlock.png" />
+    <Resource Include="Resource\PhosphorIcons-GearSixThin.png" />
+    <Resource Include="Resource\PhosphorIcons-HardDrivesThin.png" />
+  </ItemGroup>
+
+</Project>
