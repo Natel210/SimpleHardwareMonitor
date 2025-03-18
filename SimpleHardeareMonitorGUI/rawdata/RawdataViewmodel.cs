@@ -40,7 +40,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             set
             {
                 if(Set(ref _rootDirectory, value, nameof(RootDirectory)) is true)
-                    _rawdataCSVLog.Property = MakeCurrentPathProperty();
+                    _rawdataCSVLog.PathProperty = MakeCurrentPathProperty();
 
 
             }
@@ -57,7 +57,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             set
             {
                 if(Set(ref _extension, value, nameof(Extension)) is true)
-                    _rawdataCSVLog.Property = MakeCurrentPathProperty();
+                    _rawdataCSVLog.PathProperty = MakeCurrentPathProperty();
             }
         }
         public ERawDataInterval LoggingInterval
@@ -67,7 +67,7 @@ namespace SimpleHardwareMonitorGUI.Rawdata
             {
                 if(Set(ref _loggingInterval, value, nameof(LoggingInterval)) is true)
                 {
-                    _rawdataCSVLog.Property = MakeCurrentPathProperty();
+                    _rawdataCSVLog.PathProperty = MakeCurrentPathProperty();
                     RestartLoggingTimer();
                 }
             }
@@ -139,13 +139,13 @@ namespace SimpleHardwareMonitorGUI.Rawdata
         /// </summary>
         private void Load_INI()
         {
-            _rawdataCSVLog.Property = MakeCurrentPathProperty();
+            _rawdataCSVLog.PathProperty = MakeCurrentPathProperty();
         }
         private void SaveData(object? state)
         {
             if (LoggingEnabled is false)
                 return;
-            _rawdataCSVLog.Property = MakeCurrentPathProperty();
+            _rawdataCSVLog.PathProperty = MakeCurrentPathProperty();
             DataLogging();
             if (_rawdataCSVLog.IsWriting is false)
                 _rawdataCSVLog.Write();

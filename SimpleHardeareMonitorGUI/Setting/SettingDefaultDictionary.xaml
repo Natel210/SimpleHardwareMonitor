@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <system:Double x:Key="SimpleHardwareMonitorGUI.Setting.LabelWidht">180</system:Double>
+    <system:Double x:Key="SimpleHardwareMonitorGUI.Setting.ContentWidht01">200</system:Double>
+    <Thickness x:Key="SimpleHardwareMonitorGUI.Setting.LabelWhitespace">8</Thickness>
+</ResourceDictionary>

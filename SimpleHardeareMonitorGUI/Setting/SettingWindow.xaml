@@ -9,12 +9,12 @@
         xmlns:main="clr-namespace:SimpleHardwareMonitorGUI.Main"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:comboBoxHelper="clr-namespace:SimpleOverlayTheme.Object.ComboBoxObject.Helper;assembly=SimpleOverlayTheme"
-        mc:Ignorable="d"
+        xmlns:summary="clr-namespace:SimpleHardwareMonitorGUI.Setting.Summary;assembly=SimpleHardwareMonitorGUI"
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
         Title="SettingWindow"
-        Height="200"
+        Height="800"
         Width="500"
         Style="{StaticResource SimpleOverlayTheme.Window.Default}">
     <Window.Resources>
@@ -23,6 +23,7 @@
                 <x:Type TypeName="rawdata:ERawDataInterval"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <!--<ResourceDictionary Source="/SimpleHardwareMonitorGUI;component/Setting/Summary/SettingDefaultDictionary.xaml"/>-->
     </Window.Resources>
     <Border>
         <Border.BorderThickness>1
@@ -160,6 +161,7 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
+            <!--<Frame Source="Summary/SettingSummaryPage.xaml"/>-->
         </StackPanel>
     </Border>
 </Window>

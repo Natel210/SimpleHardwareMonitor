@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
 <!-- It is intended for use in WPF design mode. -->
 <!-- Please make sure it does not load during actual use. -->
@@ -10,16 +10,16 @@
 <!-- ============================== -->
 
 <!-- Theme -->
-<System:String x:Key="SimpleOverlayTheme.CurrentThemeName">Dark</System:String>
+<system:String x:Key="SimpleOverlayTheme.CurrentThemeName">Dark</system:String>
 
 <!-- Font Sizes -->
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Header1">32</System:Double>
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Header2">24</System:Double>
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Header3">18.72</System:Double>
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Header4">16</System:Double>
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Header5">13.28</System:Double>
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Header6">10.72</System:Double>
-<System:Double x:Key="SimpleOverlayTheme.FontSize.Default">16</System:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Header1">32</system:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Header2">24</system:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Header3">18.72</system:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Header4">16</system:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Header5">13.28</system:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Header6">10.72</system:Double>
+<system:Double x:Key="SimpleOverlayTheme.FontSize.Default">16</system:Double>
 
 <!-- Thickness -->
 <Thickness x:Key="SimpleOverlayTheme.DefaultThickness.Default">1</Thickness>
