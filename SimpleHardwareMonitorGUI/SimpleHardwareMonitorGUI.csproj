@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\header\**" />
+    <EmbeddedResource Remove="Common\header\**" />
+    <None Remove="Common\header\**" />
+    <Page Remove="Common\header\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resource\BootstrapIcons-Lock.png" />
+    <None Remove="Resource\BootstrapIcons-Unlock.png" />
+    <None Remove="Resource\Codicons-ChromeClose.png" />
+    <None Remove="Resource\Codicons-ChromeMaximize.png" />
+    <None Remove="Resource\Codicons-ChromeMinimize.png" />
+    <None Remove="Resource\Codicons-ChromeRestore.png" />
+    <None Remove="resource\PhosphorIcons-FolderOpenThin.png" />
+    <None Remove="resource\PhosphorIcons-FolderThin.png" />
+    <None Remove="Resource\PhosphorIcons-GearSixThin.png" />
+    <None Remove="Resource\PhosphorIcons-HardDrivesThin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SimpleFileIO" Version="0.1.4" />
+    <PackageReference Include="SimpleOverlayTheme" Version="0.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleHardwareMonitor\SimpleHardwareMonitor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\BootstrapIcons-Lock.png" />
+    <Resource Include="Resource\BootstrapIcons-Unlock.png" />
+    <Resource Include="resource\PhosphorIcons-FolderOpenThin.png" />
+    <Resource Include="resource\PhosphorIcons-FolderThin.png" />
+    <Resource Include="Resource\PhosphorIcons-GearSixThin.png" />
+    <Resource Include="Resource\PhosphorIcons-HardDrivesThin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewTemplate\" />
+  </ItemGroup>
+
+</Project>

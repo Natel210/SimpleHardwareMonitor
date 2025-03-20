@@ -1,0 +1,222 @@
+﻿<UserControl x:Class="SimpleHardwareMonitorGUI.Setting.Child.SettingSummary"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:SimpleHardwareMonitorGUI.Setting.Child"
+             xmlns:rawLoggingItem="clr-namespace:SimpleHardwareMonitorGUI.Model.Child.RawLoggingItem"
+             xmlns:buttonHelper="clr-namespace:SimpleOverlayTheme.Object.ButtonObject.Helper;assembly=SimpleOverlayTheme"
+             xmlns:comboBoxHelper="clr-namespace:SimpleOverlayTheme.Object.ComboBoxObject.Helper;assembly=SimpleOverlayTheme"
+             xmlns:groupBoxHelper="clr-namespace:SimpleOverlayTheme.Object.GroupBoxObject.Helper;assembly=SimpleOverlayTheme"
+             mc:Ignorable="d"
+             Loaded="PART_SettingSeummay_Loaded"
+             Width="Auto">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/SimpleHardwareMonitorGUI;component/Setting/SettingDefaultDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider x:Key="LoggingIntervalProvider"
+                    MethodName="GetValues"
+                    ObjectType="{x:Type system:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="rawLoggingItem:Interval"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ImageBrush x:Key="logImage" ImageSource="pack://application:,,,/SimpleHardwareMonitorGUI;component/Resource/PhosphorIcons-HardDrivesThin.png" Stretch="Uniform"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Style>
+        <StaticResource ResourceKey="SimpleOverlayTheme.UserControl.Empty"/>
+    </UserControl.Style>
+    <UserControl.DataContext>
+        <local:SettingSummaryVM/>
+    </UserControl.DataContext>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderThickness="0">
+        <StackPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Left">
+            <GroupBox x:Name="PART_CommonGroupBox" BorderThickness="5,1,1,1" Margin="0,0,0,5"
+                      Width="{StaticResource SimpleHardwareMonitorGUI.Setting.GroupWidth}"
+                      HorizontalContentAlignment="Stretch"
+                      HorizontalAlignment="Left" 
+                      Style="{StaticResource SimpleOverlayTheme.GroupBox.Fold}">
+                <GroupBox.Header>
+                    <Label Content="Common" FontSize="20" Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}" Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                </GroupBox.Header>
+                <GroupBox.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{StaticResource SimpleHardwareMonitorGUI.Setting.LabelWidth_GridLength}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Main Window Name"
+                               Grid.Row="1" Grid.Column="0" Padding="20,4,0,5"
+                               FontSize="16"
+                               BorderThickness="0,0,1,0"
+                               BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Outline}"
+                               Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}"
+                               Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                        <TextBox x:Name="PART_MainWindowNameTextBox"
+                                 Text="{Binding MainWindowName, Mode='TwoWay'}"
+                                 Grid.Row="1" Grid.Column="1"
+                                 FontSize="16"
+                                 Padding="5,0,0,0" BorderThickness="0"
+                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
+                                 LostFocus="PART_MainWindowNameTextBox_LostFocus"
+                                 Style="{StaticResource SimpleOverlayTheme.TextBox.Default}"/>
+                    </Grid>
+                </GroupBox.Content>
+            </GroupBox>
+            <GroupBox x:Name="PART_ThemeGroupBox"
+                      BorderThickness="5,1,1,1" Margin="0,0,0,5"
+                      Width="{StaticResource SimpleHardwareMonitorGUI.Setting.GroupWidth}"
+                      HorizontalContentAlignment="Stretch"
+                      HorizontalAlignment="Left" 
+                      Style="{StaticResource SimpleOverlayTheme.GroupBox.Fold}">
+                <GroupBox.Header>
+                    <Label Content="Theme" FontSize="20" Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}" Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                </GroupBox.Header>
+                <GroupBox.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{StaticResource SimpleHardwareMonitorGUI.Setting.LabelWidth_GridLength}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Current Theme"
+                               Grid.Row="2" Grid.Column="0" Padding="20,4,0,5"
+                               FontSize="16"
+                               BorderThickness="0,0,1,0"
+                               BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Outline}"
+                               Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}"
+                               Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                        <ComboBox x:Name="PART_ThemeList"
+                                  Grid.Row="2" Grid.Column="1"
+                                  BorderThickness="0"
+                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                  MaxDropDownHeight="150"
+                                  SelectedItem="{Binding CurrentTheme, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleOverlayTheme.ComboBox.Default}"
+                                  comboBoxHelper:Items.ItemPadding="12,0,0,0"
+                                  SelectionChanged="PART_ThemeList_SelectionChanged"/>
+                    </Grid>
+                </GroupBox.Content>
+            </GroupBox>
+            <GroupBox x:Name="PART_LoggingGroupBox"
+                      Padding="0" BorderThickness="5,1,1,1" Margin="0,0,0,5"
+                      Width="{StaticResource SimpleHardwareMonitorGUI.Setting.GroupWidth}"
+                      HorizontalContentAlignment="Stretch" 
+                      HorizontalAlignment="Left"
+                      Style="{StaticResource SimpleOverlayTheme.GroupBox.Fold}">
+                <GroupBox.Header>
+                    <Label Content="Logging" FontSize="20" Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}" Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                </GroupBox.Header>
+                <GroupBox.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{StaticResource SimpleHardwareMonitorGUI.Setting.LabelWidth_GridLength}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Interval"
+                               Grid.Row="1" Grid.Column="0" Padding="20,4,0,5"
+                               FontSize="16"
+                               BorderThickness="0,0,1,0"
+                               BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Outline}"
+                               Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}"
+                               Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+                        
+                        <ComboBox x:Name="PART_LoggingInterval"
+                                  Grid.Row="1" Grid.Column="1" BorderThickness="0"
+                                  ItemsSource="{Binding Source='{StaticResource LoggingIntervalProvider}'}"
+                                  SelectedItem="{Binding LoggingInterval, Mode=TwoWay, FallbackValue=Sec01}"
+                                  MaxDropDownHeight="150"
+                                  comboBoxHelper:Items.ItemPadding="12,0,0,0"
+                                  Style="{StaticResource SimpleOverlayTheme.ComboBox.Default}"/>
+
+                        <Label Content="Auto Run"
+                           Grid.Row="2" Grid.Column="0" Padding="20,4,0,5"
+                           FontSize="16"
+                           BorderThickness="0,0,1,0"
+                           BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Outline}"
+                           Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}"
+                           Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+
+                        <ToggleButton x:Name="PART_LoggingAutoCheck"
+                                      Grid.Row="2" Grid.Column="1"
+                                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                      BorderThickness="0"
+                                      Checked="PART_LoggingAutoCheck_Checked"
+                                      Unchecked="PART_LoggingAutoCheck_Unchecked"
+                                      buttonHelper:OverlayBackground.SetDefaultVisible="False"
+                                      IsChecked="{Binding EnableAutoSave_ProgramStartup, Mode=TwoWay}"
+                                      Style="{StaticResource SimpleOverlayTheme.ToggleButton.Default}">
+                            <buttonHelper:OverlayCheckedBackground.Background>
+                                <SolidColorBrush Color="#14F00000"/>
+                            </buttonHelper:OverlayCheckedBackground.Background>
+                            <ToggleButton.Content>
+                                <Label FontSize="16"
+                                       Background="Transparent"
+                                       Style="{StaticResource SimpleOverlayTheme.Label.Default}">
+                                    <TextBlock x:Name="PART_LoggingAutoCheck_LabelText"
+                                               Background="Transparent"
+                                               Style="{StaticResource SimpleOverlayTheme.TextBlock.Default}"/>
+                                </Label>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+
+                        <Label Content="Is Logging"
+                               Grid.Row="3" Grid.Column="0" Padding="20,4,0,5"
+                               FontSize="16"
+                               BorderThickness="0,0,1,0"
+                               BorderBrush="{StaticResource SimpleOverlayTheme.DefaultBrush.Outline}"
+                               Background="{StaticResource SimpleOverlayTheme.OverlayBoader.Background.MouseOver}"
+                               Style="{StaticResource SimpleOverlayTheme.Label.Default}"/>
+
+                        <ToggleButton BorderThickness="0" Margin="0,0,5,0"
+                                      Grid.Row="3" Grid.Column="1" 
+                                      ToolTip="Logging Active"
+                                      Background="Transparent"
+                                      Width="{Binding Path=ActualHeight, ElementName=SideContentPenel}"
+                                      Height="{Binding Path=ActualHeight, ElementName=SideContentPenel}"
+                                      IsChecked="{Binding IsLoggingRunning, Mode=TwoWay}"
+                                      buttonHelper:Mask.MaskBrushDefault="{DynamicResource logImage}"
+                                      buttonHelper:Mask.MaskBrushChecked="{DynamicResource logImage}"
+                                      buttonHelper:OverlayCheckedBackground.Background="Transparent">
+                            <ToggleButton.Style>
+                                <Style TargetType="ToggleButton" BasedOn="{StaticResource SimpleOverlayTheme.ToggleButton.ImageMask}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Foreground" Value="#4040FF40"/>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Foreground" Value="#40BF7815"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+
+                    </Grid>
+                </GroupBox.Content>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
