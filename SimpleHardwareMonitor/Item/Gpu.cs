@@ -1,9 +1,6 @@
 ﻿using LibreHardwareMonitor.Hardware;
 using SimpleHardwareMonitor.Item.Functional;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SimpleHardwareMonitor.Item
 {

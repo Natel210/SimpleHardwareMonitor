@@ -1,13 +1,7 @@
-﻿using HidSharp.Utility;
-using LibreHardwareMonitor.Hardware;
-using LibreHardwareMonitor.Hardware.Cpu;
-using Mono.Unix.Native;
-using SimpleHardwareMonitor.Item.Functional;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Text;
+using LibreHardwareMonitor.Hardware;
+using SimpleHardwareMonitor.Item.Functional;
 
 namespace SimpleHardwareMonitor.Item
 {
@@ -72,7 +66,6 @@ namespace SimpleHardwareMonitor.Item
                 }
                 reverseResult |= !isSensorUpdate;
             }
-            
 
             reverseResult |= !PoseUpdate();
             return !reverseResult;
@@ -133,61 +126,3 @@ namespace SimpleHardwareMonitor.Item
 
     }
 }
-
-//// Fill SensorMethods Form
-//private void RegisterSensorMethods()
-//{
-//    _updateSensorMethods.Clear();
-//
-//    // Voltage
-//    //_updateSensorMethods[SensorType.Voltage] = new SensorMethodItem() { };
-//
-//    // Current
-//    //_updateSensorMethods[SensorType.Current] = new SensorMethodItem() { };
-//
-//    // Power
-//    //_updateSensorMethods[SensorType.Power] = new SensorMethodItem() { };
-//
-//    // Clock
-//    //_updateSensorMethods[SensorType.Clock] = new SensorMethodItem() { };
-//
-//    // Temperature
-//    //_updateSensorMethods[SensorType.Temperature] = new SensorMethodItem() { };
-//
-//    // Load
-//    //_updateSensorMethods[SensorType.Load] = new SensorMethodItem() { };
-//
-//    // Frequency
-//    //_updateSensorMethods[SensorType.Frequency] = new SensorMethodItem() { };
-//
-//    // Fan
-//    //_updateSensorMethods[SensorType.Fan] = new SensorMethodItem() { };
-//
-//    // Flow
-//    //_updateSensorMethods[SensorType.Flow] = new SensorMethodItem() { };
-//
-//    // Control
-//    //_updateSensorMethods[SensorType.Control] = new SensorMethodItem() { };
-//
-//    // Level
-//    //_updateSensorMethods[SensorType.Level] = new SensorMethodItem() { };
-//
-//    // Data
-//    //_updateSensorMethods[SensorType.Data] = new SensorMethodItem() { };
-//
-//    // SmallData
-//    //_updateSensorMethods[SensorType.SmallData] = new SensorMethodItem() { };
-//
-//    // Throughput
-//    //_updateSensorMethods[SensorType.Throughput] = new SensorMethodItem() { };
-//
-//    // TimeSpan
-//    //_updateSensorMethods[SensorType.TimeSpan] = new SensorMethodItem() { };
-//
-//    // Energy
-//    //_updateSensorMethods[SensorType.Energy] = new SensorMethodItem() { };
-//
-//    // Noise
-//    //_updateSensorMethods[SensorType.Noise] = new SensorMethodItem() { };
-//
-//}

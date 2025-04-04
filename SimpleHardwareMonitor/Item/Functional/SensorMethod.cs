@@ -1,7 +1,5 @@
-﻿using LibreHardwareMonitor.Hardware;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using LibreHardwareMonitor.Hardware;
 
 namespace SimpleHardwareMonitor.Item.Functional
 {

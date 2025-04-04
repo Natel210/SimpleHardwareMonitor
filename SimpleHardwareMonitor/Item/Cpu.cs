@@ -1,10 +1,10 @@
-﻿using LibreHardwareMonitor.Hardware;
-using SimpleHardwareMonitor.Item.Functional;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.Linq;
 using System.Management;
+using System.Diagnostics;
+using System.Collections.Generic;
+using LibreHardwareMonitor.Hardware;
+using SimpleHardwareMonitor.Item.Functional;
 
 namespace SimpleHardwareMonitor.Item
 {
@@ -92,10 +92,10 @@ namespace SimpleHardwareMonitor.Item
             voltageMethodItem.Add("cpu core", (ISensor sensor) => { _data.Voltage = sensor.Value ?? -1; });
             for (int index = 0; index < _data.CoreCount; ++index)
             {
-                //// The index is registered in a modified state.
-                //int temp = index;
+                // The index is registered in a modified state.
+                int temp = index;
                 int tempNum = index + 1;
-                voltageMethodItem.Add($"cpu core #{index + 1}", (ISensor sensor) => { _data.Voltage_ByCore[index] = sensor.Value ?? -1; });
+                voltageMethodItem.Add($"cpu core #{tempNum}", (ISensor sensor) => { _data.Voltage_ByCore[temp] = sensor.Value ?? -1; });
             }
             _updateSensorMethods[SensorType.Voltage] = voltageMethodItem;
         }
