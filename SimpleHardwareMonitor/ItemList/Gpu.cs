@@ -57,7 +57,7 @@ namespace SimpleHardwareMonitor.ItemList
                 tempData.Data_D3D_Shared_Memory_Free = getData.Data_D3D_Shared_Memory_Free;
                 tempData.Data_D3D_Shared_Memory_Used = getData.Data_D3D_Shared_Memory_Used;
 
-                // SmallData
+                // Small Data
                 tempData.SmallData_Memory_Total = getData.SmallData_Memory_Total;
                 tempData.SmallData_Memory_Free = getData.SmallData_Memory_Free;
                 tempData.SmallData_Memory_Used = getData.SmallData_Memory_Used;

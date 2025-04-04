@@ -35,12 +35,13 @@ namespace SimpleHardwareMonitor.ItemList
                 // Level
                 tempData.Level_Available_Spare = getData.Level_Available_Spare;
                 tempData.Level_Available_Spare_Threshold = getData.Level_Available_Spare_Threshold;
+                tempData.Level_Percentage_Used = getData.Level_Percentage_Used;
 
                 // Data
                 tempData.Data_Read = getData.Data_Read;
                 tempData.Data_Written = getData.Data_Written;
 
-                // SmallData
+                // Small Data
                 tempData.SmallData_Read = getData.SmallData_Read;
                 tempData.SmallData_Written = getData.SmallData_Written;
 

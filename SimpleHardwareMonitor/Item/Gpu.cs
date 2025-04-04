@@ -30,10 +30,6 @@ namespace SimpleHardwareMonitor.Item
             _data.Load_D3D_GDIRender.Clear();
             _data.Load_D3D_Overlay.Clear();
             _data.Load_Ohters.Clear();
-
-            //
-
-
             return true;
         }
 
@@ -44,25 +40,58 @@ namespace SimpleHardwareMonitor.Item
         private void FillSensorMethods()
         {
             _updateSensorMethods.Clear();
+            /*---- [ Voltage ] -----------------------------------------------*/
+            /*---- [ Current ] -----------------------------------------------*/
+            /*---- [ Power ] -------------------------------------------------*/
+            RegisterPowerSensorMethods();
+            /*---- [ Clock ] -------------------------------------------------*/
+            RegisterClockSensorMethods();
+            /*---- [ Temperature ] -------------------------------------------*/
+            RegisterTemperatureSensorMethods();
+            /*---- [ Load ] --------------------------------------------------*/
+            RegisterLoadSensorMethods();
+            /*---- [ Frequency ] ---------------------------------------------*/
+            /*---- [ Fan ] ---------------------------------------------------*/
+            /*---- [ Flow ] --------------------------------------------------*/
+            /*---- [ Control ] -----------------------------------------------*/
+            /*---- [ Level ] -------------------------------------------------*/
+            /*---- [ Data ] --------------------------------------------------*/
+            RegisterDataSensorMethods();
+            /*---- [ Small Data ] --------------------------------------------*/
+            RegisterSmallDataSensorMethods();
+            /*---- [ Throughput ] --------------------------------------------*/
+            RegisterThroughputDataSensorMethods();
+            /*---- [ Time Span ] ---------------------------------------------*/
+            /*---- [ Energy ] ------------------------------------------------*/
+            /*---- [ Noise ] -------------------------------------------------*/
 
-            // Power
+        }
+
+        private void RegisterPowerSensorMethods()
+        {
             _updateSensorMethods[SensorType.Power] = new SensorMethodItem() {
                 { "gpu power", (ISensor sensor)=>{ _data.Power = sensor.Value ?? -1; } },
             };
+        }
 
-            // Clock
+        private void RegisterClockSensorMethods()
+        {
             _updateSensorMethods[SensorType.Clock] = new SensorMethodItem() {
                 { "gpu core", (ISensor sensor)=>{ _data.Clock_Core = sensor.Value ?? -1; } },
                 { "gpu memory", (ISensor sensor)=>{ _data.Clock_Memory = sensor.Value ?? -1; } },
             };
+        }
 
-            // Temperature
+        private void RegisterTemperatureSensorMethods()
+        {
             _updateSensorMethods[SensorType.Temperature] = new SensorMethodItem() {
                 { "gpu core", (ISensor sensor)=>{ _data.Temperature_Core = sensor.Value ?? -1; } },
                 { "gpu hot spot", (ISensor sensor)=>{ _data.Temperature_Hot_Spot = sensor.Value ?? -1; } },
             };
+        }
 
-            // Load
+        private void RegisterLoadSensorMethods()
+        {
             _updateSensorMethods[SensorType.Load] = new SensorMethodItem() {
                 { "gpu core", (ISensor sensor)=>{ _data.Load_Core = sensor.Value ?? -1; } },
                 { "gpu memory controller", (ISensor sensor)=>{ _data.Load_Memory_Controller = sensor.Value ?? -1; } },
@@ -77,8 +106,10 @@ namespace SimpleHardwareMonitor.Item
                 { "d3d gdi render", (ISensor sensor)=>{ _data.Load_D3D_GDIRender.Add(sensor.Value ?? -1); } },
                 { "d3d other", (ISensor sensor)=>{ _data.Load_Ohters.Add(sensor.Value ?? -1); } },
             };
+        }
 
-            // Data
+        private void RegisterDataSensorMethods()
+        {
             _updateSensorMethods[SensorType.Data] = new SensorMethodItem() {
                 { "gpu memory total", (ISensor sensor)=>{ _data.Data_Memory_Total = sensor.Value ?? -1; } },
                 { "gpu memory free", (ISensor sensor)=>{ _data.Data_Memory_Free = sensor.Value ?? -1; } },
@@ -87,8 +118,10 @@ namespace SimpleHardwareMonitor.Item
                 { "d3d shared memory free", (ISensor sensor)=>{ _data.Data_D3D_Shared_Memory_Free = sensor.Value ?? -1; } },
                 { "d3d shared memory used", (ISensor sensor)=>{ _data.Data_D3D_Shared_Memory_Used = sensor.Value ?? -1; } },
             };
+        }
 
-            // SmallData
+        private void RegisterSmallDataSensorMethods()
+        {
             _updateSensorMethods[SensorType.SmallData] = new SensorMethodItem() {
                 { "gpu memory total", (ISensor sensor)=>{ _data.SmallData_Memory_Total = sensor.Value ?? -1; } },
                 { "gpu memory free", (ISensor sensor)=>{ _data.SmallData_Memory_Free = sensor.Value ?? -1; } },
@@ -97,14 +130,14 @@ namespace SimpleHardwareMonitor.Item
                 { "d3d shared memory free", (ISensor sensor)=>{ _data.SmallData_D3D_Shared_Memory_Free = sensor.Value ?? -1; } },
                 { "d3d shared memory used", (ISensor sensor)=>{ _data.SmallData_D3D_Shared_Memory_Used = sensor.Value ?? -1; } },
             };
+        }
 
-            // Throughput
+        private void RegisterThroughputDataSensorMethods()
+        {
             _updateSensorMethods[SensorType.Throughput] = new SensorMethodItem() {
                 { "gpu pcie rx", (ISensor sensor)=>{ _data.Throughput_PCIe_Rx = sensor.Value ?? -1; } },
                 { "gpu pcie tx", (ISensor sensor)=>{ _data.Throughput_PCIe_Tx = sensor.Value ?? -1; } },
             };
-
         }
-
     }
 }

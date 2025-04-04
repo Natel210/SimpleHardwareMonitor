@@ -32,17 +32,18 @@ namespace SimpleHardwareMonitor.Item
             }
 
             FillZreoList();
-            FillSensorMethods();
+            RegisterSensorMethods();
         }
 
         protected sealed override bool PrevUpdate()
         {
             //reset 0f
             FillZreoList();
-
+            /*---- [ Used ] --------------------------------------------------*/
             _data.Use = _usePerformance.NextValue();
             for (int i = 0; i < Environment.ProcessorCount; ++i)
                 _data.Use_ByThreads[i] = _usePerformanceByThreads[i].NextValue();
+
             return true;
         }
 
@@ -58,31 +59,59 @@ namespace SimpleHardwareMonitor.Item
             _data.Voltage_ByCore = Enumerable.Repeat(0f, _data.CoreCount).ToList();
         }
 
-        private void FillSensorMethods()
+        private void RegisterSensorMethods()
         {
             _updateSensorMethods.Clear();
+            /*---- [ Voltage ] -----------------------------------------------*/
+            RegisterVoltageSensorMethod();
+            /*---- [ Current ] -----------------------------------------------*/
+            /*---- [ Power ] -------------------------------------------------*/
+            RegisterPowerSensorMethod();
+            /*---- [ Clock ] -------------------------------------------------*/
+            RegisterClockSensorMethod();
+            /*---- [ Temperature ] -------------------------------------------*/
+            RegisterTemperatureSensorMethod();
+            /*---- [ Load ] --------------------------------------------------*/
+            RegisterLoadSensorMethod();
+            /*---- [ Frequency ] ---------------------------------------------*/
+            /*---- [ Fan ] ---------------------------------------------------*/
+            /*---- [ Flow ] --------------------------------------------------*/
+            /*---- [ Control ] -----------------------------------------------*/
+            /*---- [ Level ] -------------------------------------------------*/
+            /*---- [ Data ] --------------------------------------------------*/
+            /*---- [ Small Data ] --------------------------------------------*/
+            /*---- [ Throughput ] --------------------------------------------*/
+            /*---- [ Time Span ] ---------------------------------------------*/
+            /*---- [ Energy ] ------------------------------------------------*/
+            /*---- [ Noise ] -------------------------------------------------*/
+        }
 
-            // Voltage
+        private void RegisterVoltageSensorMethod()
+        {
             var voltageMethodItem = new SensorMethodItem();
             voltageMethodItem.Add("cpu core", (ISensor sensor) => { _data.Voltage = sensor.Value ?? -1; });
             for (int index = 0; index < _data.CoreCount; ++index)
             {
-                // The index is registered in a modified state.
-                int temp = index;
+                //// The index is registered in a modified state.
+                //int temp = index;
                 int tempNum = index + 1;
-                voltageMethodItem.Add($"cpu core #{tempNum}", (ISensor sensor) => { _data.Voltage_ByCore[temp] = sensor.Value ?? -1; });
+                voltageMethodItem.Add($"cpu core #{index + 1}", (ISensor sensor) => { _data.Voltage_ByCore[index] = sensor.Value ?? -1; });
             }
             _updateSensorMethods[SensorType.Voltage] = voltageMethodItem;
+        }
 
-            // Power
+        private void RegisterPowerSensorMethod()
+        {
             _updateSensorMethods[SensorType.Power] = new SensorMethodItem() {
                 { "cpu package", (ISensor sensor) => { _data.Power_Package = sensor.Value ?? -1; } },
                 { "cpu cores", (ISensor sensor) => { _data.Power_Cores = sensor.Value ?? -1; } },
                 { "cpu memory", (ISensor sensor) => { _data.Power_Memory = sensor.Value ?? -1; } },
                 { "cpu platform", (ISensor sensor) => { _data.Power_Platform = sensor.Value ?? -1; } },
             };
+        }
 
-            // Clock
+        private void RegisterClockSensorMethod()
+        {
             var clockMethodItem = new SensorMethodItem();
             clockMethodItem.Add("bus speed", (ISensor sensor) => { _data.Clock_Bus_Speed = sensor.Value ?? -1; });
             for (int index = 0; index < _data.CoreCount; ++index)
@@ -93,12 +122,15 @@ namespace SimpleHardwareMonitor.Item
                 clockMethodItem.Add($"cpu core #{tempNum}", (ISensor sensor) => { _data.Clock_ByCore[temp] = sensor.Value ?? -1; });
             }
             _updateSensorMethods[SensorType.Clock] = clockMethodItem;
+        }
 
-            // Temperature
+        private void RegisterTemperatureSensorMethod()
+        {
             var temperatureMethodItem = new SensorMethodItem();
             temperatureMethodItem.Add("cpu package", (ISensor sensor) => { _data.Temperature_Package = sensor.Value ?? -1; });
             temperatureMethodItem.Add("core max", (ISensor sensor) => { _data.Temperature_Max = sensor.Value ?? -1; });
             temperatureMethodItem.Add("core average", (ISensor sensor) => { _data.Temperature_Average = sensor.Value ?? -1; });
+            // Core Temp
             for (int index = 0; index < _data.CoreCount; ++index)
             {
                 // The index is registered in a modified state.
@@ -106,6 +138,7 @@ namespace SimpleHardwareMonitor.Item
                 int tempNum = index + 1;
                 temperatureMethodItem.Add($"cpu core #{tempNum}", (ISensor sensor) => { _data.Temperature_ByCore[temp] = sensor.Value ?? -1; });
             }
+            // Core distance
             for (int index = 0; index < _data.CoreCount; ++index)
             {
                 // The index is registered in a modified state.
@@ -114,8 +147,10 @@ namespace SimpleHardwareMonitor.Item
                 temperatureMethodItem.Add($"cpu core #{tempNum} distance to tjmax", (ISensor sensor) => { _data.Temperature_Distanceto_Tj_Max_ByCore[temp] = sensor.Value ?? -1; });
             }
             _updateSensorMethods[SensorType.Temperature] = temperatureMethodItem;
+        }
 
-            // Load
+        private void RegisterLoadSensorMethod()
+        {
             var loadMethodItem = new SensorMethodItem();
             loadMethodItem.Add("cpu total", (ISensor sensor) => { _data.Load_Total = sensor.Value ?? -1; });
             loadMethodItem.Add("cpu core max", (ISensor sensor) => { _data.Load_Max = sensor.Value ?? -1; });

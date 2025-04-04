@@ -65,7 +65,11 @@ namespace SimpleHardwareMonitor.Item
             {
                 bool isSensorUpdate = UpdateToSensor(sensor);
                 if (isSensorUpdate == false)
-                    Debug.WriteLine($"[Error][Invaild][Hardware]{hardware.HardwareType} : {hardware.Name}    [Sensor]{sensor.SensorType} : {sensor.Name}");
+                {
+                    isSensorUpdate = CustomUpdateToSensor(sensor);
+                    if (isSensorUpdate == false)
+                        Debug.WriteLine($"[Error][Invaild][Hardware]{hardware.HardwareType} : {hardware.Name.TrimEnd('\0')}    [Sensor]{sensor.SensorType} : {sensor.Name.TrimEnd('\0')}");
+                }
                 reverseResult |= !isSensorUpdate;
             }
             
@@ -93,6 +97,14 @@ namespace SimpleHardwareMonitor.Item
         protected virtual bool PrevUpdate() { return true; }
 
         /// <summary>
+        /// Performs a custom update to the sensor if special logic is required.
+        /// Override this method to implement sensor-specific custom behavior.
+        /// </summary>
+        /// <param name="sensor">The sensor instance to apply custom logic to.</param>
+        /// <returns>True if the update was handled by custom logic; otherwise, false.</returns>
+        protected virtual bool CustomUpdateToSensor(ISensor sensor) { return false; }
+
+        /// <summary>
         /// Updates the sensor data based on the sensor type.
         /// This method delegates the update logic to the corresponding update method for each sensor type.
         /// </summary>
@@ -106,7 +118,7 @@ namespace SimpleHardwareMonitor.Item
             if (_updateSensorMethods.ContainsKey(sensor.SensorType) is false)
                 return false;
             var updateMethodItem = _updateSensorMethods[sensor.SensorType];
-            if (updateMethodItem.ContainsKey(sensor.Name.ToLower()) is false)
+            if (updateMethodItem.ContainsKey(sensor.Name.TrimEnd('\0').ToLower()) is false)
                 return false;
             updateMethodItem[sensor.Name.ToLower()](sensor);
             return true;
@@ -123,7 +135,7 @@ namespace SimpleHardwareMonitor.Item
 }
 
 //// Fill SensorMethods Form
-//private void FillSensorMethods()
+//private void RegisterSensorMethods()
 //{
 //    _updateSensorMethods.Clear();
 //

@@ -6,11 +6,24 @@ namespace SimpleHardwareMonitor.Data
 {
     public struct Gpu
     {
+        /*---- [ Common ] ----------------------------------------------------*/
+        #region Common
 
         public string Name { get; internal set; }
 
         public string Gpu_Type { get; internal set; }
 
+        #endregion
+
+        /*---- [ Voltage ] ---------------------------------------------------*/
+        #region Voltage
+        #endregion
+
+        /*---- [ Current ] ---------------------------------------------------*/
+        #region Current
+        #endregion
+
+        /*---- [ Power ] -----------------------------------------------------*/
         #region Power
 
         /// <summary>
@@ -20,6 +33,7 @@ namespace SimpleHardwareMonitor.Data
 
         #endregion
 
+        /*---- [ Clock ] -----------------------------------------------------*/
         #region Clock
 
         /// <summary>
@@ -34,6 +48,7 @@ namespace SimpleHardwareMonitor.Data
 
         #endregion
 
+        /*---- [ Temperature ] -----------------------------------------------*/
         #region Temperature
 
         /// <summary>
@@ -48,6 +63,7 @@ namespace SimpleHardwareMonitor.Data
 
         #endregion
 
+        /*---- [ Load ] ------------------------------------------------------*/
         #region Load
 
         /// <summary>
@@ -112,6 +128,27 @@ namespace SimpleHardwareMonitor.Data
 
         #endregion
 
+        /*---- [ Frequency ] -------------------------------------------------*/
+        #region Frequency
+        #endregion
+
+        /*---- [ Fan ] -------------------------------------------------------*/
+        #region Fan
+        #endregion
+
+        /*---- [ Flow ] ------------------------------------------------------*/
+        #region Flow
+        #endregion
+
+        /*---- [ Control ] ---------------------------------------------------*/
+        #region Control
+        #endregion
+
+        /*---- [ Level ] -----------------------------------------------------*/
+        #region Level
+        #endregion
+
+        /*---- [ Data ] ------------------------------------------------------*/
         #region Data
 
         /// <summary>
@@ -152,7 +189,8 @@ namespace SimpleHardwareMonitor.Data
 
         #endregion
 
-        #region SmallData
+        /*---- [ Small Data ] ------------------------------------------------*/
+        #region Small Data
 
         /// <summary>
         /// If Value is 0, Find <see cref="Data_Memory_Total"/><br/>
@@ -192,6 +230,7 @@ namespace SimpleHardwareMonitor.Data
 
         #endregion
 
+        /*---- [ Throughput ] ------------------------------------------------*/
         #region Throughput
 
         /// <summary>
@@ -204,6 +243,18 @@ namespace SimpleHardwareMonitor.Data
         /// </summary>
         public float Throughput_PCIe_Tx { get; internal set; }
 
+        #endregion
+
+        /*---- [ Time Span ] -------------------------------------------------*/
+        #region Time Span
+        #endregion
+
+        /*---- [ Energy ] ----------------------------------------------------*/
+        #region Energy
+        #endregion
+
+        /*---- [ Noise ] -----------------------------------------------------*/
+        #region Noise
         #endregion
 
     }

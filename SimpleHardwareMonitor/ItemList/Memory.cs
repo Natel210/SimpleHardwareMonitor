@@ -36,8 +36,8 @@ namespace SimpleHardwareMonitor.ItemList
                 tempData.SmallData_Virtual_Available = getData.SmallData_Virtual_Available;
 
                 // Load
-                tempData.Load_Load = getData.Load_Load;
-                tempData.Load_Virtual_Load = getData.Load_Virtual_Load;
+                tempData.Load_Memory = getData.Load_Memory;
+                tempData.Load_Virtual_Memory = getData.Load_Virtual_Memory;
 
                 dataList.Add(item.Key, tempData);
             }

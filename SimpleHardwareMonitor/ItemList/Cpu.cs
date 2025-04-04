@@ -30,22 +30,6 @@ namespace SimpleHardwareMonitor.ItemList
                 tempData.Use = getData.Use;
                 tempData.Use_ByThreads = new List<float>(getData.Use_ByThreads);
 
-                // Load
-                tempData.Load_Total = getData.Load_Total;
-                tempData.Load_Max = getData.Load_Max;
-                tempData.Load_ByThreads = new List<float>(getData.Load_ByThreads);
-
-                // Temperature
-                tempData.Temperature_Package = getData.Temperature_Package;
-                tempData.Temperature_Max = getData.Temperature_Max;
-                tempData.Temperature_Average = getData.Temperature_Average;
-                tempData.Temperature_ByCore = new List<float>(getData.Temperature_ByCore);
-                tempData.Temperature_Distanceto_Tj_Max_ByCore = new List<float>(getData.Temperature_Distanceto_Tj_Max_ByCore);
-
-                // Clock
-                tempData.Clock_Bus_Speed = getData.Clock_Bus_Speed;
-                tempData.Clock_ByCore = new List<float>(getData.Clock_ByCore);
-
                 // Voltage
                 tempData.Voltage = getData.Voltage;
                 tempData.Voltage_ByCore = new List<float>(getData.Voltage_ByCore);
@@ -56,6 +40,21 @@ namespace SimpleHardwareMonitor.ItemList
                 tempData.Power_Memory = getData.Power_Memory;
                 tempData.Power_Platform = getData.Power_Platform;
 
+                // Clock
+                tempData.Clock_Bus_Speed = getData.Clock_Bus_Speed;
+                tempData.Clock_ByCore = new List<float>(getData.Clock_ByCore);
+
+                // Temperature
+                tempData.Temperature_Package = getData.Temperature_Package;
+                tempData.Temperature_Max = getData.Temperature_Max;
+                tempData.Temperature_Average = getData.Temperature_Average;
+                tempData.Temperature_ByCore = new List<float>(getData.Temperature_ByCore);
+                tempData.Temperature_Distanceto_Tj_Max_ByCore = new List<float>(getData.Temperature_Distanceto_Tj_Max_ByCore);
+
+                // Load
+                tempData.Load_Total = getData.Load_Total;
+                tempData.Load_Max = getData.Load_Max;
+                tempData.Load_ByThreads = new List<float>(getData.Load_ByThreads);
                 dataList.Add(item.Key, tempData);
             }
             return dataList;

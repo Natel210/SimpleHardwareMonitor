@@ -17,17 +17,17 @@ namespace SimpleHardwareMonitor
         public long Interval {
             get => _updateInterval;
             set => _updateInterval = value; }
-        public Data.Motherboard Motherboard { get; }
-        public Data.SuperIO SuperIO { get; }
+        public Dictionary<string, Data.Motherboard> Motherboard { get => _motherboard.Data; }
+        public Dictionary<string, Data.SuperIO> SuperIO { get => _superIO.Data; }
         public Dictionary<string, Data.Cpu> Cpu { get => _cpu.Data; }
         public Dictionary<string, Data.Memory> Memory { get => _memory.Data; }
         public Dictionary<string, Data.Gpu> Gpu { get => _gpu.Data; }
-        public Dictionary<string, Data.Storage> Storage { get; }
-        public Data.Network Network { get; }
-        public Data.Cooler Cooler { get; }
-        public Data.EmbeddedController EmbeddedController { get; }
-        public Data.Psu Psu { get; }
-        public Data.Battery Battery { get; }
+        public Dictionary<string, Data.Storage> Storage { get => _storage.Data; }
+        public Dictionary<string, Data.Network> Network { get => _network.Data; }
+        public Dictionary<string, Data.Cooler> Cooler { get => _cooler.Data; }
+        public Dictionary<string, Data.EmbeddedController> EmbeddedController { get => _embeddedController.Data; }
+        public Dictionary<string, Data.Psu> Psu { get => _psu.Data; }
+        public Dictionary<string, Data.Battery> Battery { get => _battery.Data; }
     }
 
 
@@ -77,23 +77,17 @@ namespace SimpleHardwareMonitor
             _computer.Close();
         }
 
-        Dictionary<string, Item.Motherboard> _motherboardList = new Dictionary<string, Item.Motherboard>();
-        Dictionary<string, Item.SuperIO> _superIOList = new Dictionary<string, Item.SuperIO>();
-
+        ItemList.Motherboard _motherboard = new ItemList.Motherboard();
+        ItemList.SuperIO _superIO = new ItemList.SuperIO();
         ItemList.Cpu _cpu = new ItemList.Cpu();
         ItemList.Memory _memory = new ItemList.Memory();
         ItemList.Gpu _gpu = new ItemList.Gpu();
         ItemList.Storage _storage = new ItemList.Storage();
-        Dictionary<string, Item.Network> _networkList = new Dictionary<string, Item.Network>();
-        Dictionary<string, Item.Cooler> _coolerList = new Dictionary<string, Item.Cooler>();
-        Dictionary<string, Item.EmbeddedController> _embeddedControllerList = new Dictionary<string, Item.EmbeddedController>();
-        Dictionary<string, Item.Psu> _psuList = new Dictionary<string, Item.Psu>();
-        Dictionary<string, Item.Battery> _batteryList = new Dictionary<string, Item.Battery>();
-
-
-
-
-
+        ItemList.Network _network = new ItemList.Network();
+        ItemList.Cooler _cooler = new ItemList.Cooler();
+        ItemList.EmbeddedController _embeddedController = new ItemList.EmbeddedController();
+        ItemList.Psu _psu = new ItemList.Psu();
+        ItemList.Battery _battery = new ItemList.Battery();
 
         private void FillUpdateHardware()
         {
@@ -102,10 +96,10 @@ namespace SimpleHardwareMonitor
                 switch (hardware.HardwareType)
                 {
                     case HardwareType.Motherboard:
-                        _motherboardList.Add(hardware.Name, new Item.Motherboard(hardware.Name, hardware.HardwareType));
+                        _motherboard.Add(hardware);
                         break;
                     case HardwareType.SuperIO:
-                        _superIOList.Add(hardware.Name, new Item.SuperIO(hardware.Name, hardware.HardwareType));
+                        _superIO.Add(hardware);
                         break;
                     case HardwareType.Cpu:
                         _cpu.Add(hardware);
@@ -122,19 +116,19 @@ namespace SimpleHardwareMonitor
                         _storage.Add(hardware);
                         break;
                     case HardwareType.Network:
-                        _networkList.Add(hardware.Name, new Item.Network(hardware.Name, hardware.HardwareType));
+                        _network.Add(hardware);
                         break;
                     case HardwareType.Cooler:
-                        _coolerList.Add(hardware.Name, new Item.Cooler(hardware.Name, hardware.HardwareType));
+                        _cooler.Add(hardware);
                         break;
                     case HardwareType.EmbeddedController:
-                        _embeddedControllerList.Add(hardware.Name, new Item.EmbeddedController(hardware.Name, hardware.HardwareType));
+                        _embeddedController.Add(hardware);
                         break;
                     case HardwareType.Psu:
-                        _psuList.Add(hardware.Name, new Item.Psu(hardware.Name, hardware.HardwareType));
+                        _psu.Add(hardware);
                         break;
                     case HardwareType.Battery:
-                        _batteryList.Add(hardware.Name, new Item.Battery(hardware.Name, hardware.HardwareType));
+                        _battery.Add(hardware);
                         break;
                     default:
                         break;
@@ -143,30 +137,21 @@ namespace SimpleHardwareMonitor
             }
             _updateHardwareMethods = new Dictionary<HardwareType, Func<IHardware, bool>>()
             {
+                { HardwareType.Motherboard, _motherboard.Update },
+                { HardwareType.SuperIO, _superIO.Update },
                 { HardwareType.Cpu, _cpu.Update },
                 { HardwareType.Memory, _memory.Update },
                 { HardwareType.GpuNvidia, _gpu.Update },
                 { HardwareType.GpuAmd, _gpu.Update },
                 { HardwareType.GpuIntel, _gpu.Update },
                 { HardwareType.Storage, _storage.Update },
-
+                //{ HardwareType.Network, _network.Update },
+                { HardwareType.Cooler, _cooler.Update },
+                { HardwareType.EmbeddedController, _embeddedController.Update },
+                { HardwareType.Psu, _psu.Update },
+                { HardwareType.Battery, _battery.Update }
 
             };
-            //_updateHardwareMethods = new Dictionary<HardwareType, Func<IHardware, bool>>() {
-            //    { HardwareType.Motherboard, _motherboard.Update },
-            //    { HardwareType.SuperIO, _superIO.Update },
-            //    { HardwareType.Cpu, _cpu.Update },
-            //    { HardwareType.Memory, _memory.Update },
-            //    { HardwareType.GpuNvidia, _gpuNvidia.Update },
-            //    { HardwareType.GpuAmd, _gpuAmd.Update },
-            //    { HardwareType.GpuIntel, _gpuIntel.Update },
-            //    { HardwareType.Storage, _storage.Update },
-            //    { HardwareType.Network, _network.Update },
-            //    { HardwareType.Cooler, _cooler.Update },
-            //    { HardwareType.EmbeddedController, _embeddedController.Update },
-            //    { HardwareType.Psu, _psu.Update },
-            //    { HardwareType.Battery, _battery.Update }
-            //};
         }
 
         private async Task Update(CancellationToken cancellationToken)
