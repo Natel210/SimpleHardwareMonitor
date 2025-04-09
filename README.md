@@ -1,127 +1,96 @@
 # SimpleHardwareMonitor
 
-## Summary
+## 🔍 Summary
+SimpleHardwareMonitor provides an easy and structured way to access live hardware monitoring data in .NET applications.
+Built on top of `LibreHardwareMonitor`, it supports real-time updates through internal background threading.
+
+> ⚠️ This project is currently in **experimental/preview** stage. APIs and behavior are subject to change.
 
 
-This project provides an easier way to access hardware monitoring data through structured types.</br>
-It is based on <code>LibreHardwareMonitor</code> and includes an internal threading mechanism that automatically updates values such as CPU usage.</br>
-Users can simply retrieve the desired data through <code>get</code> accessors.</br>
-Currently in preview (experimental) stage.</br>
+## ✨ Key Features
+- Access hardware sensor data in a structured format
+- Background update via `Init()` and `Start()`
+- Singleton access pattern
+- Support for CPU, GPU, memory, storage, fan, PSU, battery, and more
 
-## Key Features
 
-- Hardware monitoring
-- Easy singleton-style access
+## 🚀 How to Use
 
-## How to
-
-### Start & Stop Monitoring
-```cs
-// Start monitoring updates
+### 1. Start & Stop Monitoring
+```csharp
+// Start monitoring
 SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Init();
-// Start monitoring updates
 SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Start();
 
-// Add Logics ...
+// Add your logic here...
 
-// Stop monitoring updates
+// Stop monitoring
 SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.End();
 ```
 
-### Get
-```cs
-// Simply load the module and use the parameters you need.
-// For practical usage examples, refer to the "SimpleHardWareTester" sample.
-var motherboard = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Motherboard;
-var superIO = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.SuperIO;
-var cpu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cpu;
-var memory = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Memory;
-var graphics = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Gpu;
-var storage = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Storage;
-var network = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Network;
-var cooler = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cooler;
-var embeddedController = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.EmbeddedController;
-var psu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Psu;
-var battery = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Battery;
+### 2. Retrieve Sensor Data
+```csharp
+// Access hardware categories
+var cpu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cpu; // Dictionary<string, Model.Cpu>
+var memory = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Memory; // Dictionary<string, Model.Memory>
+// ... and so on for:
+// Motherboard, SuperIO, Gpu, Storage, Network, Cooler, EmbeddedController, Psu, Battery
 
-// 각 부분에 대한 정보 가져오기
-Console.WriteLine(string.Format(_titleFormat, $"Summary"));
-foreach (var model in motherboard)
-    Console.WriteLine($"** Motherboard : {model.Value.Name}");
-foreach (var model in superIO)
-    Console.WriteLine($"** SuperIO : {model.Value.Name}");
-foreach (var model in cpu)
-    Console.WriteLine($"** Cpu : {model.Value.Name} - {model.Value.Load_Total:F01}{_loadUnit}");
-foreach (var model in memory)
-    Console.WriteLine($"** Memory : {model.Value.Name} - {model.Value.Load_Memory:F01}{_loadUnit}");
-foreach (var model in graphics)
+// Example: Read CPU usage per item
+foreach (var item in cpu)
 {
-    if (model.Value.Load_D3D_3D.Count != 0)
-        Console.WriteLine($"** Graphics : {model.Value.Name} - {model.Value.Load_D3D_3D.Max():F01}{_loadUnit}");
-    else
-        Console.WriteLine($"** Graphics : {model.Value.Name} - XX.X {_loadUnit}");
-}
-foreach (var model in storage)
-    Console.WriteLine($"** Storage : {model.Value.Name} - {100.0f - model.Value.Load_Used_Space:F01}{_loadUnit}");
-foreach (var model in network)
-    Console.WriteLine($"** Network : {model.Value.Name}");
-foreach (var model in cooler)
-    Console.WriteLine($"** Cooler : {model.Value.Name}");
-foreach (var model in embeddedController)
-    Console.WriteLine($"** EmbeddedController : {model.Value.Name}");
-foreach (var model in psu)
-    Console.WriteLine($"** Psu : {model.Value.Name}");
-foreach (var model in battery)
-    Console.WriteLine($"** Battery : {model.Value.Name} - {model.Value.Level_Charge}{_levelUnit}");
+    Console.WriteLine($"CPU: {item.Value.Name} - {item.Value.Load_Total:F1}%");
 }
 ```
-```cs
-// Lambda expressions used
-var name_ToString = (string name) =>
-{
-    if (string.IsNullOrEmpty(name) is false)
-        return $"** Name : {name}";
-    else
-        return $"** Name : N/A";
-};
+
+> ✅ Each property (e.g. `Cpu`, `Memory`) returns a `Dictionary<string, Model.X>` where `X` is a data structure representing that hardware.
+
+
+### 3. Format Utilities (Optional)
+```csharp
+// Lambda helpers
+var name_ToString = (string name) => string.IsNullOrEmpty(name) ? "** Name : N/A" : $"** Name : {name}";
 var model_ToString = (string header, float value, string unit) =>
-{
-    if (value != 0f)
-        return string.Format(_itemFormat, header, value, unit);
-    return string.Format(_itemFormat, header, "N/A", unit);
-};
-```
-```cs
-// Unit suffixes used in output
-private static readonly string _voltageUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Voltage);
-private static readonly string _currentUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Current);
-private static readonly string _clockUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Clock);
-private static readonly string _powerUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Power);
-private static readonly string _levelUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Level);
-private static readonly string _loadUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Load);
-private static readonly string _temperatureUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Temperature);
-private static readonly string _dataUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Data);
-private static readonly string _smallDataUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.SmallData);
-private static readonly string _energyUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Energy);
-private static readonly string _throughputUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Throughput);
-private const string _titleFormat = "========  {0}  ========";
-private const string _itemFormat = "** {0}({2}) : {1}";
+    value != 0f ? string.Format(_itemFormat, header, value, unit) : string.Format(_itemFormat, header, "N/A", unit);
+
+// Sensor unit suffixes (auto-generated per SensorType)
+private static readonly string _loadUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(SensorType.Load);
+private static readonly string _temperatureUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(SensorType.Temperature);
+private static readonly string _levelUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(SensorType.Level);
+// etc...
 ```
 
-## Third-Party Libraries
+## 🧪 Sample Console Output (SimpleHardWareTester)
+```text
+========  Summary  ========
+** Motherboard : ASRock B650M
+** SuperIO : Nuvoton NCT6797D
+** CPU : AMD Ryzen 9 - 32.4 %
+** Memory : DDR5-6000 - 71.6 %
+** Graphics : NVIDIA RTX 4080 - 97.2 %
+** Storage : Samsung SSD 980 - 88.4 %
+** Network : Intel Ethernet I225-V
+** Cooler : Be Quiet! Pure Rock 2
+** Embedded Controller : EC Ver.1.02
+** PSU : Corsair RM850x
+** Battery : ASUS Battery - 95 %
+```
+
+
+## 📦 Third-Party Libraries
 
 ### LibreHardwareMonitorLib
 - Version: 0.9.4
 - License: Mozilla Public License 2.0 (MPL-2.0)
-- Copyright: © LibreHardwareMonitor contributors
-- Project URL: [LibreHardwareMonitor Project](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor)
-- Nuget: [LibreHardwareMonitor NuGet](https://www.nuget.org/packages/LibreHardwareMonitorLib/0.9.4)
-- Usage:  
-  - Used for monitoring hardware sensors including temperature, fan speed, voltage, CPU/GPU load and clock.
-- Dependencies:
-  - HidSharp (>= 2.1.0)
-    - License: Apache License 2.0
-    - Project URL: [HidSharp Project](http://www.zer7.com/software/hidsharp)
-  - Mono.Posix.NETStandard (>= 1.0.0)
-    - License: MIT, BSD, MS-PL
-    - Project URL: [Mono Project](https://github.com/mono/mono)
+- Project URL: [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor)
+- NuGet: [LibreHardwareMonitorLib](https://www.nuget.org/packages/LibreHardwareMonitorLib)
+- Used For:
+  - Sensor data: temperature, fan speed, voltage, CPU/GPU load and clocks
+
+#### Dependencies:
+- HidSharp (>= 2.1.0)
+  - License: Apache License 2.0
+  - Project URL: [HidSharp Project](http://www.zer7.com/software/hidsharp)
+- Mono.Posix.NETStandard (>= 1.0.0)
+  - License: MIT, BSD, MS-PL
+  - Project URL: [Mono Project](https://github.com/mono/mono)
