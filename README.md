@@ -12,9 +12,10 @@ Built on top of `LibreHardwareMonitor`, it supports real-time updates through in
 - Background update via `Init()` and `Start()`
 - Singleton access pattern
 - Support for CPU, GPU, memory, storage, fan, PSU, battery, and more
+- SMBIOS information extraction
 
 
-## 🚀 How to Use
+## 🚀 Getting Started
 
 ### 1. Start & Stop Monitoring
 ```csharp
@@ -31,10 +32,17 @@ SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.End();
 ### 2. Retrieve Sensor Data
 ```csharp
 // Access hardware categories
+var motherboard = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Motherboard; // Dictionary<string, Model.Motherboard>
 var cpu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cpu; // Dictionary<string, Model.Cpu>
 var memory = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Memory; // Dictionary<string, Model.Memory>
 // ... and so on for:
 // Motherboard, SuperIO, Gpu, Storage, Network, Cooler, EmbeddedController, Psu, Battery
+
+// Example: Print motherboard info
+foreach (var item in motherboard)
+{
+    Console.WriteLine($"Motherboard: {item.Value.Name}");
+}
 
 // Example: Read CPU usage per item
 foreach (var item in cpu)
@@ -46,36 +54,58 @@ foreach (var item in cpu)
 > ✅ Each property (e.g. `Cpu`, `Memory`) returns a `Dictionary<string, Model.X>` where `X` is a data structure representing that hardware.
 
 
-### 3. Format Utilities (Optional)
-```csharp
-// Lambda helpers
-var name_ToString = (string name) => string.IsNullOrEmpty(name) ? "** Name : N/A" : $"** Name : {name}";
-var model_ToString = (string header, float value, string unit) =>
-    value != 0f ? string.Format(_itemFormat, header, value, unit) : string.Format(_itemFormat, header, "N/A", unit);
+### 3. Optional Advanced Usage
 
-// Sensor unit suffixes (auto-generated per SensorType)
+#### Retrieve SMBIOS Information
+```csharp
+// Returns structured BIOS, motherboard, and system information
+var smbios = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.GetSMBios();
+if (smbios != null)
+{
+    Console.WriteLine("BIOS Vendor: " + smbios.Bios.Vendor);
+    Console.WriteLine("BIOS Version: " + smbios.Bios.Version);
+    Console.WriteLine("BIOS Date: " + smbios.Bios.Date);
+
+    Console.WriteLine("System Manufacturer: " + smbios.System.ManufacturerName);
+    Console.WriteLine("System Name: " + smbios.System.ProductName);
+    Console.WriteLine("System Version: " + smbios.System.Version);
+
+    Console.WriteLine("Motherboard Manufacturer: " + smbios.Board.ManufacturerName);
+    Console.WriteLine("Motherboard Name: " + smbios.Board.ProductName);
+    Console.WriteLine("Motherboard Version: " + smbios.Board.Version);
+}
+```
+
+#### Set Update Interval
+```csharp
+// Set the interval between sensor updates (in milliseconds)
+SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Interval = 1000; // 1 second
+```
+
+### 4. Optional Unit Formatting Helpers
+```csharp
+// Sensor unit suffixes used for formatting output values (optional, for display)
 private static readonly string _loadUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(SensorType.Load);
 private static readonly string _temperatureUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(SensorType.Temperature);
 private static readonly string _levelUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(SensorType.Level);
 // etc...
 ```
 
-## 🧪 Sample Console Output (SimpleHardWareTester)
+## 🧪 Console Output
 ```text
-========  Summary  ========
-** Motherboard : ASRock B650M
-** SuperIO : Nuvoton NCT6797D
-** CPU : AMD Ryzen 9 - 32.4 %
-** Memory : DDR5-6000 - 71.6 %
-** Graphics : NVIDIA RTX 4080 - 97.2 %
-** Storage : Samsung SSD 980 - 88.4 %
-** Network : Intel Ethernet I225-V
-** Cooler : Be Quiet! Pure Rock 2
-** Embedded Controller : EC Ver.1.02
-** PSU : Corsair RM850x
-** Battery : ASUS Battery - 95 %
+======== Summary ========
+Motherboard : ASRock B650M
+SuperIO : Nuvoton NCT6797D
+CPU : AMD Ryzen 9 - 32.4 %
+Memory : DDR5-6000 - 71.6 %
+Graphics : NVIDIA RTX 4080 - 97.2 %
+Storage : Samsung SSD 980 - 88.4 %
+Network : Intel Ethernet I225-V
+Cooler : Be Quiet! Pure Rock 2
+Embedded Controller : EC Ver.1.02
+PSU : Corsair RM850x
+Battery : ASUS Battery - 95 %
 ```
-
 
 ## 📦 Third-Party Libraries
 
