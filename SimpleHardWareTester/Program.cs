@@ -1,11 +1,10 @@
-﻿using SimpleHardwareMonitor.Data;
-
-namespace SimpleHardWareTester
+﻿namespace SimpleHardWareTester
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Init();
             SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Start();
             Outputs outputs = new Outputs();
             outputs.OutputMode = OutputMode.Summary;

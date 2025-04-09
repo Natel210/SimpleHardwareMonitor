@@ -1,6 +1,8 @@
 # SimpleHardwareMonitor
 
 ## Summary
+
+
 This project provides an easier way to access hardware monitoring data through structured types.</br>
 It is based on <code>LibreHardwareMonitor</code> and includes an internal threading mechanism that automatically updates values such as CPU usage.</br>
 Users can simply retrieve the desired data through <code>get</code> accessors.</br>
@@ -16,70 +18,91 @@ Currently in preview (experimental) stage.</br>
 ### Start & Stop Monitoring
 ```cs
 // Start monitoring updates
+SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Init();
+// Start monitoring updates
 SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Start();
+
+// Add Logics ...
+
 // Stop monitoring updates
 SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.End();
 ```
 
 ### Get
 ```cs
-// Example shown here is for CPU monitoring.
-// Similar structures and access patterns apply for other hardware types,
-// such as GPU, RAM, Storage, and more via the same interface.
+// 단순하게 해당 모듈을 불러와서 원하는 파라미터를 사용하시면됩니다.
+var motherboard = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Motherboard;
+var superIO = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.SuperIO;
+var cpu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cpu;
+var memory = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Memory;
+var graphics = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Gpu;
+var storage = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Storage;
+var network = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Network;
+var cooler = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cooler;
+var embeddedController = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.EmbeddedController;
+var psu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Psu;
+var battery = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Battery;
 
-// A value of 0 indicates that the measurement was not available.
-
-// Helper to convert a List<float> to a readable string
-var listToString = (List<float> list) => {
-    string temp = "";
-    foreach (var item in list)
-        temp += $"[{item}],";
-    return temp;
-};
-// Get current CPU data
-var datas = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cpu;
-// Iterate over all CPU entries (may contain duplicates for each hardware instance)
-foreach (var item in datas.Values)
+Console.WriteLine(string.Format(_titleFormat, $"Summary"));
+foreach (var model in motherboard)
+    Console.WriteLine($"** Motherboard : {model.Value.Name}");
+foreach (var model in superIO)
+    Console.WriteLine($"** SuperIO : {model.Value.Name}");
+foreach (var model in cpu)
+    Console.WriteLine($"** Cpu : {model.Value.Name} - {model.Value.Load_Total:F01}{_loadUnit}");
+foreach (var model in memory)
+    Console.WriteLine($"** Memory : {model.Value.Name} - {model.Value.Load_Memory:F01}{_loadUnit}");
+foreach (var model in graphics)
 {
-    Console.WriteLine($"--------------------");
-    Console.WriteLine($"Name:{item.Name}");
-    Console.WriteLine($"CoreCount:{item.CoreCount}");
-    Console.WriteLine($"ProcessorCount:{item.ProcessorCount}");
-    //Use
-    Console.WriteLine("");
-    Console.WriteLine($"Use:{item.Use}");
-    Console.WriteLine($"Use_ByThreads:{listToString(item.Use_ByThreads)}");
-    //Load_Load
-    Console.WriteLine("");
-    Console.WriteLine($"Load_Load Total:{item.Load_Total}");
-    Console.WriteLine($"Load_Load Max:{item.Load_Max}");
-    Console.WriteLine($"Load_ByThreads:{listToString(item.Load_ByThreads)}");
-    //Temp
-    Console.WriteLine("");
-    Console.WriteLine($"Temperature_Package:{item.Temperature_Package}");
-    Console.WriteLine($"Temperature_Max:{item.Temperature_Max}");
-    Console.WriteLine($"Temperature_Average:{item.Temperature_Average}");
-    Console.WriteLine($"Temperature_ByCore:{listToString(item.Temperature_ByCore)} ");
-    Console.WriteLine($"Temperature_Distanceto_Tj_Max_ByCore:{listToString(item.   Temperature_Distanceto_Tj_Max_ByCore)}");
-
-    //Clock
-    Console.WriteLine("");
-    Console.WriteLine($"Clock_Bus_Speed:{item.Clock_Bus_Speed}");
-    Console.WriteLine($"Clock_ByCore:{listToString(item.Clock_ByCore)}");
-
-    //Vol
-    Console.WriteLine("");
-    Console.WriteLine($"Voltage:{item.Voltage}");
-    Console.WriteLine($"Voltage_ByCore:{listToString(item.Voltage_ByCore)}");
-
-    Console.WriteLine("");
-    Console.WriteLine($"Power_Package:{item.Power_Package}");
-    Console.WriteLine($"Power_Cores:{item.Power_Cores}");
-    Console.WriteLine($"Power_Memory:{item.Power_Memory}");
-    Console.WriteLine($"Power_Platform:{item.Power_Platform}");
+    if (model.Value.Load_D3D_3D.Count != 0)
+        Console.WriteLine($"** Graphics : {model.Value.Name} - {model.Value.Load_D3D_3D.Max():F01}{_loadUnit}");
+    else
+        Console.WriteLine($"** Graphics : {model.Value.Name} - XX.X {_loadUnit}");
+}
+foreach (var model in storage)
+    Console.WriteLine($"** Storage : {model.Value.Name} - {100.0f - model.Value.Load_Used_Space:F01}{_loadUnit}");
+foreach (var model in network)
+    Console.WriteLine($"** Network : {model.Value.Name}");
+foreach (var model in cooler)
+    Console.WriteLine($"** Cooler : {model.Value.Name}");
+foreach (var model in embeddedController)
+    Console.WriteLine($"** EmbeddedController : {model.Value.Name}");
+foreach (var model in psu)
+    Console.WriteLine($"** Psu : {model.Value.Name}");
+foreach (var model in battery)
+    Console.WriteLine($"** Battery : {model.Value.Name} - {model.Value.Level_Charge}{_levelUnit}");
 }
 ```
-
+```cs
+//사용한 람다식
+var name_ToString = (string name) =>
+{
+    if (string.IsNullOrEmpty(name) is false)
+        return $"** Name : {name}";
+    else
+        return $"** Name : N/A";
+};
+var model_ToString = (string header, float value, string unit) =>
+{
+    if (value != 0f)
+        return string.Format(_itemFormat, header, value, unit);
+    return string.Format(_itemFormat, header, "N/A", unit);
+};
+```
+```cs
+// 사용한 변수
+private static readonly string _voltageUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Voltage);
+private static readonly string _currentUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Current);
+private static readonly string _clockUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Clock);
+private static readonly string _powerUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Power);
+private static readonly string _levelUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Level);
+private static readonly string _loadUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Load);
+private static readonly string _temperatureUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Temperature);
+private static readonly string _dataUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Data);
+private static readonly string _smallDataUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.SmallData);
+private static readonly string _energyUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Energy);
+private static readonly string _throughputUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Throughput);
+```
 
 ## Third-Party Libraries
 
