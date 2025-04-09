@@ -30,7 +30,8 @@ SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.End();
 
 ### Get
 ```cs
-// 단순하게 해당 모듈을 불러와서 원하는 파라미터를 사용하시면됩니다.
+// Simply load the module and use the parameters you need.
+// For practical usage examples, refer to the "SimpleHardWareTester" sample.
 var motherboard = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Motherboard;
 var superIO = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.SuperIO;
 var cpu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Cpu;
@@ -43,6 +44,7 @@ var embeddedController = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Em
 var psu = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Psu;
 var battery = SimpleHardwareMonitor.SimpleHardwareMonitor.Instance.Battery;
 
+// 각 부분에 대한 정보 가져오기
 Console.WriteLine(string.Format(_titleFormat, $"Summary"));
 foreach (var model in motherboard)
     Console.WriteLine($"** Motherboard : {model.Value.Name}");
@@ -74,7 +76,7 @@ foreach (var model in battery)
 }
 ```
 ```cs
-//사용한 람다식
+// Lambda expressions used
 var name_ToString = (string name) =>
 {
     if (string.IsNullOrEmpty(name) is false)
@@ -90,7 +92,7 @@ var model_ToString = (string header, float value, string unit) =>
 };
 ```
 ```cs
-// 사용한 변수
+// Unit suffixes used in output
 private static readonly string _voltageUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Voltage);
 private static readonly string _currentUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Current);
 private static readonly string _clockUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Clock);
@@ -102,6 +104,8 @@ private static readonly string _dataUnit = SimpleHardwareMonitor.SimpleHardwareM
 private static readonly string _smallDataUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.SmallData);
 private static readonly string _energyUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Energy);
 private static readonly string _throughputUnit = SimpleHardwareMonitor.SimpleHardwareMonitor.SenserTypeToUnitString(LibreHardwareMonitor.Hardware.SensorType.Throughput);
+private const string _titleFormat = "========  {0}  ========";
+private const string _itemFormat = "** {0}({2}) : {1}";
 ```
 
 ## Third-Party Libraries
@@ -118,6 +122,6 @@ private static readonly string _throughputUnit = SimpleHardwareMonitor.SimpleHar
   - HidSharp (>= 2.1.0)
     - License: Apache License 2.0
     - Project URL: [HidSharp Project](http://www.zer7.com/software/hidsharp)
-  - Mono.Posix.NETStandard** (>= 1.0.0)
+  - Mono.Posix.NETStandard (>= 1.0.0)
     - License: MIT, BSD, MS-PL
     - Project URL: [Mono Project](https://github.com/mono/mono)
